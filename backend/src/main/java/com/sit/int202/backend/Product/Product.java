@@ -10,7 +10,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
 @Entity
-@Table(name="creditcards")
+@Table(name="product")
 public class Product implements Serializable{
 
     @Id
