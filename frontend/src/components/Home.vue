@@ -13,7 +13,6 @@
               Home
             </a>
           </div>
-
           <div class="navbar-end">
             <div class="navbar-item">
               <div class="buttons">
@@ -33,56 +32,52 @@
       <h1>{{ msg }}</h1>
       <div class="columns">
         <div class="column">
-          <div class="card">
-            <div class="card-image is-4by3">
-              <img src="./../assets/logo.png" alt="Placeholder image">
+          <router-link to="/ProductDetail">
+            <div class="card">
+              <div class="card-image is-4by3">
+                <img src="./../assets/logo.png" alt="Placeholder image">
+              </div>
+              <div class="card-content">
+                product name
+              </div>
             </div>
-            <div class="card-content">
-              product name
-            </div>
-            <div class="card-footer">
-              <router-link to="/ProductDetail"><div class="button">Buy now</div></router-link>
-            </div>
-          </div>
+          </router-link>
         </div>
-         <div class="column">
-          <div class="card">
-            <div class="card-image is-4by3">
-              <img src="./../assets/logo.png" alt="Placeholder image">
+        <div class="column">
+          <router-link to="/ProductDetail">
+            <div class="card">
+              <div class="card-image is-4by3">
+                <img src="./../assets/logo.png" alt="Placeholder image">
+              </div>
+              <div class="card-content">
+                product name
+              </div>
             </div>
-            <div class="card-content">
-              product name
-            </div>
-            <div class="card-footer">
-              <router-link to="/ProductDetail"><div class="button">Buy now</div></router-link>
-            </div>
-          </div>
+          </router-link>
         </div>
-         <div class="column">
-          <div class="card">
-            <div class="card-image is-4by3">
-              <img src="./../assets/logo.png" alt="Placeholder image">
+        <div class="column">
+          <router-link to="/ProductDetail">
+            <div class="card">
+              <div class="card-image is-4by3">
+                <img src="./../assets/logo.png" alt="Placeholder image">
+              </div>
+              <div class="card-content">
+                product name
+              </div>
             </div>
-            <div class="card-content">
-              product name
-            </div>
-            <div class="card-footer">
-              <router-link to="/ProductDetail"><div class="button">Buy now</div></router-link>
-            </div>
-          </div>
+          </router-link>
         </div>
-         <div class="column">
-          <div class="card">
-            <div class="card-image is-4by3">
-              <img src="./../assets/logo.png" alt="Placeholder image">
+        <div class="column">
+          <router-link to="/ProductDetail">
+            <div class="card">
+              <div class="card-image is-4by3">
+                <img src="./../assets/logo.png" alt="Placeholder image">
+              </div>
+              <div class="card-content">
+                product name
+              </div>
             </div>
-            <div class="card-content">
-              product name
-            </div>
-            <div class="card-footer">
-              <router-link to="/ProductDetail"><div class="button">Buy now</div></router-link>
-            </div>
-          </div>
+          </router-link>
         </div>
       </div>
     </div>
@@ -93,7 +88,7 @@
 import './../../node_modules/bulma/css/bulma.css';
 
 export default {
-  name: 'HelloWorld',
+  name: 'Home',
   data () {
     return {
       msg: 'หน้าแรก สำหรับแสดงสินค้า'
