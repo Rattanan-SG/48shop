@@ -13,3 +13,10 @@ new Vue({
   components: { App },
   template: '<App/>'
 })
+
+var button =document.getElementById('button');
+var modal =document.getElementById('page-modal');
+
+  button.onclick=function(){
+    modal.style.display='block';
+  }

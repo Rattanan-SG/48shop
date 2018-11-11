@@ -26,11 +26,87 @@
     <div class="navbar is-fixed-bottom" id="nav-bot">
         <div class="container" id="nav-bot-box">
             เพิ่มเครดิต
-            <div class="button">เพิ่ม</div>
+            <div class="button" @click="showLoginModal=true" id="button">เพิ่ม</div>
         </div>
-      
     </div>
-  </div>
+      <!-- popup -->
+    
+      <div class="modal-card" id="popUpCradit">
+          <div class="container" >
+              <div class="modal" id="page-modal">
+                  <div class="modal-background"></div>
+                  <section class="modal-card-body">
+                      <div class="modal-content" id="screen">
+                          <header id ="head" class="modal-card-head">
+                              <p class="modal-card-title">ใส่บัตรเครดิต/เดบิต</p>
+                                  <button class="delete"  aria-label="close"></button>
+                          </header>
+                        <div class="columns is-multiline" style=" display: flex;" id="bodyPopUp">
+                            <div class="field is-grouped" id="number">
+                                <label  id="text" class="label">หมายเลขบัตร</label>
+                                <label> <img src="../assets/visa.svg" width="20" height="10" style="  margin-left: 10px;"></label>
+                                <label> <img src="../assets/mastercard.svg" width="20" height="10" style="  margin-left: 10px;"></label>
+                            </div>
+                            <div class="control">
+                                <input class="input" type="text" placeholder="Ex. 1234567890123456">
+                            </div>
+                            <div class="field" id="name" style=" margin-top: 13px;">
+                                <label class="label" id="text">ชื่อที่ปรากฏบนบัตร</label>
+                                    <div class="control">
+                                        <input class="input" type="text" placeholder="Ex. โสภณ จำปาซ่อนกลิ่น">
+                                    </div>
+                            </div>
+                            <div class="field" id="province">
+                                <label id="text" class="label">จังหวัด</label>
+                                <div class="control">
+                                    <input class="input" type="text" placeholder="Ex. สมุทรสงคราม">
+                                  </div>
+                            </div>
+                                <div class="field is-grouped" id="MY">
+                                  <div class="field" id="month">
+                                      <label  id="text" class="label">เดือนหมดอายุ</label>
+                                      <div class="control ">
+                                          <input id="box" class="input" type="text" placeholder="mm" style="width: 70px;  margin-right: 48px;">
+                                      </div>
+                                  </div>
+                                  <div class="field" id="year">
+                                      <label  id="text" class="label">ปีหมดอายุ</label>
+                                      <div class="control">
+                                          <input id="box" class="input" type="text" placeholder="yyyy" style="width: 70px;">
+                                      </div>
+                                  </div>
+                                </div>    
+                                <div class="field" id="CVV">
+                                    <label  id="text" class="label ">รหัสรักษาความปลอดภัย</label>
+                                    <div class="control">
+                                        <input class="input" type="text" placeholder="CVV">
+                                    </div>
+                                </div>
+                                <div class="field is-horizontal">
+                                    <div class="field">
+                                        <div class="field is-expanded">
+                                            <div class="field" id="postnumber">
+                                                <label id="text"  class="label">หมายเลขไปรษณีย์</label>
+                                                <div class="control">
+                                                    <input class="input" type="text" placeholder="Ex.14140">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="column is-11 is-offset-1">
+                                    <footer id= "footer" class="modal-card-foot" >
+                                        <button class="button ">ยกเลิก</button>
+                                        <button class="button is-success">บันทึก</button>
+                                    </footer>
+                                </div>
+                          </div>    
+                      </div>
+                  </section>
+              </div>
+          </div>
+      </div>
+    </div>
 </template>
 
 <script>
@@ -71,5 +147,70 @@ export default {
   min-height: 2000px;
   margin-top: 13px;
   box-shadow: 2px 10px grey;
+}
+html {
+  background: #f2f2f2;
+}
+
+nav {
+  background: #f2f2f2;
+  border-bottom: 10px;
+  border-color: #e0e0e0;
+}
+
+#nav-top {
+  border-bottom: 10px;
+  border-color: #e0e0e0;
+}
+
+#nav-box {
+  width: 1000px;
+}
+
+/* popup */
+#home-box {
+  background: white;
+  width: 1000px;
+  min-height: 2000px;
+  margin-top: 13px;
+  box-shadow: 2px 10px grey;
+}
+
+#bodyPopUp {
+  justify-content: center;
+  background: white;
+  margin-top:0px;
+  margin-left: 0px;
+  position: fixed;
+  height: 606px;
+  width: 299.5px;
+}
+
+#screen {
+  width: 300px;
+}
+
+#box {
+  width: 40%;
+  height: 20%;
+}
+
+#text {
+  font-size: 9pt;
+  font-weight: 100;
+}
+#number{
+    height: 9px;
+    margin-right: 70px;
+    margin-top: 10px;
+}
+#head{
+    border-style: none;
+    margin-top: 20px;
+}
+#footer{
+    margin-left: 20px;
+    background-color:white; 
+    border-style: none;
 }
 </style>
