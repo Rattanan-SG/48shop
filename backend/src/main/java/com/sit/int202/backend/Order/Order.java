@@ -1,40 +1,88 @@
 package com.sit.int202.backend.Order;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sit.int202.backend.Address.Address;
+import com.sit.int202.backend.Product.Product;
+import com.sit.int202.backend.UserProfile.UserProfile;
 import java.io.Serializable;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotBlank;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
 @Table(name = "orders")
+@EntityListeners(AuditingEntityListener.class)
 public class Order implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @NotBlank
-    private int userId;
-    
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_profile_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
+    private UserProfile userProfile;
+
     @NotBlank
     private double totalPrice;
-    
+
     private String method;
-    
-    @NotBlank
-    private int startLocationId;
-    
-    @NotBlank
-    private int destinationId;
-    
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "start_location_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
+    private Address startLocation;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "destination_location_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
+    private Address destination;
+
     @NotBlank
     private int trackingId;
     
-    private int creditCardId;
+    private String omiseToken;
+
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                CascadeType.PERSIST,
+                CascadeType.MERGE
+            })
+    @JoinTable(name = "order_has_products",
+            joinColumns = {
+                @JoinColumn(name = "order_id")},
+            inverseJoinColumns = {
+                @JoinColumn(name = "product_id")})
+    private Set<Product> products = new HashSet<>();
+
+    @Column(nullable = false, updatable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    @CreatedDate
+    private Date createdAt;
 
     public Order() {
     }
@@ -47,12 +95,12 @@ public class Order implements Serializable {
         this.id = id;
     }
 
-    public int getUserId() {
-        return userId;
+    public UserProfile getUserProfile() {
+        return userProfile;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUserProfile(UserProfile userProfile) {
+        this.userProfile = userProfile;
     }
 
     public double getTotalPrice() {
@@ -71,20 +119,20 @@ public class Order implements Serializable {
         this.method = method;
     }
 
-    public int getStartLocationId() {
-        return startLocationId;
+    public Address getStartLocation() {
+        return startLocation;
     }
 
-    public void setStartLocationId(int startLocationId) {
-        this.startLocationId = startLocationId;
+    public void setStartLocation(Address startLocation) {
+        this.startLocation = startLocation;
     }
 
-    public int getDestinationId() {
-        return destinationId;
+    public Address getDestination() {
+        return destination;
     }
 
-    public void setDestinationId(int destinationId) {
-        this.destinationId = destinationId;
+    public void setDestination(Address destination) {
+        this.destination = destination;
     }
 
     public int getTrackingId() {
@@ -95,12 +143,30 @@ public class Order implements Serializable {
         this.trackingId = trackingId;
     }
 
-    public int getCreditCardId() {
-        return creditCardId;
+    public String getOmiseToken() {
+        return omiseToken;
     }
 
-    public void setCreditCardId(int creditCardId) {
-        this.creditCardId = creditCardId;
+    public void setOmiseToken(String omiseToken) {
+        this.omiseToken = omiseToken;
     }
 
+    public Set<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(Set<Product> products) {
+        this.products = products;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    
+    
 }

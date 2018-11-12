@@ -1,28 +1,49 @@
 package com.sit.int202.backend.Product;
 
+import com.sit.int202.backend.Order.Order;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.CascadeType;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
 @Entity
-@Table(name="product")
-public class Product implements Serializable{
+@Table(name = "products")
+public class Product implements Serializable {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @NotBlank
     private String name;
+
     private String detail;
+
     private String img_album_link;
+
+    @NotBlank
     private double price;
-     
+
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                CascadeType.PERSIST,
+                CascadeType.MERGE
+            },
+            mappedBy = "products")
+    private Set<Order> orders = new HashSet<>();
+
+    public Product() {
+    }
+
     public long getId() {
         return id;
     }
@@ -61,6 +82,14 @@ public class Product implements Serializable{
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public Set<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(Set<Order> orders) {
+        this.orders = orders;
     }
 
 }

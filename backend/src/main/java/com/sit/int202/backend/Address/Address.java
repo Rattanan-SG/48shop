@@ -10,12 +10,11 @@ import javax.persistence.GenerationType;
 import javax.validation.constraints.NotBlank;
 
 @Entity
-@Table(name="address")
-public class Address implements Serializable{
-
+@Table(name = "address")
+public class Address implements Serializable {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @NotBlank
@@ -30,13 +29,12 @@ public class Address implements Serializable{
     @NotBlank
     private int zipcode;
 
+    public Address() {
+    }
 
-
-   
     public long getId() {
         return id;
     }
-
 
     public void setId(long id) {
         this.id = id;
@@ -46,37 +44,30 @@ public class Address implements Serializable{
         return detail;
     }
 
-   
     public void setDetail(String detail) {
         this.detail = detail;
     }
 
-   
     public String getCity() {
         return city;
     }
 
-   
     public void setCity(String city) {
         this.city = city;
     }
 
-   
     public String getDistrict() {
         return district;
     }
 
-   
     public void setDistrict(String district) {
         this.district = district;
     }
 
-    
     public int getZipcode() {
         return zipcode;
     }
 
-   
     public void setZipcode(int zipcode) {
         this.zipcode = zipcode;
     }
