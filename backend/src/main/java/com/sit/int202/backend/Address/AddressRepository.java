@@ -1,4 +1,4 @@
-package main.java.com.sit.int202.backend.Address;
+package com.sit.int202.backend.Address;
 
 
 import org.springframework.data.jpa.repository.JpaRepository;

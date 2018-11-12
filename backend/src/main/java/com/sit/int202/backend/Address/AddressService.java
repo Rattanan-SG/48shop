@@ -1,4 +1,4 @@
-package main.java.com.sit.int202.backend.Address;
+package com.sit.int202.backend.Address;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
