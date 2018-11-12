@@ -10,7 +10,7 @@ import javax.persistence.GenerationType;
 import javax.validation.constraints.NotBlank;
 
 @Entity
-@Table(name = "address")
+@Table(name = "addresses")
 public class Address implements Serializable {
 
     @Id
