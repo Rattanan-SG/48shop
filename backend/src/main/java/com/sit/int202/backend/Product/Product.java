@@ -1,5 +1,6 @@
 package com.sit.int202.backend.Product;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sit.int202.backend.Order.Order;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -14,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "products")
@@ -30,7 +32,7 @@ public class Product implements Serializable {
 
     private String img_album_link;
 
-    @NotBlank
+    @NotNull
     private double price;
 
     @ManyToMany(fetch = FetchType.LAZY,
@@ -39,6 +41,7 @@ public class Product implements Serializable {
                 CascadeType.MERGE
             },
             mappedBy = "products")
+    @JsonIgnore
     private Set<Order> orders = new HashSet<>();
 
     public Product() {
