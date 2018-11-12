@@ -28,6 +28,48 @@
         </div>
       </div>
     </nav>
+      <div class="field is-grouped" id="CategoryBar">
+          <nav class="level" id="bar">
+            <p class="level-item has-text-centered">
+              เสื้อผ้าและแฟชั่น
+            </p>
+          </nav>
+          <nav class="level" id="bar">
+            <p class="level-item has-text-centered">
+              สุขภาพและความงาม
+            </p>
+          </nav>
+          <nav class="level" id="bar">
+            <p class="level-item has-text-centered">
+              อุปกรณ์ทำครัว
+            </p>
+          </nav>
+          <nav class="level" id="bar">
+            <p class="level-item has-text-centered">
+              บ้านและไลฟ์สไตล์
+            </p>
+          </nav>
+          <nav class="level" id="bar">
+            <p class="level-item has-text-centered">
+              เครื่องใช้ไฟฟ้าในบ้าน
+            </p>
+          </nav>
+          <nav class="level" id="bar">
+            <p class="level-item has-text-centered">
+             อุปกรณ์อิเล็กทรอนิกส์
+            </p>
+          </nav>
+          <nav class="level" id="bar">
+            <p class="level-item has-text-centered">
+              อุปกรณ์กีฬา
+            </p>
+          </nav>
+          <nav class="level" id="bar">
+            <p class="level-item has-text-centered" style=" margin-bottom:18px;">
+              อุปกรณ์ยานยนต์
+            </p>
+          </nav>
+      </div>
     
     <router-view/>
   </div>
@@ -44,24 +86,18 @@ export default {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
 }
 
 html {
   background: #F2F2F2;
 }
-nav {
-  border-bottom: 10px;
-}
-
-#nav-top {
-  border-bottom: 10px;
-  border-color: #E0E0E0;
-}
 
 #nav-box {
   width: 1000px;
+}
+#nav-top{
+  height: 90px;
 }
 
 #home-box {
@@ -71,6 +107,22 @@ nav {
   margin-top: 13px;
   box-shadow: 2px 10px grey;
 }
+/* Category */
+#bar{
+  font-size: 14px;
+  margin-left:30px;
+  margin-top: 20px;
+  background:white;
+  
+}
+#CategoryBar{
+  background:white;
+  justify-content: center;
+  border: 0.09em solid #E0E0E0;
+  height: 40px;
+}
+
+
 
 
 </style>
