@@ -29,7 +29,7 @@
             <div class="button" @click="showLoginModal=true" id="button">เพิ่ม</div>
         </div>
     </div>
-      <!-- popup -->
+      <!-- popup Cradit -->
     
       <div class="modal-card" id="popUpCradit">
           <div class="container" >
@@ -38,7 +38,7 @@
                   <section class="modal-card-body">
                       <div class="modal-content" id="screen">
                           <header id ="head" class="modal-card-head">
-                              <p class="modal-card-title">ใส่บัตรเครดิต/เดบิต</p>
+                              <p class="modal-card-title" style="text-align: center;">ใส่บัตรเครดิต/เดบิต</p>
                                   <button class="delete"  aria-label="close"></button>
                           </header>
                         <div class="columns is-multiline" style=" display: flex;" id="bodyPopUp">
