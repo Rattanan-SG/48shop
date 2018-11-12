@@ -17,6 +17,16 @@ new Vue({
 var button =document.getElementById('button');
 var modal =document.getElementById('page-modal');
 
+var button2 =document.getElementById('button2');
+var modal2 =document.getElementById('page-modal2');
+
+
+
   button.onclick=function(){
     modal.style.display='block';
   }
+
+  button2.onclick=function(){
+    modal2.style.display='block';
+  }
+  

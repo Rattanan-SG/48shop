@@ -26,7 +26,8 @@
     <div class="navbar is-fixed-bottom" id="nav-bot">
         <div class="container" id="nav-bot-box">
             เพิ่มเครดิต
-            <div class="button" @click="showLoginModal=true" id="button">เพิ่ม</div>
+            <div class="button" @click="showLoginModal=true" id="button">เพิ่มเครดิต</div>
+            <div class="button" @click="showLoginModal=true" id="button2">เพิ่มที่อยู่</div>
         </div>
     </div>
       <!-- popup Cradit -->
@@ -106,6 +107,65 @@
               </div>
           </div>
       </div>
+
+        <!-- popupAddress -->
+      <div class="modal-card" id="popUpAddress">
+          <div class="container" >
+              <div class="modal" id="page-modal2" >
+                <div class="modal-background"></div>
+                    <section class="modal-card-body">
+                        <div class="modal-content" id="screenAddress">
+                            <header id ="head" class="modal-card-head">
+                                <p class="modal-card-title">ส่งสินค้าไปที่</p>
+                                <button class="delete"  aria-label="close"></button>
+                            </header>
+                            <div class="columns is-multiline" style=" display: flex;" id="bodyPopUpAddress">
+                                <div class="field is-horizontal" id="addressbox">
+                                    <div class="field" >
+                                        <label class="label">ชื่อ - นามสกุล</label>
+                                        <div class="control">
+                                            <input id="Name" class="input" type="text" placeholder="Ex. กิตฮับ ขยันอัพจัง" style="width: 300px;">
+                                        </div>
+                                    </div>
+                                    <div class="field" style="margin-left: 60px;">
+                                        <label class="label">หมายเลขโทรศัพท์ (สำหรับติดต่อ)</label>
+                                        <div class="control">
+                                            <input id="telNo" class="input" type="text" placeholder="Ex. 062-0672928 " style="width: 300px;" >
+                                        </div>
+                                    </div>
+                                </div>
+                                    <div class="field" id="addressbox-line2">
+                                        <label class="label">ที่อยู่ในการจัดส่ง</label>
+                                        <div class="control">
+                                            <textarea class="textarea" id="address" placeholder="Ex. เช่น 112/44 ตึกหอสมุด ด้านใน KMUTT ถนนสุขสบายดี ตำบลมะละกอ" style="height: 100px; width: 300px;"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="field" style="margin-left: 400px; margin-top: 100px;">
+                                        <label class="label">จังหวัด</label>
+                                        <div class="control">
+                                            <input id="province" class="input" type="text" placeholder="Ex. กรุงเทพมหานคร " style="width: 300px; height: 50px;">
+                                        </div>
+                                    </div>
+                                    <div class="field" style="margin-left: 400px; margin-bottom: 2000px;">
+                                        <label class="label">หมายเลขไปรษณีย์</label>
+                                        <div class="control">
+                                            <input id="postcode" class="input" type="text" placeholder="Ex. 10140 " style="width: 300px; height: 50px;">
+                                        </div>
+                                    </div>
+                                        
+                            </div>
+                            <div class="field is-grouped" id="buttonAddress">
+                                    <footer id= "footer" class="modal-card-foot" >
+                                        <button class="button" style="width: 100px;">ยกเลิก</button>
+                                        <button class="button is-success" style="width: 100px; margin-left: 10px;">บันทึก</button>
+                                    </footer>
+                                </div>
+                    </div>
+                  </section>
+                  
+              </div>
+          </div>
+      </div>
     </div>
 </template>
 
@@ -124,6 +184,8 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
+
 #nav-bot {
     height: 240px;
 }
@@ -190,6 +252,37 @@ nav {
   width: 300px;
 }
 
+#addressbox {
+    margin-top: 20px;
+    margin-left: 40px;
+    position: fixed;
+}
+
+#addressbox-line2 {
+    margin-top: 100px;
+    margin-left: 40px;
+    position: fixed;
+}
+
+#bodyPopUpAddress {
+    text-align: left;
+    background: white;
+    margin-top:0px;
+    margin-left: 0px;
+    position: fixed;
+    height: 400px;
+    width: 800px;
+}
+
+#screenAddress {
+  width: 800px;
+}
+
+#buttonAddress {
+    justify-content: center;
+    margin-top: 300px;
+    margin-right: 60px;
+}
 #box {
   width: 40%;
   height: 20%;
