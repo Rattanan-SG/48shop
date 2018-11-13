@@ -8,6 +8,7 @@ public class CreditCard{
     private String name;
     private String address;
     private String zip;
+    private double totalPrice;
 
     public void setCardId(String cardId){
         this.cardId = cardId;
@@ -27,6 +28,9 @@ public class CreditCard{
     public void setZip(String zip){
         this.zip = zip;
     }
+    public void setPrice(double totalPrice){
+        this.totalPrice = totalPrice;
+    }
 
     public String getCardId(){
         return cardId;
@@ -45,6 +49,9 @@ public class CreditCard{
     }
     public String getZip(){
         return zip;
+    }
+    public double totalPrice(){
+        return totalPrice;
     }
 
 }
