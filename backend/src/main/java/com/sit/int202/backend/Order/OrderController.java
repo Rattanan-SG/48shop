@@ -22,9 +22,9 @@ public class OrderController {
     private OrderService orderService;
 
     @PostMapping("/Charge")
-    public void charge(@RequestBody Object creditCard) throws ClientException, IOException, OmiseException{
-        Token token = orderService.getToken(creditCard);
-        orderService.charge(100000/* example price*/,token); // need to implement this method //test
+    public void charge(@RequestBody LinkedHashMap payment) throws ClientException, IOException, OmiseException{
+        Token token = orderService.getToken(payment);
+        orderService.charge((long)payment.get("total_price"),token); // need to implement this method
     }
     
 }

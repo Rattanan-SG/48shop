@@ -45,20 +45,19 @@ public class OrderService {
         return orderRepository.save(order);
     }
 
-    public Token getToken(Object data) throws ClientException, IOException, OmiseException{
+    public Token getToken(LinkedHashMap data) throws ClientException, IOException, OmiseException{
         Client client = new Client(OMISE_OPUBLIC_KEY,OMISE_SECRET_KEY);
-        LinkedHashMap paymentData = (LinkedHashMap) data;
         System.out.print(data);
         Token token = client.tokens().create(
             new Token.Create().card(
                 new Card.Create()
-                .number((String)paymentData.get("card_id"))
-                .expirationMonth((int)paymentData.get("exp_m"))
-                .expirationYear((int)paymentData.get("exp_y"))
-                .securityCode((String)paymentData.get("cvv"))
-                .name((String)paymentData.get("name"))
-                .city((String)paymentData.get("address"))
-                .postalCode((String)paymentData.get("zip"))
+                .number((String)data.get("card_id"))
+                .expirationMonth((int)data.get("exp_m"))
+                .expirationYear((int)data.get("exp_y"))
+                .securityCode((String)data.get("cvv"))
+                .name((String)data.get("name"))
+                .city((String)data.get("address"))
+                .postalCode((String)data.get("zip"))
             )
         );
         return token;
