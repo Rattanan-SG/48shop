@@ -50,7 +50,7 @@
                                     <label> <img src="../assets/mastercard.svg" width="20" height="10" style="  margin-left: 10px;"></label>
                                 </div>
                                 <!-- form start -->
-                                <form v-on:submit.prevent="getCreditCard">
+                                <form v-on:submit.prevent="setCreditCard">
                                     <div class="control">
                                         <input class="input" type="text" placeholder="Ex. 1234567890123456"
                                         v-model="credit.id">
@@ -181,7 +181,9 @@
 
 <script>
 import './../../node_modules/bulma/css/bulma.css';
+import axios from 'axios';
 
+const url = `http://jsonplaceholder.typicode.com/posts`;
 export default {
     name: 'ProductDetail',
     data () {
@@ -213,10 +215,23 @@ export default {
         closeAddressModal: function() {
             this.showAddress = '';
         },
-        getCreditCard: function() {
-            // this.credit.id = credit.id;
+        setCreditCard: function() {
+            // for tesing
             console.log(this.credit.id + "\n" + this.credit.exp_m + "\n" + this.credit.exp_y + "\n" + this.credit.cvv
              + "\n" + this.credit.name + "\n" + this.credit.address + "\n" + this.credit.zip);
+            //  
+            axios.post(url, {
+                card_id: this.credit.id,
+                exp_m: this.credit.exp_m,
+                exp_y: this.credit.exp_y,
+                cvv: this.credit.cvv,
+                name: this.credit.name,
+                address: this.credit.address,
+                zip: this.credit.zip
+            })
+            .then(response => {
+                console.log(response)
+            })
         }
     }
 }
