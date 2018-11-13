@@ -132,9 +132,10 @@
 
 <script>
 export default {
-  name: 'CategoryProduct',
-  data(){
-    
+  data () {
+    return {
+      msg: 'หน้าแรก สำหรับแสดงสินค้า'
+    }
   }
 
 }
