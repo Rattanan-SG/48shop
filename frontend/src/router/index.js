@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/components/Home'
 import ProductDetail from '@/components/ProductDetail'
+import CategoryProduct from '@/components/CategoryProduct'
 
 Vue.use(Router)
 
@@ -21,6 +22,11 @@ export default new Router({
       path: '/ProductDetail',
       name: 'ProductDetail',
       component: ProductDetail
+    },
+    {
+      path: '/CategoryProduct',
+      name: 'CategoryProduct',
+      component: CategoryProduct
     }
   ]
 })
