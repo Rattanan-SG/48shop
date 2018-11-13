@@ -32,7 +32,7 @@
             </div>
         </div>
         <!-- popup Cradit -->
-        
+
         <div class="modal-card" id="popUpCradit">
             <div class="container" >
                 <div class="modal" id="page-modal" v-bind:style="{ display: showCredit}">
@@ -49,59 +49,70 @@
                                     <label> <img src="../assets/visa.svg" width="20" height="10" style="  margin-left: 10px;"></label>
                                     <label> <img src="../assets/mastercard.svg" width="20" height="10" style="  margin-left: 10px;"></label>
                                 </div>
-                                <div class="control">
-                                    <input class="input" type="text" placeholder="Ex. 1234567890123456">
-                                </div>
-                                <div class="field" id="name" style=" margin-top: 13px;">
-                                    <label class="label" id="text">ชื่อที่ปรากฏบนบัตร</label>
+                                <!-- form start -->
+                                <form v-on:submit.prevent="getCreditCard">
                                     <div class="control">
-                                        <input class="input" type="text" placeholder="Ex. โสภณ จำปาซ่อนกลิ่น">
+                                        <input class="input" type="text" placeholder="Ex. 1234567890123456"
+                                        v-model="credit.id">
                                     </div>
-                                </div>
-                                <div class="field" id="province">
-                                    <label id="text" class="label">จังหวัด</label>
-                                    <div class="control">
-                                        <input class="input" type="text" placeholder="Ex. สมุทรสงคราม">
+                                    <div class="field" id="name" style=" margin-top: 13px;">
+                                        <label class="label" id="text">ชื่อที่ปรากฏบนบัตร</label>
+                                        <div class="control">
+                                            <input class="input" type="text" placeholder="Ex. โสภณ จำปาซ่อนกลิ่น"
+                                            v-model="credit.name">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="field is-grouped" id="MY">
-                                <div class="field" id="month">
-                                    <label  id="text" class="label">เดือนหมดอายุ</label>
-                                    <div class="control ">
-                                        <input id="box" class="input" type="text" placeholder="mm" style="width: 70px;  margin-right: 48px;">
+                                    <div class="field" id="province">
+                                        <label id="text" class="label">จังหวัด</label>
+                                        <div class="control">
+                                            <input class="input" type="text" placeholder="Ex. สมุทรสงคราม"
+                                            v-model="credit.address">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="field" id="year">
-                                    <label  id="text" class="label">ปีหมดอายุ</label>
-                                    <div class="control">
-                                        <input id="box" class="input" type="text" placeholder="yyyy" style="width: 70px;">
+                                    <div class="field is-grouped" id="MY">
+                                    <div class="field" id="month">
+                                        <label  id="text" class="label">เดือนหมดอายุ</label>
+                                        <div class="control ">
+                                            <input id="box" class="input" type="text" placeholder="mm" style="width: 70px;  margin-right: 48px;"
+                                            v-model="credit.exp_m">
+                                        </div>
                                     </div>
-                                </div>
-                                </div>    
-                                <div class="field" id="CVV">
-                                    <label  id="text" class="label ">รหัสรักษาความปลอดภัย</label>
-                                    <div class="control">
-                                        <input class="input" type="text" placeholder="CVV">
+                                    <div class="field" id="year">
+                                        <label  id="text" class="label">ปีหมดอายุ</label>
+                                        <div class="control">
+                                            <input id="box" class="input" type="text" placeholder="yy" style="width: 70px;"
+                                            v-model="credit.exp_y">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="field is-horizontal">
-                                    <div class="field">
-                                        <div class="field is-expanded">
-                                            <div class="field" id="postnumber">
-                                                <label id="text"  class="label">หมายเลขไปรษณีย์</label>
-                                                <div class="control">
-                                                    <input class="input" type="text" placeholder="Ex.14140">
+                                    </div>    
+                                    <div class="field" id="CVV">
+                                        <label  id="text" class="label ">รหัสรักษาความปลอดภัย</label>
+                                        <div class="control">
+                                            <input class="input" type="text" placeholder="CVV"
+                                            v-model="credit.cvv">
+                                        </div>
+                                    </div>
+                                    <div class="field is-horizontal">
+                                        <div class="field">
+                                            <div class="field is-expanded">
+                                                <div class="field" id="postnumber">
+                                                    <label id="text"  class="label">หมายเลขไปรษณีย์</label>
+                                                    <div class="control">
+                                                        <input class="input" type="text" placeholder="Ex.14140"
+                                                        v-model="credit.zip">
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="column is-11 is-offset-1">
-                                    <footer id= "footer" class="modal-card-foot" >
-                                        <button class="button ">ยกเลิก</button>
-                                        <button class="button is-success">บันทึก</button>
-                                    </footer>
-                                </div>
+                                    <div class="column is-11 is-offset-1">
+                                        <footer id= "footer" class="modal-card-foot" >
+                                            <button class="button ">ยกเลิก</button>
+                                            <button type="submit" class="button is-success">บันทึก</button>
+                                        </footer>
+                                    </div>
+                                </form>
+                                <!-- form end -->
                             </div>    
                         </div>
                     </section>
@@ -177,21 +188,35 @@ export default {
         return {
             msg: 'This is Detail page',
             showCredit: '',
-            showAddress: ''
+            showAddress: '',
+            credit: {
+                id: '',
+                exp_m: '',
+                exp_y: '',
+                cvv: '',
+                name: '',
+                address: '',
+                zip: ''
+            }
         }
     },
     methods:{
-        showCreditModal: function(){
+        showCreditModal: function() {
             this.showCredit = 'block';
         },
-        closeCreditModal: function(){
+        closeCreditModal: function() {
             this.showCredit = '';
         },
-        showAddressModal: function(){
+        showAddressModal: function() {
             this.showAddress = 'block';
         },
-        closeAddressModal: function(){
+        closeAddressModal: function() {
             this.showAddress = '';
+        },
+        getCreditCard: function() {
+            // this.credit.id = credit.id;
+            console.log(this.credit.id + "\n" + this.credit.exp_m + "\n" + this.credit.exp_y + "\n" + this.credit.cvv
+             + "\n" + this.credit.name + "\n" + this.credit.address + "\n" + this.credit.zip);
         }
     }
 }
