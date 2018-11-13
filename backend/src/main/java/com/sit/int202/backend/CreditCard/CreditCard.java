@@ -1,6 +1,6 @@
-package com.sit.int202.backend.Order;
+package com.sit.int202.backend.CreditCard;
 
-public class CreditCard(){
+public class CreditCard{
     
     private String cardId;
     private int expM;
