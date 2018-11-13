@@ -24,7 +24,8 @@ public class OrderController {
     @PostMapping("/Charge")
     public void charge(@RequestBody LinkedHashMap payment) throws ClientException, IOException, OmiseException{
         Token token = orderService.getToken(payment);
-        orderService.charge((long)payment.get("total_price"),token); // need to implement this method
+        long price = Long.parseLong(payment.get("total_price").toString());
+        orderService.charge(price,token); // need to implement this method
     }
     
 }
