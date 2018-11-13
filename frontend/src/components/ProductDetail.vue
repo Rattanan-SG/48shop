@@ -18,6 +18,7 @@
                 <div class="card-footer">
                     <router-link to="/Home"><div class="button">Back</div></router-link>
                     <router-link to="/ProductDetail"><div class="button" disabled>Buy now</div></router-link>
+                    <router-link to="/CategoryProduct"><div class="button">this</div></router-link>
                 </div>
             </div>
           </div>
