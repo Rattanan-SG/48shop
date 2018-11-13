@@ -68,7 +68,7 @@ public class OrderService {
         Client client = new Client(OMISE_OPUBLIC_KEY,OMISE_SECRET_KEY);
         Charge charge = client.charges().create(
             new Charge.Create()
-            .amount(amount).currency(TH_BAHT).card(token.getId())
+            .amount(amount).currency(TH_BAHT).card(token.getId()) //test
         );
     }
 }

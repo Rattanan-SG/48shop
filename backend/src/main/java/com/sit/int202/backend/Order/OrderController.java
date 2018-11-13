@@ -24,7 +24,7 @@ public class OrderController {
     @PostMapping("/Charge")
     public void charge(@RequestBody Object creditCard) throws ClientException, IOException, OmiseException{
         Token token = orderService.getToken(creditCard);
-        orderService.charge(100000/* example price*/,token); // need to implement this method
+        orderService.charge(100000/* example price*/,token); // need to implement this method //test
     }
     
 }
