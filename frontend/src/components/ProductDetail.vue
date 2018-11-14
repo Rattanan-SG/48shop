@@ -31,7 +31,8 @@
                 <a @click="showAddressModal">+ ใส่ที่อยู่</a>
                 <br><br>
                 <p>ชำระเงินด้วย
-                    <button class="button is-small is-rounded" id="small-button" @click="editCreditCard">เปลี่ยนบัตร</button>
+                    <button class="button is-small is-rounded" id="small-button" @click="editCreditCard"
+                    :disabled="!hasCredit">เปลี่ยนบัตร</button>
                 </p>
                 <template v-if="hasCredit">
                     {{credit.id}}
@@ -100,7 +101,7 @@
         <!-- popup Cradit -->
         <div class="modal-card" id="popUpCradit">
             <div class="container" >
-                <div class="modal" id="page-modal" v-bind:style="{ display: showCredit}">
+                <div class="modal" id="page-modal" v-bind:style="{display: showCredit}">
                     <div class="modal-background"></div>
                     <section class="modal-card-body">
                         <div class="modal-content" id="screen">
@@ -245,6 +246,7 @@ export default {
                 console.log(response);
                 this.hasCredit = true;
                 this.showCredit = '';
+
             })
         },
         editCreditCard: function() {
@@ -381,6 +383,6 @@ nav {
 }
 
 #small-button {
-    margin-left: 2%;
+    margin-left: 1%;
 }
 </style>
