@@ -105,7 +105,7 @@
                                     <label> <img src="../assets/mastercard.svg" width="20" height="10" style="  margin-left: 10px;"></label>
                                 </div>
                                 <!-- form start -->
-                                <form v-on:submit.prevent="setCreditCard">
+                                <form>
                                     <div class="control">
                                         <input class="input" type="text" placeholder="Ex. 1234567890123456"
                                         v-model="credit.id">
@@ -162,8 +162,8 @@
                                     </div>
                                     <div class="column is-11 is-offset-1">
                                         <footer id= "footer" class="modal-card-foot" >
-                                            <button class="button ">ยกเลิก</button>
-                                            <button type="submit" class="button is-success">บันทึก</button>
+                                            <button class="button" @click="closeCreditModal">ยกเลิก</button>
+                                            <button class="button is-success" @click.prevent="setCreditCard">บันทึก</button>
                                         </footer>
                                     </div>
                                 </form>
@@ -201,17 +201,20 @@ export default {
         }
     },
     methods:{
+        showAddressModal: function() {
+            this.showAddress = 'block';
+        },
+        closeAddressModal: function() {
+            this.showAddress = '';
+        },
         showCreditModal: function() {
             this.showCredit = 'block';
         },
         closeCreditModal: function() {
             this.showCredit = '';
         },
-        showAddressModal: function() {
-            this.showAddress = 'block';
-        },
-        closeAddressModal: function() {
-            this.showAddress = '';
+        setAddress: function () {
+
         },
         setCreditCard: function() {
             // for tesing
@@ -228,7 +231,9 @@ export default {
                 zip: this.credit.zip
             })
             .then(response => {
-                console.log(response)
+                console.log(response);
+                this.showCredit = '';
+
             })
         }
     }
