@@ -12,17 +12,21 @@ import javax.validation.constraints.NotBlank;
 @Entity
 @Table(name = "user_profiles")
 public class UserProfile implements Serializable {
+
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     @NotBlank
     private String firstname;
+
     @NotBlank
     private String lastname;
 
     private String facebookToken;
 
     private String omiseToken;
+
     @NotBlank
     private String telNumber;
 
@@ -40,11 +44,11 @@ public class UserProfile implements Serializable {
     public String getOmiseToken() {
         return omiseToken;
     }
-    
+
     public String getFacebookToken() {
         return facebookToken;
     }
-    
+
     public String getLastname() {
         return lastname;
     }
@@ -68,11 +72,11 @@ public class UserProfile implements Serializable {
     public void setLastname(String lastname) {
         this.lastname = lastname;
     }
-    
+
     public void setId(long id) {
         this.id = id;
     }
-    
+
     public void setFirstname(String firstname) {
         this.firstname = firstname;
     }
