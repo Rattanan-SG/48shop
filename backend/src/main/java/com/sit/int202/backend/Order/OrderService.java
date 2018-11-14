@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Properties;
 import java.util.TreeMap;
 
 import com.fasterxml.jackson.databind.util.JSONPObject;
@@ -25,8 +26,9 @@ import co.omise.models.Token;
 @Service
 public class OrderService {
 
-    private static final String OMISE_OPUBLIC_KEY = "pkey_test_5dviz6scp4tdk4cm0au";
-    private static final String OMISE_SECRET_KEY = "skey_test_5dviz7b84hcwu90jews";
+    Properties prop = new Properties();
+    // private static final String OMISE_OPUBLIC_KEY = "pkey_test_5dviz6scp4tdk4cm0au";
+    // private static final String OMISE_SECRET_KEY = "skey_test_5dviz7b84hcwu90jews";
     private static final String TH_BAHT = "thb";
 
     @Autowired
@@ -51,9 +53,13 @@ public class OrderService {
     }
     
     public LinkedHashMap getToken(LinkedHashMap data) throws ClientException, IOException, OmiseException{
-        Client client = new Client(OMISE_OPUBLIC_KEY,OMISE_SECRET_KEY);
+
+        prop.load(this.getClass().getResourceAsStream("/application.properties"));
+        final String PUBLIC_KEY = prop.getProperty("PUBLIC_KEY");
+        final String SECRET_KEY = prop.getProperty("SECRET_KEY");
+
+        Client client = new Client(PUBLIC_KEY,SECRET_KEY);
         LinkedHashMap<String,String> tokenData = new LinkedHashMap<>();
-        System.out.print(data);
         try{
             Token token = client.tokens().create(
                 new Token.Create().card(
@@ -77,7 +83,11 @@ public class OrderService {
     }
 
     public void charge(long amount,String token) throws ClientException, IOException, OmiseException {
-        Client client = new Client(OMISE_OPUBLIC_KEY,OMISE_SECRET_KEY);
+        prop.load(this.getClass().getResourceAsStream("/application.properties"));
+        final String PUBLIC_KEY = prop.getProperty("PUBLIC_KEY");
+        final String SECRET_KEY = prop.getProperty("SECRET_KEY");
+
+        Client client = new Client(PUBLIC_KEY,SECRET_KEY);
         Charge charge = client.charges().create(
             new Charge.Create()
             .amount(amount).currency(TH_BAHT).card(token)
