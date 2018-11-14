@@ -24,22 +24,24 @@
             </div>
         </div>
         <div class="navbar is-fixed-bottom" id="nav-bot">
-            <div class="container" id="nav-bot-box">
-                <p>สินค้า: sdfsdfsdf</p>
-                <br>
-                <p>ส่งสินค้าไปที่</p>
-                <a @click="showAddressModal">+ ใส่ที่อยู่</a>
-                <br><br>
-                <p>ชำระเงินด้วย
-                    <button class="button is-small is-rounded" id="small-button" @click="editCreditCard"
-                    :disabled="!hasCredit">เปลี่ยนบัตร</button>
-                </p>
+            <div class="container" id="nav-box" >
+            <ol type="none" > 
+                <p style="margin-top: 10px;">สินค้า: sdfsdfsdf</p>
+                 <p style="margin-top: 10px;">ส่งสินค้าไปที่</p>
+                <a @click="showAddressModal" style="margin-top: 10px; ">+ ใส่ที่อยู่</a>
+                <div class="field is-grouped " style="  width: 500px; height: 45px; margin-top: 10px;">
+                <p style="margin-top: 30px;"> ชำระเงินด้วย </p>
+                 <button class="button is-small is-rounded" id="small-button" @click="editCreditCard"
+                    :disabled="!hasCredit" style="margin-top: 30px;  margin-left: 30px;">เปลี่ยนบัตร</button>
+                </div>
                 <template v-if="hasCredit">
                     {{credit.id}}
                 </template>
                 <template v-else>
                     <a @click="showCreditModal">+ ใส่บัตรเครดิต</a>
-                </template>   
+                </template>  
+            </ol> 
+            
             </div>
         </div>
         <!-- popupAddress -->
@@ -263,12 +265,6 @@ export default {
 #nav-bot {
     height: 240px;
 }
-
-#nav-bot-box {
-    margin-top: 17px;
-    width: 1000px;
-}
-
 #nav-top {
   border-bottom: 10px;
   border-color: #E0E0E0;
@@ -276,6 +272,7 @@ export default {
 
 #nav-box {
   width: 1000px;
+  margin-top: 20px;
 }
 
 #home-box {
