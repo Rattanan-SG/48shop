@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "addresses")
@@ -26,7 +27,7 @@ public class Address implements Serializable {
     @NotBlank
     private String district;
 
-    @NotBlank
+    @NotNull
     private int zipcode;
 
     public Address() {
