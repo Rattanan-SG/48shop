@@ -197,7 +197,7 @@
 import './../../node_modules/bulma/css/bulma.css';
 import axios from 'axios';
 
-const url = `http://jsonplaceholder.typicode.com/posts`;
+const url = `http://localhost:8080/creditcard`; //http://jsonplaceholder.typicode.com/posts
 export default {
     name: 'ProductDetail',
     data () {

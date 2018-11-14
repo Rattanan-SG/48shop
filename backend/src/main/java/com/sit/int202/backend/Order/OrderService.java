@@ -45,29 +45,34 @@ public class OrderService {
         return orderRepository.save(order);
     }
 
-    public Token getToken(LinkedHashMap data) throws ClientException, IOException, OmiseException{
+    
+    public String getToken(LinkedHashMap data) throws ClientException, IOException, OmiseException{
         Client client = new Client(OMISE_OPUBLIC_KEY,OMISE_SECRET_KEY);
-        System.out.print(data);
-        Token token = client.tokens().create(
-            new Token.Create().card(
-                new Card.Create()
-                .number((String)data.get("card_id"))
-                .expirationMonth((int)data.get("exp_m"))
-                .expirationYear((int)data.get("exp_y"))
-                .securityCode((String)data.get("cvv"))
-                .name((String)data.get("name"))
-                .city((String)data.get("address"))
-                .postalCode((String)data.get("zip"))
-            )
-        );
-        return token;
+            System.out.print(data);
+            Token token = client.tokens().create(
+                new Token.Create().card(
+                    new Card.Create()
+                    .number(data.get("card_id").toString())
+                    .expirationMonth(Integer.parseInt(data.get("exp_m").toString()))
+                    .expirationYear(Integer.parseInt(data.get("exp_y").toString()))
+                    .securityCode(data.get("cvv").toString())
+                    .name(data.get("name").toString())
+                    .city(data.get("address").toString())
+                    .postalCode(data.get("zip").toString())
+                )
+            );
+        return token.getId();
+    public long delete(long id) {
+        orderRepository.deleteById(id);
+        return id;
+    }
     }
 
-    public void charge(long amount,Token token) throws ClientException, IOException, OmiseException {
+    public void charge(long amount,String token) throws ClientException, IOException, OmiseException {
         Client client = new Client(OMISE_OPUBLIC_KEY,OMISE_SECRET_KEY);
         Charge charge = client.charges().create(
             new Charge.Create()
-            .amount(amount).currency(TH_BAHT).card(token.getId()) //test
-        );
+            .amount(amount).currency(TH_BAHT).card(token)
+        ); //test
     }
 }
