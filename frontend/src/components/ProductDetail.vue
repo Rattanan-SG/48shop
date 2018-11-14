@@ -18,6 +18,7 @@
                         <div class="card-footer">
                             <router-link to="/Home"><div class="button">Back</div></router-link>
                             <router-link to="/ProductDetail"><div class="button" disabled>Buy now</div></router-link>
+                            <router-link to="/CategoryProduct"><div class="button">this</div></router-link>
                         </div>
                     </div>
                 </div>
@@ -44,66 +45,11 @@
             
             </div>
         </div>
-        <!-- popupAddress -->
-        <div class="modal-card" id="popUpAddress">
-            <div class="container" >
-                <div class="modal" id="page-modal2" v-bind:style="{ display: showAddress}">
-                    <div class="modal-background"></div>
-                    <section class="modal-card-body">
-                        <div class="modal-content" id="screenAddress">
-                            <header id ="head" class="modal-card-head">
-                                <p class="modal-card-title">ส่งสินค้าไปที่</p>
-                                <button class="delete"  aria-label="close" @click="closeAddressModal"></button>
-                            </header>
-                            <div class="columns is-multiline" style=" display: flex;" id="bodyPopUpAddress">
-                                <div class="field is-horizontal" id="addressbox">
-                                    <div class="field" >
-                                        <label class="label">ชื่อ - นามสกุล</label>
-                                        <div class="control">
-                                            <input id="Name" class="input" type="text" placeholder="Ex. กิตฮับ ขยันอัพจัง" style="width: 300px;">
-                                        </div>
-                                    </div>
-                                    <div class="field" style="margin-left: 60px;">
-                                        <label class="label">หมายเลขโทรศัพท์ (สำหรับติดต่อ)</label>
-                                        <div class="control">
-                                            <input id="telNo" class="input" type="text" placeholder="Ex. 062-0672928 " style="width: 300px;" >
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="field" id="addressbox-line2">
-                                    <label class="label">ที่อยู่ในการจัดส่ง</label>
-                                    <div class="control">
-                                        <textarea class="textarea" id="address" placeholder="Ex. เช่น 112/44 ตึกหอสมุด ด้านใน KMUTT ถนนสุขสบายดี ตำบลมะละกอ" style="height: 100px; width: 300px;"></textarea>
-                                    </div>
-                                </div>
-                                <div class="field" style="margin-left: 400px; margin-top: 100px;">
-                                    <label class="label">จังหวัด</label>
-                                    <div class="control">
-                                        <input id="province" class="input" type="text" placeholder="Ex. กรุงเทพมหานคร " style="width: 300px; height: 50px;">
-                                    </div>
-                                </div>
-                                <div class="field" style="margin-left: 400px; margin-bottom: 2000px;">
-                                    <label class="label">หมายเลขไปรษณีย์</label>
-                                    <div class="control">
-                                        <input id="postcode" class="input" type="text" placeholder="Ex. 10140 " style="width: 300px; height: 50px;">
-                                    </div>
-                                </div>          
-                            </div>
-                            <div class="field is-grouped" id="buttonAddress">
-                                <footer id= "footer" class="modal-card-foot" >
-                                    <button class="button" style="width: 100px;">ยกเลิก</button>
-                                    <button class="button is-success" style="width: 100px; margin-left: 10px;">บันทึก</button>
-                                </footer>
-                            </div>
-                        </div>
-                    </section> 
-                </div>
-            </div>
-        </div>
         <!-- popup Cradit -->
+
         <div class="modal-card" id="popUpCradit">
             <div class="container" >
-                <div class="modal" id="page-modal" v-bind:style="{display: showCredit}">
+                <div class="modal" id="page-modal" v-bind:style="{ display: showCredit}">
                     <div class="modal-background"></div>
                     <section class="modal-card-body">
                         <div class="modal-content" id="screen">
@@ -118,7 +64,7 @@
                                     <label> <img src="../assets/mastercard.svg" width="20" height="10" style="  margin-left: 10px;"></label>
                                 </div>
                                 <!-- form start -->
-                                <form>
+                                <form v-on:submit.prevent="setCreditCard">
                                     <div class="control">
                                         <input class="input" type="text" placeholder="Ex. 1234567890123456"
                                         v-model="credit.id">
@@ -175,8 +121,8 @@
                                     </div>
                                     <div class="column is-11 is-offset-1">
                                         <footer id= "footer" class="modal-card-foot" >
-                                            <button class="button" @click="closeCreditModal">ยกเลิก</button>
-                                            <button class="button is-success" @click.prevent="setCreditCard">บันทึก</button>
+                                            <button class="button ">ยกเลิก</button>
+                                            <button type="submit" class="button is-success">บันทึก</button>
                                         </footer>
                                     </div>
                                 </form>
@@ -186,7 +132,64 @@
                     </section>
                 </div>
             </div>
-        </div>    
+        </div>
+
+            <!-- popupAddress -->
+        <div class="modal-card" id="popUpAddress">
+            <div class="container" >
+                <div class="modal" id="page-modal2" v-bind:style="{ display: showAddress}">
+                    <div class="modal-background"></div>
+                    <section class="modal-card-body">
+                        <div class="modal-content" id="screenAddress">
+                            <header id ="head" class="modal-card-head">
+                                <p class="modal-card-title">ส่งสินค้าไปที่</p>
+                                <button class="delete"  aria-label="close" @click="closeAddressModal"></button>
+                            </header>
+                            <div class="columns is-multiline" style=" display: flex;" id="bodyPopUpAddress">
+                                <div class="field is-horizontal" id="addressbox">
+                                    <div class="field" >
+                                        <label class="label">ชื่อ - นามสกุล</label>
+                                        <div class="control">
+                                            <input id="Name" class="input" type="text" placeholder="Ex. กิตฮับ ขยันอัพจัง" style="width: 300px;">
+                                        </div>
+                                    </div>
+                                    <div class="field" style="margin-left: 60px;">
+                                        <label class="label">หมายเลขโทรศัพท์ (สำหรับติดต่อ)</label>
+                                        <div class="control">
+                                            <input id="telNo" class="input" type="text" placeholder="Ex. 062-0672928 " style="width: 300px;" >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="field" id="addressbox-line2">
+                                    <label class="label">ที่อยู่ในการจัดส่ง</label>
+                                    <div class="control">
+                                        <textarea class="textarea" id="address" placeholder="Ex. เช่น 112/44 ตึกหอสมุด ด้านใน KMUTT ถนนสุขสบายดี ตำบลมะละกอ" style="height: 100px; width: 300px;"></textarea>
+                                    </div>
+                                </div>
+                                <div class="field" style="margin-left: 400px; margin-top: 100px;">
+                                    <label class="label">จังหวัด</label>
+                                    <div class="control">
+                                        <input id="province" class="input" type="text" placeholder="Ex. กรุงเทพมหานคร " style="width: 300px; height: 50px;">
+                                    </div>
+                                </div>
+                                <div class="field" style="margin-left: 400px; margin-bottom: 2000px;">
+                                    <label class="label">หมายเลขไปรษณีย์</label>
+                                    <div class="control">
+                                        <input id="postcode" class="input" type="text" placeholder="Ex. 10140 " style="width: 300px; height: 50px;">
+                                    </div>
+                                </div>          
+                            </div>
+                            <div class="field is-grouped" id="buttonAddress">
+                                <footer id= "footer" class="modal-card-foot" >
+                                    <button class="button" style="width: 100px;">ยกเลิก</button>
+                                    <button class="button is-success" style="width: 100px; margin-left: 10px;">บันทึก</button>
+                                </footer>
+                            </div>
+                        </div>
+                    </section> 
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -202,7 +205,6 @@ export default {
             msg: 'This is Detail page',
             showCredit: '',
             showAddress: '',
-            hasCredit: false,
             credit: {
                 id: '',
                 exp_m: '',
@@ -215,20 +217,17 @@ export default {
         }
     },
     methods:{
-        showAddressModal: function() {
-            this.showAddress = 'block';
-        },
-        closeAddressModal: function() {
-            this.showAddress = '';
-        },
         showCreditModal: function() {
             this.showCredit = 'block';
         },
         closeCreditModal: function() {
             this.showCredit = '';
         },
-        setAddress: function () {
-
+        showAddressModal: function() {
+            this.showAddress = 'block';
+        },
+        closeAddressModal: function() {
+            this.showAddress = '';
         },
         setCreditCard: function() {
             // for tesing
@@ -245,14 +244,8 @@ export default {
                 zip: this.credit.zip
             })
             .then(response => {
-                console.log(response);
-                this.hasCredit = true;
-                this.showCredit = '';
-
+                console.log(response)
             })
-        },
-        editCreditCard: function() {
-            this.showCreditModal();
         }
     }
 }
@@ -364,22 +357,18 @@ nav {
   font-size: 9pt;
   font-weight: 100;
 }
-#number {
+#number{
     height: 9px;
     margin-right: 70px;
     margin-top: 10px;
 }
-#head {
+#head{
     border-style: none;
     margin-top: 20px;
 }
-#footer {
+#footer{
     margin-left: 20px;
     background-color:white; 
     border-style: none;
-}
-
-#small-button {
-    margin-left: 1%;
 }
 </style>

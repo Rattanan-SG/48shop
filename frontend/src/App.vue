@@ -4,17 +4,13 @@
       <div class="container" id="nav-box">
         <div class="navbar-brand">
           <a class="navbar-item">
-            <router-link to="/Home">
-              <img src="./assets/logo.png" width="200" height="100">
-            </router-link>
+            <img src="./assets/logo.png" width="200" height="100">
           </a>
         </div>
-        <div id="navbarBasicExample" class="navbar-menu">  
+        <div id="navbarBasicExample" class="navbar-menu">
           <div class="navbar-start">
             <a class="navbar-item">
-                <router-link to="/Home">
-                  Home
-                </router-link>
+              Home
             </a>
           </div>
           <div class="navbar-end">
@@ -35,58 +31,42 @@
       <div class="field is-grouped" id="CategoryBar">
           <nav class="level" id="bar">
             <p class="level-item has-text-centered">
-              <router-link to="/CategoryProduct">
-                เสื้อผ้าและแฟชั่น
-              </router-link>
+              เสื้อผ้าและแฟชั่น
             </p>
           </nav>
           <nav class="level" id="bar">
             <p class="level-item has-text-centered">
-              <router-link to="/CategoryProduct">
-                สุขภาพและความงาม
-              </router-link>
+              สุขภาพและความงาม
             </p>
           </nav>
           <nav class="level" id="bar">
             <p class="level-item has-text-centered">
-              <router-link to="/CategoryProduct">
-                อุปกรณ์ทำครัว
-              </router-link>
+              อุปกรณ์ทำครัว
             </p>
           </nav>
           <nav class="level" id="bar">
             <p class="level-item has-text-centered">
-              <router-link to="/CategoryProduct">
-                บ้านและไลฟ์สไตล์
-              </router-link>
+              บ้านและไลฟ์สไตล์
             </p>
           </nav>
           <nav class="level" id="bar">
             <p class="level-item has-text-centered">
-              <router-link to="/CategoryProduct">
-                เครื่องใช้ไฟฟ้าในบ้าน
-              </router-link>
+              เครื่องใช้ไฟฟ้าในบ้าน
             </p>
           </nav>
           <nav class="level" id="bar">
             <p class="level-item has-text-centered">
-              <router-link to="/CategoryProduct">
-                อุปกรณ์อิเล็กทรอนิกส์
-              </router-link>
+             อุปกรณ์อิเล็กทรอนิกส์
             </p>
           </nav>
           <nav class="level" id="bar">
             <p class="level-item has-text-centered">
-              <router-link to="/CategoryProduct">
-                อุปกรณ์กีฬา
-              </router-link>
+              อุปกรณ์กีฬา
             </p>
           </nav>
           <nav class="level" id="bar">
             <p class="level-item has-text-centered" style=" margin-bottom:18px;">
-              <router-link to="/CategoryProduct">
-                อุปกรณ์ยานยนต์
-              </router-link>
+              อุปกรณ์ยานยนต์
             </p>
           </nav>
       </div>
