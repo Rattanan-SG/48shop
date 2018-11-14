@@ -30,7 +30,9 @@
                 <p>ส่งสินค้าไปที่</p>
                 <a @click="showAddressModal">+ ใส่ที่อยู่</a>
                 <br><br>
-                <p>ชำระเงินด้วย</p>
+                <p>ชำระเงินด้วย
+                    <button class="button is-small is-rounded" id="small-button" @click="editCreditCard">เปลี่ยนบัตร</button>
+                </p>
                 <template v-if="hasCredit">
                     {{credit.id}}
                 </template>
@@ -244,6 +246,9 @@ export default {
                 this.hasCredit = true;
                 this.showCredit = '';
             })
+        },
+        editCreditCard: function() {
+            this.showCreditModal();
         }
     }
 }
@@ -360,18 +365,22 @@ nav {
   font-size: 9pt;
   font-weight: 100;
 }
-#number{
+#number {
     height: 9px;
     margin-right: 70px;
     margin-top: 10px;
 }
-#head{
+#head {
     border-style: none;
     margin-top: 20px;
 }
-#footer{
+#footer {
     margin-left: 20px;
     background-color:white; 
     border-style: none;
+}
+
+#small-button {
+    margin-left: 2%;
 }
 </style>
