@@ -21,10 +21,13 @@ public class UserProfile implements Serializable {
     private String lastname;
 
     private String facebookToken;
-    @NotBlank
+
     private String omiseToken;
     @NotBlank
     private String telNumber;
+
+    public UserProfile() {
+    }
 
     public long getId() {
         return id;
