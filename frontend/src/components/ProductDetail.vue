@@ -25,10 +25,18 @@
         </div>
         <div class="navbar is-fixed-bottom" id="nav-bot">
             <div class="container" id="nav-bot-box">
+                <p>สินค้า: sdfsdfsdf</p>
+                <br>
                 <p>ส่งสินค้าไปที่</p>
                 <a @click="showAddressModal">+ ใส่ที่อยู่</a>
-                <p>ชำระเงินด้วย</p>  
-                <a @click="showCreditModal">+ ใส่บัตรเครดิต</a>
+                <br><br>
+                <p>ชำระเงินด้วย</p>
+                <template v-if="hasCredit">
+                    {{credit.id}}
+                </template>
+                <template v-else>
+                    <a @click="showCreditModal">+ ใส่บัตรเครดิต</a>
+                </template>   
             </div>
         </div>
         <!-- popupAddress -->
@@ -189,6 +197,7 @@ export default {
             msg: 'This is Detail page',
             showCredit: '',
             showAddress: '',
+            hasCredit: false,
             credit: {
                 id: '',
                 exp_m: '',
@@ -232,8 +241,8 @@ export default {
             })
             .then(response => {
                 console.log(response);
+                this.hasCredit = true;
                 this.showCredit = '';
-
             })
         }
     }
@@ -249,6 +258,7 @@ export default {
 }
 
 #nav-bot-box {
+    margin-top: 17px;
     width: 1000px;
 }
 
