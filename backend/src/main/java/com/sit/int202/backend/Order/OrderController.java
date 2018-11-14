@@ -59,7 +59,7 @@ public class OrderController {
 
     @PostMapping("/Charge") //for one time payment
     public void charge(@RequestBody LinkedHashMap payment) throws ClientException, IOException, OmiseException{
-        String token = orderService.getToken(payment);
+        String token = orderService.getToken(payment).get("token").toString();
         if(payment.get("total_price") != null){
             long price = Long.parseLong(payment.get("total_price").toString()); //use this when we has totalPrice from front-end
         }
@@ -67,15 +67,8 @@ public class OrderController {
     }
     
     @PostMapping("/creditcard") //get token
-    public String creditcard(@RequestBody LinkedHashMap payment) throws ClientException, IOException, OmiseException{
-        String token;
-        try{
-            token =  orderService.getToken(payment);
-            System.out.println(token);
-        }catch(OmiseException o){
-            System.out.println(o.getMessage());
-            return o.getMessage();
-        }
-        return "card availiable";
+    public LinkedHashMap creditcard(@RequestBody LinkedHashMap payment) throws ClientException, IOException, OmiseException{
+        LinkedHashMap token =  orderService.getToken(payment);
+        return token;
     }
 }

@@ -50,9 +50,11 @@ public class OrderService {
         return id;
     }
     
-    public String getToken(LinkedHashMap data) throws ClientException, IOException, OmiseException{
+    public LinkedHashMap getToken(LinkedHashMap data) throws ClientException, IOException, OmiseException{
         Client client = new Client(OMISE_OPUBLIC_KEY,OMISE_SECRET_KEY);
-            System.out.print(data);
+        LinkedHashMap<String,String> tokenData = new LinkedHashMap<>();
+        System.out.print(data);
+        try{
             Token token = client.tokens().create(
                 new Token.Create().card(
                     new Card.Create()
@@ -65,7 +67,13 @@ public class OrderService {
                     .postalCode(data.get("zip").toString())
                 )
             );
-        return token.getId();
+            tokenData.put("token",token.getId());
+            tokenData.put("message","availiable card");
+        }catch(OmiseException o){
+            tokenData.put("token","null");
+            tokenData.put("message",o.getMessage());
+        }
+        return tokenData;
     }
 
     public void charge(long amount,String token) throws ClientException, IOException, OmiseException {
