@@ -44,7 +44,11 @@ public class OrderService {
     public Order save(Order order){
         return orderRepository.save(order);
     }
-
+    
+    public long delete(long id) {
+        orderRepository.deleteById(id);
+        return id;
+    }
     
     public String getToken(LinkedHashMap data) throws ClientException, IOException, OmiseException{
         Client client = new Client(OMISE_OPUBLIC_KEY,OMISE_SECRET_KEY);
@@ -62,10 +66,6 @@ public class OrderService {
                 )
             );
         return token.getId();
-    public long delete(long id) {
-        orderRepository.deleteById(id);
-        return id;
-    }
     }
 
     public void charge(long amount,String token) throws ClientException, IOException, OmiseException {
