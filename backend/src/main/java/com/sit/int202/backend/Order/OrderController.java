@@ -27,6 +27,7 @@ import co.omise.models.OmiseException;
 import co.omise.models.Token;
 
 @RestController
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class OrderController {
 
     @Autowired
