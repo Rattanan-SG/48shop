@@ -30,15 +30,6 @@ public class ProductCategory implements Serializable {
     @Column(name = "name", nullable = false)
     private String categoryName;
 
-    @OneToMany(fetch = FetchType.LAZY,
-    cascade = {
-        CascadeType.PERSIST,
-        CascadeType.MERGE
-    },
-    mappedBy = "product_categories")
-    @JsonIgnore
-    private Set<Product> product = new HashSet<>();
-
     public ProductCategory() {
 
     }
