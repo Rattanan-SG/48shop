@@ -51,6 +51,8 @@
                     <div class="modal-background"></div>
                     <section class="modal-card-body">
                         <div class="modal-content" id="screenAddress">
+                            <!-- Address Form start here-->
+                            <form>
                             <header id ="head" class="modal-card-head">
                                 <p class="modal-card-title">ส่งสินค้าไปที่</p>
                                 <button class="delete"  aria-label="close" @click="closeAddressModal"></button>
@@ -60,41 +62,47 @@
                                     <div class="field" >
                                         <label class="label">ชื่อ - นามสกุล</label>
                                         <div class="control">
-                                            <input id="Name" class="input" type="text" placeholder="Ex. กิตฮับ ขยันอัพจัง" style="width: 300px;">
+                                            <input class="input" type="text" placeholder="Ex. กิตฮับ ขยันอัพจัง" style="width: 300px;"
+                                            v-model="address.receiver_name">
                                         </div>
                                     </div>
                                     <div class="field" style="margin-left: 60px;">
                                         <label class="label">หมายเลขโทรศัพท์ (สำหรับติดต่อ)</label>
                                         <div class="control">
-                                            <input id="telNo" class="input" type="text" placeholder="Ex. 062-0672928 " style="width: 300px;" >
+                                            <input class="input" type="text" placeholder="Ex. 062-0672928 " style="width: 300px;" 
+                                            v-model="address.tel_no">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="field" id="addressbox-line2">
                                     <label class="label">ที่อยู่ในการจัดส่ง</label>
                                     <div class="control">
-                                        <textarea class="textarea" id="address" placeholder="Ex. เช่น 112/44 ตึกหอสมุด ด้านใน KMUTT ถนนสุขสบายดี ตำบลมะละกอ" style="height: 100px; width: 300px;"></textarea>
+                                        <textarea class="textarea" id="address" placeholder="Ex. เช่น 112/44 ตึกหอสมุด ด้านใน KMUTT ถนนสุขสบายดี ตำบลมะละกอ" style="height: 100px; width: 300px;"
+                                        v-model="address.receiver_address"></textarea>
                                     </div>
                                 </div>
                                 <div class="field" style="margin-left: 400px; margin-top: 100px;">
                                     <label class="label">จังหวัด</label>
                                     <div class="control">
-                                        <input id="province" class="input" type="text" placeholder="Ex. กรุงเทพมหานคร " style="width: 300px; height: 50px;">
+                                        <input id="province" class="input" type="text" placeholder="Ex. กรุงเทพมหานคร " style="width: 300px; height: 50px;"
+                                        v-model="address.receiver_province">
                                     </div>
                                 </div>
                                 <div class="field" style="margin-left: 400px; margin-bottom: 2000px;">
                                     <label class="label">หมายเลขไปรษณีย์</label>
                                     <div class="control">
-                                        <input id="postcode" class="input" type="text" placeholder="Ex. 10140 " style="width: 300px; height: 50px;">
+                                        <input id="postcode" class="input" type="text" placeholder="Ex. 10140 " style="width: 300px; height: 50px;"
+                                        v-model="address.receiver_postcode">
                                     </div>
                                 </div>          
                             </div>
                             <div class="field is-grouped" id="buttonAddress">
                                 <footer id= "footer" class="modal-card-foot" >
-                                    <button class="button" style="width: 100px;">ยกเลิก</button>
-                                    <button class="button is-success" style="width: 100px; margin-left: 10px;">บันทึก</button>
+                                    <button class="button" @click="closeAddressModal" style="width: 100px;">ยกเลิก</button>
+                                    <button class="button is-success" @click.prevent="setAddress" style="width: 100px; margin-left: 10px;">บันทึก</button>
                                 </footer>
                             </div>
+                            </form>
                         </div>
                     </section> 
                 </div>
@@ -210,8 +218,18 @@ export default {
                 cvv: '',
                 name: '',
                 address: '',
-                zip: ''
+                zip: '',
+            
+            },
+            address: {
+                receiver_name: '',
+                tel_no: '',
+                receiver_address: '',
+                receiver_province: '',
+                receiver_postcode: ''
+            
             }
+            
         }
     },
     methods:{
@@ -228,8 +246,25 @@ export default {
             this.showCredit = '';
         },
         setAddress: function () {
+            console.log(this.address.receiver_name + " " + 
+                        this.address.receiver_address + " " + 
+                        this.address.receiver_province + " " + 
+                        this.address.receiver_postcode + " " + 
+                        this.address.tel_no);
+            axios.post(url, {
+                receiver_name: this.address.receiver_name,
+                tel_no: this.address.tel_no,
+                receiver_address: this.address.receiver_address,
+                receiver_province: this.address.receiver_province,
+                receiver_postcode: this.address.receiver_postcode
+            })
+            .then(response => {
+                console.log(response);
+                this.showAddress = '';
+            })
 
         },
+
         setCreditCard: function() {
             // for tesing
             console.log(this.credit.id + "\n" + this.credit.exp_m + "\n" + this.credit.exp_y + "\n" + this.credit.cvv
