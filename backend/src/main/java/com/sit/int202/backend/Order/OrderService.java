@@ -69,8 +69,6 @@ public class OrderService {
                     .expirationYear(Integer.parseInt(data.get("exp_y").toString()))
                     .securityCode(data.get("cvv").toString())
                     .name(data.get("name").toString())
-                    .city(data.get("address").toString())
-                    .postalCode(data.get("zip").toString())
                 )
             );
             tokenData.put("token",token.getId());
