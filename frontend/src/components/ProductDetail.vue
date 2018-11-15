@@ -46,7 +46,9 @@
                     :disabled="!hasCredit" style="margin-top: 30px;  margin-left: 30px;">เปลี่ยนบัตร</button>
                 </div>
                 <template v-if="hasCredit">
-                    {{credit.id}}
+                    {{  
+                        "XXXX XXXX XXXX X" +credit.id.charAt(13)+credit.id.charAt(14)+credit.id.charAt(15)
+                    }}
                 </template>
                 <template v-else>
                     <a @click="showCreditModal">+ ใส่บัตรเครดิต</a>
@@ -296,11 +298,16 @@ export default {
                 console.log(response);
                 this.hasCredit = true;
                 this.showCredit = '';
-
+                censorCreditCard;
             })
         },
         editCreditCard: function() {
             this.showCreditModal();
+        },
+
+        censorCreditCard: function() {
+            credit.id.toString();
+            
         }
     }
 }
