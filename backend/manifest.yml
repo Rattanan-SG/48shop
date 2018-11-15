@@ -1,0 +1,5 @@
+applications:
+ - name: 48shop-backend
+   memory: 256MB
+   path: target/backend-0.0.1-SNAPSHOT.jar
+   
