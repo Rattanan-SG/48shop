@@ -40,7 +40,7 @@ public class Product implements Serializable {
 
     private String detail;
 
-    private String img_album_link;
+    private String img_url;
 
     @NotNull
     private double price;
@@ -87,12 +87,12 @@ public class Product implements Serializable {
         this.detail = detail;
     }
 
-    public String getImg_album_link() {
-        return img_album_link;
+    public String getImg_url() {
+        return img_url;
     }
 
-    public void setImg_album_link(String img_album_link) {
-        this.img_album_link = img_album_link;
+    public void setImg_url(String img_url) {
+        this.img_url = img_url;
     }
 
     public double getPrice() {
