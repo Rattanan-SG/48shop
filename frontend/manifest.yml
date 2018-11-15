@@ -1,0 +1,5 @@
+applications:
+ - name: 48shop-frontend
+   memory: 256MB
+   path: .
+   buildpack: staticfile_buildpack
