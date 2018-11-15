@@ -28,7 +28,18 @@
             <ol type="none" > 
                 <p style="margin-top: 10px;">สินค้า: sdfsdfsdf</p>
                  <p style="margin-top: 10px;">ส่งสินค้าไปที่</p>
-                <a @click="showAddressModal" style="margin-top: 10px; ">+ ใส่ที่อยู่</a>
+                 <template v-if="addresDetail">
+                    {{
+                        address.receiver_name + " " + 
+                        address.receiver_address + " " + 
+                        address.receiver_province + " " + 
+                        address.receiver_postcode + " " + 
+                        address.tel_no
+                    }}
+                </template>
+                <template v-else>
+                    <a @click="showAddressModal" style="margin-top: 10px; ">+ ใส่ที่อยู่</a>
+                </template>  
                 <div class="field is-grouped " style="  width: 500px; height: 45px; margin-top: 10px;">
                 <p style="margin-top: 30px;"> ชำระเงินด้วย </p>
                  <button class="button is-small is-rounded" id="small-button" @click="editCreditCard"
@@ -47,7 +58,7 @@
         <!-- popupAddress -->
         <div class="modal-card" id="popUpAddress">
             <div class="container" >
-                <div class="modal" id="page-modal2" v-bind:style="{ display: showAddress}">
+                <div class="modal" id="page-modal2" v-bind:style="{display: showAddress}">
                     <div class="modal-background"></div>
                     <section class="modal-card-body">
                         <div class="modal-content" id="screenAddress">
@@ -210,6 +221,7 @@ export default {
             msg: 'This is Detail page',
             showCredit: '',
             showAddress: '',
+            addresDetail: false,
             hasCredit: false,
             credit: {
                 id: '',
@@ -260,6 +272,7 @@ export default {
             })
             .then(response => {
                 console.log(response);
+                this.addresDetail = true;
                 this.showAddress = '';
             })
 
