@@ -1,143 +1,62 @@
 <template>
   <div id="CategoryProduct">
     <div class="container" id="Category-box">
-        <div class="field is-grouped" id="field-box">
-            <div class="card" id="items">
-                <div class="card-image">
-                    <figure class="image is-4by3">
-                        <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image">
-                    </figure>
-                </div>
-                <div class="card-content">
-                     <div class="content">
-                        <p>test</p>
-                     </div>
-                </div>
-            </div>
-            <div class="card" id="items">
-                <div class="card-image">
-                    <figure class="image is-4by3">
-                        <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image">
-                    </figure>
-                </div>
-                <div class="card-content">
-                     <div class="content">
-                        <p>test</p>
-                     </div>
-                </div>
-            </div>
-            <div class="card" id="items">
-                <div class="card-image">
-                    <figure class="image is-4by3">
-                        <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image">
-                    </figure>
-                </div>
-                <div class="card-content">
-                     <div class="content">
-                        <p>test</p>
-                     </div>
-                </div>
-            </div>
-            <div class="card" id="items">
-                <div class="card-image">
-                    <figure class="image is-4by3">
-                        <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image">
-                    </figure>
-                </div>
-                <div class="card-content">
-                     <div class="content">
-                        <p>test</p>
-                     </div>
-                </div>
-            </div>
-            <div class="card" id="items">
-                <div class="card-image">
-                    <figure class="image is-4by3">
-                        <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image">
-                    </figure>
-                </div>
-                <div class="card-content">
-                     <div class="content">
-                        <p>test</p>
-                     </div>
-                </div>
-            </div>
-        </div>
-        <div class="field is-grouped" id="field-box">
-            <div class="card" id="items">
-                <div class="card-image">
-                    <figure class="image is-4by3">
-                        <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image">
-                    </figure>
-                </div>
-                <div class="card-content">
-                     <div class="content">
-                        <p>test</p>
-                     </div>
-                </div>
-            </div>
-            <div class="card" id="items">
-                <div class="card-image">
-                    <figure class="image is-4by3">
-                        <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image">
-                    </figure>
-                </div>
-                <div class="card-content">
-                     <div class="content">
-                        <p>test</p>
-                     </div>
-                </div>
-            </div>
-            <div class="card" id="items">
-                <div class="card-image">
-                    <figure class="image is-4by3">
-                        <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image">
-                    </figure>
-                </div>
-                <div class="card-content">
-                     <div class="content">
-                        <p>test</p>
-                     </div>
-                </div>
-            </div>
-            <div class="card" id="items">
-                <div class="card-image">
-                    <figure class="image is-4by3">
-                        <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image">
-                    </figure>
-                </div>
-                <div class="card-content">
-                     <div class="content">
-                        <p>test</p>
-                     </div>
-                </div>
-            </div>
-            <div class="card" id="items">
-                <div class="card-image">
-                    <figure class="image is-4by3">
-                        <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image">
-                    </figure>
-                </div>
-                <div class="card-content">
-                     <div class="content">
-                        <p>test</p>
-                     </div>
-                </div>
-            </div>
-        </div>
-        
+        <div class="field is-grouped" id="field-box" v-for="products in chunkedProducts" :key="products.id">
+            <!-- <div class="columns" v-for="products in chunkedProducts" :key="products.id">
+                <div class="column" v-for="product in products" :key="product.id"> -->
+                    <router-link to="/ProductDetail" v-for="product in products" :key="product.id">
+                        <div class="card" id="items" >
+                            <div class="card-image is-4by3">
+                            <img :src=product.image alt="Placeholder image" width="100" height="100">
+                            </div>
+                            <div class="card-content">
+                                {{product.name}}
+                            </div>
+                        </div>
+                    </router-link>
+                <!-- </div>
+            </div> -->
+        </div>    
     </div>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
+import chunk from 'chunk';
+
+const url = 'http://localhost:8080/products';
 export default {
   data () {
     return {
-      msg: 'หน้าแรก สำหรับแสดงสินค้า'
+      msg: 'หน้าแรก สำหรับแสดงสินค้า',
+      products: []
     }
-  }
-
+  },
+  methods: {
+    getAllProducts: function () {
+      axios.get(url)
+      .then(response => {
+          // console.log(response.data);
+          response.data.forEach(ele => {
+            this.products.push({
+              name: ele.name,
+              price: ele.price,
+              image: ele.img_url 
+            });
+          });
+      })
+    }
+  },
+  mounted () {
+    this.getAllProducts();
+    console.log(this.products);
+  },
+  computed: {
+        chunkedProducts: function() {
+            return chunk(this.products, 5)
+        }
+    }
 }
 </script>
 
