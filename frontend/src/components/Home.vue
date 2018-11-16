@@ -2,67 +2,69 @@
   <div class="hello">
     <div class="container" id="home-box">
       <h1>{{ msg }}</h1>
-        <carousel>
-          <carousel-slide>
-            <div class='carousel carousel-animated carousel-animate-slide' data-size="5">
-  <div class='carousel-container'>
-    <div class='carousel-item is-active'>
-      <figure class="image is-2by1"><img src="https://bulma.io/images/placeholders/640x320.png"></figure>
-    </div>
-    <div class='carousel-item'>
-      <figure class="image is-2by1"><img src="https://bulma.io/images/placeholders/640x320.png"></figure>
-    </div>
-    <div class='carousel-item'>
-      <figure class="image is-2by1"><img src="https://bulma.io/images/placeholders/640x320.png"></figure>
-    </div>
-    <div class='carousel-item'>
-      <figure class="image is-2by1"><img src="https://bulma.io/images/placeholders/640x320.png"></figure>
-    </div>
-    <div class='carousel-item'>
-      <figure class="image is-2by1"><img src="https://bulma.io/images/placeholders/640x320.png"></figure>
-    </div>
-    <div class='carousel-item'>
-      <figure class="image is-2by1"><img src="https://bulma.io/images/placeholders/640x320.png"></figure>
-    </div>
-    <div class='carousel-item'>
-      <figure class="image is-2by1"><img src="https://bulma.io/images/placeholders/640x320.png"></figure>
-    </div>
-  </div>
-  <div class="carousel-navigation is-centered">
-    <div class="carousel-nav-left">
-      <i class="fa fa-chevron-left" aria-hidden="true"></i>
-    </div>
-    <div class="carousel-nav-right">
-      <i class="fa fa-chevron-right" aria-hidden="true"></i>
-    </div>
-  </div>
-</div>
-          </carousel-slide>
-        </carousel>
-        
-    
+      <div class="columns">
+        <div class="column">
+          <router-link to="/ProductDetail">
+            <div class="card">
+              <div class="card-image is-4by3">
+                <img src="./../assets/logo.png" alt="Placeholder image">
+              </div>
+              <div class="card-content">
+                product name
+              </div>
+            </div>
+          </router-link>
+        </div>
+        <div class="column">
+          <router-link to="/ProductDetail">
+            <div class="card">
+              <div class="card-image is-4by3">
+                <img src="./../assets/logo.png" alt="Placeholder image">
+              </div>
+              <div class="card-content">
+                product name
+              </div>
+            </div>
+          </router-link>
+        </div>
+        <div class="column">
+          <router-link to="/ProductDetail">
+            <div class="card">
+              <div class="card-image is-4by3">
+                <img src="./../assets/logo.png" alt="Placeholder image">
+              </div>
+              <div class="card-content">
+                product name
+              </div>
+            </div>
+          </router-link>
+        </div>
+        <div class="column">
+          <router-link to="/ProductDetail">
+            <div class="card">
+              <div class="card-image is-4by3">
+                <img src="./../assets/logo.png" alt="Placeholder image">
+              </div>
+              <div class="card-content">
+                product name
+              </div>
+            </div>
+          </router-link>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import './../../node_modules/bulma/css/bulma.css';
-import Carousel from './carousel/Carousel';
-import CarouselSlide from './carousel/CarouselSlide';
-
-
 
 export default {
   name: 'Home',
   data () {
     return {
-      
       msg: 'หน้าแรก สำหรับแสดงสินค้า'
     }
-  },
-  components:{
-    Carousel,
-    CarouselSlide
   }
 }
 </script>
