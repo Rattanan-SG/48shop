@@ -119,8 +119,20 @@ export default {
   name: 'Home',
   data () {
     return {
-      msg: 'หน้าแรก สำหรับแสดงสินค้า'
+      msg: 'หน้าแรก สำหรับแสดงสินค้า',
+      activateTab: 1
     }
+  },
+  methods: {
+    getAllProduct: function () {
+      axios.get(url)
+      .then(response => {
+          console.log(response);
+      })
+    }
+  },
+  mounted () {
+    this.getAllProduct();
   }
 }
 </script>
