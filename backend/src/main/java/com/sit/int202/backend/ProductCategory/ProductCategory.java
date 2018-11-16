@@ -16,6 +16,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sit.int202.backend.Product.Product;
 
 @Entity
@@ -28,6 +29,7 @@ public class ProductCategory implements Serializable {
 
     @NotBlank
     @Column(name = "name", nullable = false)
+    @JsonProperty(value="name")
     private String categoryName;
 
     public ProductCategory() {
