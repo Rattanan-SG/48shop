@@ -120,13 +120,6 @@ html {
   height: 90px;
 }
 
-#home-box {
-  background: white;
-  width: 1000px;
-  min-height: 2000px;
-  margin-top: 13px;
-  box-shadow: 2px 10px grey;
-}
 /* Category */
 #bar{
   font-size: 14px;
