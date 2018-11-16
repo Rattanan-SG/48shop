@@ -111,4 +111,12 @@ public class Product implements Serializable {
         this.orders = orders;
     }
 
+    public ProductCategory getProductCategory() {
+        return this.productCategory;
+    }
+
+    public void setProductCategory(ProductCategory productCategory) {
+        this.productCategory = productCategory;
+    }
+
 }
