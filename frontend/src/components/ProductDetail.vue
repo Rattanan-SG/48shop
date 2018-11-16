@@ -23,12 +23,16 @@
                 </div>
             </div>
         </div>
-        <div class="navbar is-fixed-bottom" id="nav-bot">
+        <div class="navbar is-fixed-bottom" id="nav-bot" style="height: 250px">
             <div class="container" id="nav-box" >
             <ol type="none" > 
-                <p style="margin-top: 10px;">สินค้า: sdfsdfsdf</p>
-                 <p style="margin-top: 10px;">ส่งสินค้าไปที่</p>
-                 <template v-if="addresDetail">
+                <p style="margin-top: 5px;">สินค้า: sdfsdfsdf</p>
+                <div class="field is-grouped " style="  width: 500px; height: 45px; margin-top: 10px;">
+                <p style="margin-top: 10px;">ส่งสินค้าไปที่</p>
+                <button class="button is-small is-rounded" id="small-button" @click="editAddress"
+                    :disabled="!addresDetail" style="margin-top: 3px;  margin-left: 100px;">เปลี่ยนที่อยู่</button>
+                </div>
+                <template v-if="addresDetail">
                     {{
                         address.receiver_name + " " + 
                         address.receiver_address + " " + 
@@ -41,9 +45,9 @@
                     <a @click="showAddressModal" style="margin-top: 10px; ">+ ใส่ที่อยู่</a>
                 </template>  
                 <div class="field is-grouped " style="  width: 500px; height: 45px; margin-top: 10px;">
-                <p style="margin-top: 30px;"> ชำระเงินด้วย </p>
+                <p style="margin-top: 15px;"> ชำระเงินด้วย </p>
                  <button class="button is-small is-rounded" id="small-button" @click="editCreditCard"
-                    :disabled="!hasCredit" style="margin-top: 30px;  margin-left: 30px;">เปลี่ยนบัตร</button>
+                    :disabled="!hasCredit" style="margin-top: 10px;  margin-left: 100px;">เปลี่ยนบัตร</button>
                 </div>
                 <template v-if="hasCredit">
                     {{  
@@ -278,6 +282,10 @@ export default {
                 this.showAddress = '';
             })
 
+        },
+
+        editAddress: function() {
+            this.showAddressModal();
         },
 
         setCreditCard: function() {
