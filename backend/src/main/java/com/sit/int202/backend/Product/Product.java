@@ -41,6 +41,7 @@ public class Product implements Serializable {
     @Column(length = 4096)
     private String detail;
 
+    @Column(length = 512)
     private String img_url;
 
     @NotNull
