@@ -12,7 +12,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.CascadeType;
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
@@ -38,6 +38,7 @@ public class Product implements Serializable {
     @NotBlank
     private String name;
 
+    @Column(length = 4096)
     private String detail;
 
     private String img_url;
@@ -51,12 +52,7 @@ public class Product implements Serializable {
     @JsonIgnore
     private ProductCategory productCategory;
 
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {
-                CascadeType.PERSIST,
-                CascadeType.MERGE
-            },
-            mappedBy = "products")
+    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "products")
     @JsonIgnore
     private Set<Order> orders = new HashSet<>();
 
