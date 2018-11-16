@@ -49,9 +49,8 @@ public class Product implements Serializable {
     @NotNull
     private double price;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false )
     @JoinColumn(name = "product_category_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @JsonProperty(value="category")
     private ProductCategory productCategory;
