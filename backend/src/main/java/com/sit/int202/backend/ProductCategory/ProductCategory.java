@@ -2,6 +2,7 @@ package com.sit.int202.backend.ProductCategory;
 
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -16,6 +17,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sit.int202.backend.Product.Product;
 
@@ -31,6 +33,11 @@ public class ProductCategory implements Serializable {
     @Column(name = "name", nullable = false)
     @JsonProperty(value="name")
     private String categoryName;
+
+    @OneToMany(mappedBy = "productCategory", fetch = FetchType.LAZY)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @JsonIgnore
+    private Set<Product> products = new HashSet<>();
 
     public ProductCategory() {
 
@@ -51,5 +58,15 @@ public class ProductCategory implements Serializable {
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
     }
+
+    public Set<Product> getProducts() {
+        return this.products;
+    }
+
+    public void setProducts(Set<Product> products) {
+        this.products = products;
+    }
+
+
 
 }
