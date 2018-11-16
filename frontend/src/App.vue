@@ -2,33 +2,17 @@
   <div id="app">
     <nav class="navbar" id="nav-top" role="navigation" aria-label="main navigation">
       <div class="container" id="nav-box">
-        <div class="navbar-brand">
-          <a class="navbar-item">
-            <router-link to="/Home">
-              <img src="./assets/logo.png" width="200" height="100">
+        <router-link to="/Home">
+              <img src="./assets/vectorpaint.svg" width="200" height="100">
             </router-link>
-          </a>
-        </div>
         <div id="navbarBasicExample" class="navbar-menu">  
           <div class="navbar-start">
-            <a class="navbar-item">
-                <router-link to="/Home">
-                  Home
-                </router-link>
-            </a>
           </div>
-          <div class="navbar-end">
-            <div class="navbar-item">
-              <div class="buttons">
-                <a class="button is-primary">
-                  <strong>Sign up</strong>
-                </a>
-                <a class="button is-light">
-                  Log in
-                </a>
-              </div>
-            </div>
-          </div>
+          <dev class="level">
+               <button id="fb"> 
+                 <img src="./assets/facebook.svg" width="250"   >
+                </button>  
+          </dev>
         </div>
       </div>
     </nav>
@@ -117,7 +101,7 @@ html {
   width: 1000px;
 }
 #nav-top{
-  height: 90px;
+  height: 120px;
 }
 
 #home-box {
@@ -140,6 +124,12 @@ html {
   justify-content: center;
   border: 0.09em solid #E0E0E0;
   height: 40px;
+}
+#fb{
+  border:none;
+  outline: none;
+  margin-top: 20px;
+  
 }
 
 
