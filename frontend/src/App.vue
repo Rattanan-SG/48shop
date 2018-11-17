@@ -23,7 +23,7 @@
                 <a class="button is-primary">
                   <strong>Sign up</strong>
                 </a>
-                <a class="button is-light">
+                <a class="button is-light" @click="login">
                   Log in
                 </a>
               </div>
@@ -96,8 +96,22 @@
 </template>
 
 <script>
+import axios from 'axios';
+
+const url_login = `http://localhost:8080/login`;
 export default {
-  name: 'App'
+  name: 'App',
+  methods: {
+    getProductDetail: function() {
+        axios.get(url_login)
+        .then(response => {
+            console.log(response)
+        })
+    },
+    login: function () {
+      this.getProductDetail();
+    }
+  }
 }
 </script>
 
