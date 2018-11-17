@@ -1,6 +1,6 @@
 package com.sit.int202.backend.Order;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sit.int202.backend.Address.Address;
 import com.sit.int202.backend.Product.Product;
 import com.sit.int202.backend.UserProfile.UserProfile;
@@ -24,9 +24,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotBlank;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
+import javax.validation.constraints.NotNull;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -39,44 +37,38 @@ public class Order implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.MERGE)
     @JoinColumn(name = "user_profile_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private UserProfile userProfile;
 
-    @NotBlank
+    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.MERGE)
+    @JoinColumn(name = "start_location_id", nullable = false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private Address startLocation;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.MERGE)
+    @JoinColumn(name = "destination_location_id", nullable = false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private Address destination;
+
+    @NotNull
+    private int trackingId;
+
+    @NotNull
     private double totalPrice;
 
     private String method;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "start_location_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
-    private Address startLocation;
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "destination_location_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
-    private Address destination;
-
-    @NotBlank
-    private int trackingId;
-    
     private String omiseToken;
 
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {
-                CascadeType.PERSIST,
-                CascadeType.MERGE
-            })
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinTable(name = "order_has_products",
             joinColumns = {
                 @JoinColumn(name = "order_id")},
             inverseJoinColumns = {
                 @JoinColumn(name = "product_id")})
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Set<Product> products = new HashSet<>();
 
     @Column(nullable = false, updatable = false)
@@ -103,22 +95,6 @@ public class Order implements Serializable {
         this.userProfile = userProfile;
     }
 
-    public double getTotalPrice() {
-        return totalPrice;
-    }
-
-    public void setTotalPrice(double totalPrice) {
-        this.totalPrice = totalPrice;
-    }
-
-    public String getMethod() {
-        return method;
-    }
-
-    public void setMethod(String method) {
-        this.method = method;
-    }
-
     public Address getStartLocation() {
         return startLocation;
     }
@@ -141,6 +117,22 @@ public class Order implements Serializable {
 
     public void setTrackingId(int trackingId) {
         this.trackingId = trackingId;
+    }
+
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public String getMethod() {
+        return method;
+    }
+
+    public void setMethod(String method) {
+        this.method = method;
     }
 
     public String getOmiseToken() {
@@ -167,6 +159,4 @@ public class Order implements Serializable {
         this.createdAt = createdAt;
     }
 
-    
-    
 }
