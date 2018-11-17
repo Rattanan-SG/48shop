@@ -18,7 +18,7 @@ public class FacebookController {
     @Autowired
     FacebookService facebookService;
 
-    @GetMapping("/login")
+    @GetMapping("/")
 
     public LinkedHashMap getInfo(OAuth2Authentication authentication){
         OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) authentication.getDetails();

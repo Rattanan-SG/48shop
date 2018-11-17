@@ -6,12 +6,11 @@ import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.cors.CorsConfiguration;
 
 @SpringBootApplication
 @EnableJpaAuditing
 @EnableOAuth2Sso
-@CrossOrigin(origins="*",maxAge=3600)
 
 public class BackendApplication extends WebSecurityConfigurerAdapter{
 
@@ -21,10 +20,17 @@ public class BackendApplication extends WebSecurityConfigurerAdapter{
 
 	@Override
     protected void configure (HttpSecurity http) throws Exception {
+        final CorsConfiguration config = new CorsConfiguration();
+        config.addAllowedOrigin("*");
+        config.addAllowedHeader("*");
+        config.addAllowedMethod("GET");
+        config.addAllowedMethod("PUT");
+        config.addAllowedMethod("POST");
+
         http
         .csrf().disable().antMatcher("/**")
         .authorizeRequests()
-			.antMatchers("/creditcard").authenticated()
+			.antMatchers("/creditcard","/login").authenticated()
 			.anyRequest().permitAll()
 
             .and().logout().logoutSuccessUrl("/").permitAll();
