@@ -1,27 +1,29 @@
 <template>
     <div class="ProductDetail">
-        <div class="container" id="home-box">
-            <h1>{{ msg }}</h1>
+        <div class="container" id="product-box">
+            <h1>{{product.id}}</h1>
             <div class="columns">
                 <div class="column is-one-fifth">
-                    <img src="./../assets/item1.png" alt="Placeholder image">
-                    item1
+                    <img :src=product.image alt="Placeholder image">
                 </div>
                 <div class="column">
                     <div class="card">
                         <div class="card-header">
-                            ITEM1
+                            {{product.name}}
                         </div>
                         <div class="card-content">
-                            kgkdfghdfjghdglghdfd;gjsg
+                            {{product.price}}
                         </div>
                         <div class="card-footer">
-                            <router-link to="/Home"><div class="button">Back</div></router-link>
-                            <router-link to="/ProductDetail"><div class="button" disabled>Buy now</div></router-link>
+                            <router-link to="/product"><div class="button" disabled>Buy now</div></router-link>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="container" id="detail-box">
+            <p>รายละเอียดสินค้า</p>
+            {{product.detail}}
         </div>
         <div class="navbar is-fixed-bottom" id="nav-bot" style="height: 250px">
             <div class="container" id="nav-box" >
@@ -218,14 +220,24 @@
 <script>
 import './../../node_modules/bulma/css/bulma.css';
 import axios from 'axios';
+import chunk from 'chunk';
 
-// const url = `http://localhost:8080/creditcard`;
-const url = `http://jsonplaceholder.typicode.com/posts`;
+const url_test = `http://jsonplaceholder.typicode.com/posts`;
+const url_product = `http://localhost:8080/product/`;
+const url_credit = `http://localhost:8080/creditcard`;
+
 export default {
     name: 'ProductDetail',
     data () {
         return {
             msg: 'This is Detail page',
+            product: {
+                id: 0,
+                name: '',
+                price: '',
+                image: '',
+                detail: ''
+            },
             showCredit: '',
             showAddress: '',
             addresDetail: false,
@@ -248,10 +260,25 @@ export default {
                 receiver_postcode: ''
             
             }
-            
         }
     },
-    methods:{
+    created() {
+        this.product.id = this.$route.params.id;
+    },
+    mounted() {
+        this.getProductDetail();
+    },
+    methods: {
+        getProductDetail: function() {
+            axios.get(url_product + this.product.id)
+            .then(response => {
+                console.log(response.data)
+                this.product.name = response.data.name,
+                this.product.price = response.data.price,
+                this.product.image = response.data.img_url,
+                this.product.detail = response.data.detail 
+            })
+        },
         showAddressModal: function() {
             this.showAddress = 'block';
         },
@@ -294,7 +321,7 @@ export default {
             console.log(this.credit.id + "\n" + this.credit.exp_m + "\n" + this.credit.exp_y + "\n" + this.credit.cvv
              + "\n" + this.credit.name + "\n" + this.credit.address + "\n" + this.credit.zip);
             //  
-            axios.post(url, {
+            axios.post(url_credit, {
                 card_id: this.credit.id,
                 exp_m: this.credit.exp_m,
                 exp_y: this.credit.exp_y,
@@ -325,6 +352,23 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 
+#product-box {
+    margin-bottom: 13px;
+    background: white;
+    width: 1000px;
+    min-height: 300px;
+}
+
+#detail-box {
+    background: white;
+    width: 1000px;
+    min-height: 500px;
+    margin-top: 13px;
+}
+
+html {
+  background: #f2f2f2;
+}
 
 #nav-bot {
     height: 240px;
@@ -337,17 +381,6 @@ export default {
 #nav-box {
   width: 1000px;
   margin-top: 20px;
-}
-
-#home-box {
-  background: white;
-  width: 1000px;
-  min-height: 2000px;
-  margin-top: 13px;
-  box-shadow: 2px 10px grey;
-}
-html {
-  background: #f2f2f2;
 }
 
 nav {
@@ -366,14 +399,6 @@ nav {
 }
 
 /* popup */
-#home-box {
-  background: white;
-  width: 1000px;
-  min-height: 2000px;
-  margin-top: 13px;
-  box-shadow: 2px 10px grey;
-}
-
 #bodyPopUp {
   justify-content: center;
   background: white;
