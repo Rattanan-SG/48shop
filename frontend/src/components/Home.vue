@@ -23,17 +23,25 @@
           <div class="card-carousel-wrapper" id="slide">
               <div class="card-carousel--nav__left" @click="moveCarousel(-1)" :disabled="atHeadOfList"></div>
               <div class="card-carousel">
-              <div class="card-carousel--overflow-container">
-                  <div class="card-carousel-cards" :style="{ transform: 'translateX' + '(' + currentOffset + 'px' + ')'}">
-                      <div class="card-carousel--card" v-for="product in products" :key="product.id">
-                          <img :src=product.image alt="Placeholder image" width="100" height="100">
-                          <div class="card-carousel--card--footer">
-                          <p>{{ product.name }}</p>
-                          <p>{{ product.price }}</p>
+                <div class="card-carousel--overflow-container">
+                    <div class="card-carousel-cards" :style="{ transform: 'translateX' + '(' + currentOffset + 'px' + ')'}">
+                        <div class="card" id="item" v-for="product in products" :key="product.id">
+                          <div class="card-image">
+                            <figure class="image is-4by3">
+                              <img :src=product.image alt="Placeholder image">
+                            </figure>  
                           </div>
-                      </div>
-                  </div>
-              </div>
+                          <div class="card-content">
+                            <div class="content">
+                              <p>{{ product.name }}</p>
+                            </div>
+                            <div class="content">
+                              <p>{{ product.price }}</p>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
               </div>
               <div class="card-carousel--nav__right" @click="moveCarousel(1)" :disabled="atEndOfList"></div>
           </div>
