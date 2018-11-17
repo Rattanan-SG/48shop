@@ -6,10 +6,12 @@ import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 @SpringBootApplication
 @EnableJpaAuditing
 @EnableOAuth2Sso
+@CrossOrigin(origins="*",maxAge=3600)
 
 public class BackendApplication extends WebSecurityConfigurerAdapter{
 
