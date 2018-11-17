@@ -138,77 +138,61 @@
                                 <p class="modal-card-title" style="text-align: center;">ใส่บัตรเครดิต/เดบิต</p>
                                 <button class="delete"  aria-label="close" @click="closeCreditModal"></button>
                             </header>
+                     <!-- form start -->
+                             <form>
                             <div class="columns is-multiline" style=" display: flex;" id="bodyPopUp">
-                                <div class="field is-grouped" id="number">
-                                    <label  id="text" class="label">หมายเลขบัตร</label>
-                                    <label> <img src="../assets/visa.svg" width="20" height="10" style="  margin-left: 10px;"></label>
-                                    <label> <img src="../assets/mastercard.svg" width="20" height="10" style="  margin-left: 10px;"></label>
-                                </div>
-                                <!-- form start -->
-                                <form>
-                                    <div class="control">
-                                        <input class="input" type="text" placeholder="Ex. 1234567890123456"
-                                        v-model="credit.id">
+                            <div class="field is-grouped" id="card-Pop" >
+                                <div class="field is-grouped" id="number" >
+                                    <div class="field" >
+                                    <label  id="text" class="label">หมายเลขบัตร
+                                    <img src="../assets/visa.svg" width="20" height="10" style="  margin-left: 10px;">
+                                    <img src="../assets/mastercard.svg" width="20" height="10" style="  margin-left: 10px;"></label>
+                                    <div class="control" >
+                                        <input id="num" class="input" type="text" placeholder="Ex. 2321 2342 2415 5432"
+                                        v-model="credit.id" >
                                     </div>
-                                    <div class="field" id="name" style=" margin-top: 13px;">
+                                    </div>
+                                </div>
+                                    <div class="field" id="name" style=" margin-top: 18px;  width: 220px; ">
                                         <label class="label" id="text">ชื่อที่ปรากฏบนบัตร</label>
                                         <div class="control">
-                                            <input class="input" type="text" placeholder="Ex. โสภณ จำปาซ่อนกลิ่น"
+                                            <input class="input" type="text" placeholder="Ex. โสภณ จำปาซ่อนกลิ่น" 
                                             v-model="credit.name">
                                         </div>
                                     </div>
-                                    <div class="field" id="province">
-                                        <label id="text" class="label">จังหวัด</label>
-                                        <div class="control">
-                                            <input class="input" type="text" placeholder="Ex. สมุทรสงคราม"
-                                            v-model="credit.address">
-                                        </div>
-                                    </div>
-                                    <div class="field is-grouped" id="MY">
+                            </div>
+                                    <div class="field is-grouped " id="MY">
                                     <div class="field" id="month">
                                         <label  id="text" class="label">เดือนหมดอายุ</label>
                                         <div class="control ">
-                                            <input id="box" class="input" type="text" placeholder="mm" style="width: 70px;  margin-right: 48px;"
+                                            <input id="box" class="input" type="text" placeholder="mm" style="width: 150px;  margin-right: 50px;"
                                             v-model="credit.exp_m">
                                         </div>
                                     </div>
                                     <div class="field" id="year">
                                         <label  id="text" class="label">ปีหมดอายุ</label>
                                         <div class="control">
-                                            <input id="box" class="input" type="text" placeholder="yy" style="width: 70px;"
+                                            <input id="box" class="input" type="text" placeholder="yyyy" style="width: 130px;  margin-right: 50px;"
                                             v-model="credit.exp_y">
                                         </div>
                                     </div>
-                                    </div>    
-                                    <div class="field" id="CVV">
+                                    <div class="field" >
                                         <label  id="text" class="label ">รหัสรักษาความปลอดภัย</label>
                                         <div class="control">
-                                            <input class="input" type="text" placeholder="CVV"
+                                            <input id="box" class="input" type="text" placeholder="CVV" style="width: 110px;  margin-right: 50px;"
                                             v-model="credit.cvv">
                                         </div>
                                     </div>
-                                    <div class="field is-horizontal">
-                                        <div class="field">
-                                            <div class="field is-expanded">
-                                                <div class="field" id="postnumber">
-                                                    <label id="text"  class="label">หมายเลขไปรษณีย์</label>
-                                                    <div class="control">
-                                                        <input class="input" type="text" placeholder="Ex.14140"
-                                                        v-model="credit.zip">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
                                     </div>
-                                    <div class="column is-11 is-offset-1">
-                                        <footer id= "footer" class="modal-card-foot" >
+                                    <div class="field is-grouped " id="foot"> 
+                                      <div class="field" >
                                             <button class="button" @click="closeCreditModal">ยกเลิก</button>
                                             <button class="button is-success" @click.prevent="setCreditCard">บันทึก</button>
-                                        </footer>
+                                      </div>
                                     </div>
-                                </form>
-                                <!-- form end -->
-                            </div>    
+                                </div>    
+                            </form>
+                             <!-- form end -->    
                         </div>
                     </section>
                 </div>
@@ -352,23 +336,6 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 
-#product-box {
-    margin-bottom: 13px;
-    background: white;
-    width: 1000px;
-    min-height: 300px;
-}
-
-#detail-box {
-    background: white;
-    width: 1000px;
-    min-height: 500px;
-    margin-top: 13px;
-}
-
-html {
-  background: #f2f2f2;
-}
 
 #nav-bot {
     height: 240px;
@@ -381,6 +348,20 @@ html {
 #nav-box {
   width: 1000px;
   margin-top: 20px;
+}
+
+#home-box {
+  background: white;
+  width: 1000px;
+  min-height: 2000px;
+  margin-top: 13px;
+  box-shadow: 2px 10px grey;
+}
+html {
+  background: #f2f2f2;
+}
+#num{
+    width: 220px;
 }
 
 nav {
@@ -399,18 +380,53 @@ nav {
 }
 
 /* popup */
+#home-box {
+  background: white;
+  width: 1000px;
+  min-height: 2000px;
+  margin-top: 13px;
+  box-shadow: 2px 10px grey;
+}
+#card-Pop{
+    height: 90px;
+    width: 1200px;
+    margin-left: 50px;
+}
+#MY{
+    width: 1200px;
+    margin-left: 50px
+}
+
+#name{
+    margin-top: 19px;
+    margin-right: 150px;
+    padding-right: 30px;
+}
+#foot{
+    width: 800px;
+    margin-bottom: 20px;
+    justify-content: center;
+    margin-top: 10px;
+  
+}
+
 #bodyPopUp {
-  justify-content: center;
   background: white;
   margin-top:0px;
   margin-left: 0px;
   position: fixed;
-  height: 606px;
-  width: 299.5px;
+  height: 250px;
+  width: 600px;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+
 }
 
+
 #screen {
-  width: 300px;
+  width: 600px;
+  margin-top: 10%;
+
 }
 
 #addressbox {
@@ -452,10 +468,11 @@ nav {
 #text {
   font-size: 9pt;
   font-weight: 100;
+
 }
 #number {
     height: 9px;
-    margin-right: 70px;
+    margin-right: 80px;
     margin-top: 10px;
 }
 #head {
@@ -471,4 +488,5 @@ nav {
 #small-button {
     margin-left: 1%;
 }
+
 </style>
