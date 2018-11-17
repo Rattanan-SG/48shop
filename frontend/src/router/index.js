@@ -14,17 +14,18 @@ export default new Router({
       component: Home
     },
     {
-      path: '/Home',
+      path: '/home',
       name: 'Home',
       component: Home
     },
     {
-      path: '/ProductDetail',
+      path: '/product/:id',
       name: 'ProductDetail',
-      component: ProductDetail
+      component: ProductDetail,
+      props: true
     },
     {
-      path: '/CategoryProduct',
+      path: '/category',
       name: 'CategoryProduct',
       component: CategoryProduct
     }
