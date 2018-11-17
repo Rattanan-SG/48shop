@@ -4,7 +4,7 @@
         <div class="field is-grouped" id="field-box" v-for="products in chunkedProducts" :key="products.id">
             <!-- <div class="columns" v-for="products in chunkedProducts" :key="products.id">
                 <div class="column" v-for="product in products" :key="product.id"> -->
-                    <router-link to="/ProductDetail" v-for="product in products" :key="product.id">
+                    <router-link :to="{name: 'ProductDetail', params: { id: product.id }}" v-for="product in products" :key="product.id">
                         <div class="card" id="items" >
                             <div class="card-image is-4by3">
                             <img :src=product.image alt="Placeholder image" width="100" height="100">
@@ -40,9 +40,10 @@ export default {
           // console.log(response.data);
           response.data.forEach(ele => {
             this.products.push({
-              name: ele.name,
-              price: ele.price,
-              image: ele.img_url 
+                id: ele.id,
+                name: ele.name,
+                price: ele.price,
+                image: ele.img_url 
             });
           });
       })
