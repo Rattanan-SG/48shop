@@ -15,7 +15,7 @@
                             {{product.price}}
                         </div>
                         <div class="card-footer">
-                            <router-link to="/product"><div class="button" disabled>Buy now</div></router-link>
+                            <div class="button" @click="buy()" :disabled="showNavBot">ซื้อสินค้า</div>
                         </div>
                     </div>
                 </div>
@@ -25,42 +25,52 @@
             <p>รายละเอียดสินค้า</p>
             {{product.detail}}
         </div>
-        <div class="navbar is-fixed-bottom" id="nav-bot" style="height: 250px">
+        <div class="navbar is-fixed-bottom" id="nav-bot" v-if="showNavBot">
             <div class="container" id="nav-box" >
-            <ol type="none" > 
-                <p style="margin-top: 5px;">สินค้า: sdfsdfsdf</p>
-                <div class="field is-grouped " style="  width: 500px; height: 45px; margin-top: 10px;">
-                <p style="margin-top: 10px;">ส่งสินค้าไปที่</p>
-                <button class="button is-small is-rounded" id="small-button" @click="editAddress"
-                    :disabled="!addresDetail" style="margin-top: 3px;  margin-left: 100px;">เปลี่ยนที่อยู่</button>
+                <div class="columns">
+                    <div class="column">
+                        <ol type="none" > 
+                            <p>สินค้า: {{product.name}}</p>
+                            <div class="field is-grouped " id="form">
+                            <p style="margin-top: 10px;">ส่งสินค้าไปที่:</p>
+                            <button class="button is-small is-rounded" id="small-button" @click="editAddress"
+                                :disabled="!addresDetail">เปลี่ยนที่อยู่</button>
+                            </div>
+                            <template v-if="addresDetail">
+                                <p class="is-size-7">
+                                    {{
+                                        address.receiver_name + " " + 
+                                        address.tel_no + " " + 
+                                        address.receiver_address + " " + 
+                                        address.receiver_province + " " + 
+                                        address.receiver_postcode 
+                                    }}
+                                </p>
+                            </template>
+                            <template v-else>
+                                <a @click="showAddressModal" class="is-size-7">+ ใส่ที่อยู่</a>
+                            </template>  
+                            <div class="field is-grouped " id="form">
+                            <p style="margin-top: 13px;"> ชำระเงินด้วย:</p>
+                            <button class="button is-small is-rounded" id="small-button" @click="editCreditCard"
+                                :disabled="!hasCredit">เปลี่ยนบัตร</button>
+                            </div>
+                            <template v-if="hasCredit">
+                                <a @click="showCreditModal">
+                                    <p class="is-size-7">
+                                        {{ "XXXX XXXX XXXX X" +credit.id.charAt(13)+credit.id.charAt(14)+credit.id.charAt(15) }}
+                                    </p>
+                                </a>
+                            </template>
+                            <template v-else>
+                                <a @click="showCreditModal" class="is-size-7">+ ใส่บัตรเครดิต</a>
+                            </template>  
+                        </ol> 
+                    </div>
+                    <div class="column">
+                        ราคา {{product.price}}
+                    </div>
                 </div>
-                <template v-if="addresDetail">
-                    {{
-                        address.receiver_name + " " + 
-                        address.receiver_address + " " + 
-                        address.receiver_province + " " + 
-                        address.receiver_postcode + " " + 
-                        address.tel_no
-                    }}
-                </template>
-                <template v-else>
-                    <a @click="showAddressModal" style="margin-top: 10px; ">+ ใส่ที่อยู่</a>
-                </template>  
-                <div class="field is-grouped " style="  width: 500px; height: 45px; margin-top: 10px;">
-                <p style="margin-top: 15px;"> ชำระเงินด้วย </p>
-                 <button class="button is-small is-rounded" id="small-button" @click="editCreditCard"
-                    :disabled="!hasCredit" style="margin-top: 10px;  margin-left: 100px;">เปลี่ยนบัตร</button>
-                </div>
-                <template v-if="hasCredit">
-                    {{  
-                        "XXXX XXXX XXXX X" +credit.id.charAt(13)+credit.id.charAt(14)+credit.id.charAt(15)
-                    }}
-                </template>
-                <template v-else>
-                    <a @click="showCreditModal">+ ใส่บัตรเครดิต</a>
-                </template>  
-            </ol> 
-            
             </div>
         </div>
         <!-- popupAddress -->
@@ -222,6 +232,7 @@ export default {
                 image: '',
                 detail: ''
             },
+            showNavBot: false,
             showCredit: '',
             showAddress: '',
             addresDetail: false,
@@ -256,12 +267,15 @@ export default {
         getProductDetail: function() {
             axios.get(url_product + this.product.id)
             .then(response => {
-                console.log(response.data)
                 this.product.name = response.data.name,
                 this.product.price = response.data.price,
                 this.product.image = response.data.img_url,
                 this.product.detail = response.data.detail 
             })
+        },
+        buy: function() {
+            this.showNavBot = true;
+            
         },
         showAddressModal: function() {
             this.showAddress = 'block';
@@ -281,7 +295,7 @@ export default {
                         this.address.receiver_province + " " + 
                         this.address.receiver_postcode + " " + 
                         this.address.tel_no);
-            axios.post(url, {
+            axios.post(url_test, {
                 receiver_name: this.address.receiver_name,
                 tel_no: this.address.tel_no,
                 receiver_address: this.address.receiver_address,
@@ -305,7 +319,7 @@ export default {
             console.log(this.credit.id + "\n" + this.credit.exp_m + "\n" + this.credit.exp_y + "\n" + this.credit.cvv
              + "\n" + this.credit.name + "\n" + this.credit.address + "\n" + this.credit.zip);
             //  
-            axios.post(url_credit, {
+            axios.post(url_test, {
                 card_id: this.credit.id,
                 exp_m: this.credit.exp_m,
                 exp_y: this.credit.exp_y,
@@ -318,7 +332,7 @@ export default {
                 console.log(response);
                 this.hasCredit = true;
                 this.showCredit = '';
-                censorCreditCard;
+                this.censorCreditCard;
             })
         },
         editCreditCard: function() {
@@ -339,6 +353,7 @@ export default {
 
 #nav-bot {
     height: 240px;
+    border: 0.09em solid #E0E0E0;
 }
 #nav-top {
   border-bottom: 10px;
@@ -350,15 +365,24 @@ export default {
   margin-top: 20px;
 }
 
-#home-box {
+#product-box {
   background: white;
   width: 1000px;
-  min-height: 2000px;
-  margin-top: 13px;
-  box-shadow: 2px 10px grey;
+  min-height: 300px;
+  padding-bottom: 13px;
+  box-shadow: 0 4px 15px 0 rgba(40,44,53,.06), 0 2px 2px 0 rgba(40,44,53,.08);
 }
+
+#detail-box {
+  background: white;
+  width: 1000px;
+  min-height: 1000px;
+  margin-top: 13px;
+  box-shadow: 0 4px 15px 0 rgba(40,44,53,.06), 0 2px 2px 0 rgba(40,44,53,.08);
+}
+
 html {
-  background: #f2f2f2;
+    background: #f2f2f2;
 }
 #num{
     width: 220px;
@@ -379,14 +403,12 @@ nav {
   width: 1000px;
 }
 
-/* popup */
-#home-box {
-  background: white;
-  width: 1000px;
-  min-height: 2000px;
-  margin-top: 13px;
-  box-shadow: 2px 10px grey;
+#form {
+    width: 500px;
+    height: 35px;
+    margin-top: 10px;
 }
+
 #card-Pop{
     height: 90px;
     width: 1200px;
@@ -486,7 +508,8 @@ nav {
 }
 
 #small-button {
-    margin-left: 1%;
+    margin-left: 20px;
+    margin-top: 13px;
 }
 
 </style>
