@@ -1,7 +1,6 @@
 <template>
   <div class="hello">
     <div class="container" id="home-box">
-      <h1>{{ msg }}</h1>
       <div class="columns" id="tabs">
         <div class="column">
           <img src="./../assets/girl.svg" alt="Placeholder image"  width="40" height="40"
@@ -16,37 +15,30 @@
         <div class="column">
           <img src="./../assets/wallet.svg" alt="Placeholder image"  width="40" height="40"
           @mouseover="activateTab=3" v-bind:class="[ activateTab === 3 ? 'active' : '' ]">
-          สินค้าส่งฟรี
+          สินค้าทั้งหมด
         </div>
         
       </div>
        <div class="container" v-if="activateTab===1">
-         <div>
-        <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400" rel="stylesheet"/>
-            <div class="card-carousel-wrapper" id="slide">
-                <div class="card-carousel--nav__left" @click="moveCarousel(-1)" :disabled="atHeadOfList"></div>
-                <div class="card-carousel">
-                <div class="card-carousel--overflow-container">
-                    <div class="card-carousel-cards" :style="{ transform: 'translateX' + '(' + currentOffset + 'px' + ')'}">
-                        <div
-                            class="card-carousel--card"
-                            v-for="item in items"
-                            :key="item.name"
-                        >
-                            <img src="https://placehold.it/200x200"/>
-                            <div class="card-carousel--card--footer">
-                            <p>{{ item.name }}</p>
-                            <p>{{ item.tag }}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                </div>
-                <div class="card-carousel--nav__right" @click="moveCarousel(1)" :disabled="atEndOfList"></div>
-            </div>
-        </div>
+          <div class="card-carousel-wrapper" id="slide">
+              <div class="card-carousel--nav__left" @click="moveCarousel(-1)" :disabled="atHeadOfList"></div>
+              <div class="card-carousel">
+              <div class="card-carousel--overflow-container">
+                  <div class="card-carousel-cards" :style="{ transform: 'translateX' + '(' + currentOffset + 'px' + ')'}">
+                      <div class="card-carousel--card" v-for="product in products" :key="product.id">
+                          <img :src=product.image alt="Placeholder image" width="100" height="100">
+                          <div class="card-carousel--card--footer">
+                          <p>{{ product.name }}</p>
+                          <p>{{ product.price }}</p>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              </div>
+              <div class="card-carousel--nav__right" @click="moveCarousel(1)" :disabled="atEndOfList"></div>
+          </div>
       </div>
- <div class="container" v-if="activateTab===2">
+      <div class="container" v-if="activateTab===2">
         <div class="columns">
           <div class="column">
             <router-link to="/ProductDetail">
@@ -74,7 +66,7 @@
           </div>
         </div>
       </div>
-  <div class="container" v-if="activateTab===3">
+      <div class="container" v-if="activateTab===3">
         <div class="columns">
           <div class="column">
             <router-link to="/ProductDetail">
@@ -102,10 +94,6 @@
           </div>
         </div>
       </div>
-   
-    
-      
-
     </div>
   </div>
 </template>
@@ -115,6 +103,7 @@ import './../../node_modules/bulma/css/bulma.css';
 import axios from 'axios';
 
 const url = 'http://localhost:8080/products';
+const url_product = `http://localhost:8080/product/`;
 export default {
   name: 'CarouselGroup',
   name: 'Home',
@@ -125,37 +114,32 @@ export default {
       currentOffset: 0,
       windowSize: 3,
       paginationFactor: 220,
-      items: [
-        {name: 'Tycoon Thai', tag: "Thai"},
-        {name: 'Ippudo', tag: "Japanese"},
-        {name: 'Milano', tag: "Pizza"},
-        {name: 'Tsing Tao', tag: "Chinese"},
-        {name: 'Frances', tag: "French"},
-    
-      ]
-    }
-  },
-  methods: {
-    getAllProduct: function () {
-      axios.get(url)
-      .then(response => {
-          console.log(response);
-      })
+      recProduct: [19,22,3,4,8,12,13,15,26,37,5,6,9,23,32,42],
+      topProduct: [1,2,3,5,6,7,18,32,35,39,41,45],
+      products: [],
+      product: {
+        id: 0,
+        name: '',
+        price: '',
+        image: '',
+        detail: ''
+      }
     }
   },
   mounted () {
     this.getAllProduct();
+    this.getRecProduct();
   },
   computed: {
     atEndOfList() {
-      return this.currentOffset <= (this.paginationFactor * -1) * (this.items.length - this.windowSize);
+      return this.currentOffset <= (this.paginationFactor * -1) * (this.products.length - this.windowSize);
     },
     atHeadOfList() {
       return this.currentOffset === 0;
     },
   },
   methods: {
-    moveCarousel(direction) {
+    moveCarousel: function (direction) {
       // Find a more elegant way to express the :style. consider using props to make it truly generic
       if (direction === 1 && !this.atEndOfList) {
         this.currentOffset -= this.paginationFactor;
@@ -163,6 +147,26 @@ export default {
         this.currentOffset += this.paginationFactor;
       } 
     },
+    getAllProduct: function () {
+      axios.get(url)
+      .then(response => {
+          console.log(response.data);
+      })
+    },
+    getRecProduct: function() {
+      this.recProduct.forEach(id => {
+        axios.get(url_product + id)
+        .then(response => {
+          console.log(response.data.id);
+          this.products.push({
+              id: response.data.id,
+              name: response.data.name,
+              price: response.data.price,
+              image: response.data.img_url 
+          });
+        })
+      });
+    }
   }
 }
 
@@ -358,9 +362,5 @@ h1 {
 #slide{
   margin-right: 140px;
 }
-
-
-
-
 
 </style>
