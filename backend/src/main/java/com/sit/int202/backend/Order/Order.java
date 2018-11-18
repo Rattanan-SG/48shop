@@ -56,7 +56,7 @@ public class Order implements Serializable {
     private int trackingId;
 
     @NotNull
-    private double totalPrice;
+    private long totalPrice;
 
     private String method;
 
@@ -119,11 +119,11 @@ public class Order implements Serializable {
         this.trackingId = trackingId;
     }
 
-    public double getTotalPrice() {
-        return totalPrice;
+    public long getTotalPrice() {
+        return this.totalPrice;
     }
 
-    public void setTotalPrice(double totalPrice) {
+    public void setTotalPrice(long totalPrice) {
         this.totalPrice = totalPrice;
     }
 
