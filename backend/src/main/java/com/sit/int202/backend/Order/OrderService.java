@@ -88,7 +88,7 @@ public class OrderService {
         Client client = new Client(PUBLIC_KEY,SECRET_KEY);
         Charge charge = client.charges().create(
             new Charge.Create()
-            .amount(amount).currency(TH_BAHT).card(token)
-        ); //test
+            .amount(amount*100).currency(TH_BAHT).card(token)
+        );
     }
 }

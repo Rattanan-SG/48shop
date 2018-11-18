@@ -40,6 +40,13 @@ public class OrderController {
 
     @PostMapping("/order")
     public ResponseEntity<Order> createOrder(@Valid @RequestBody Order order) {
+        try {
+            orderService.charge(order.getTotalPrice(), order.getOmiseToken());
+        } catch (OmiseException o) {
+            return new ResponseEntity<Order>(orderService.save(order), HttpStatus.FORBIDDEN);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return new ResponseEntity<Order>(orderService.save(order), HttpStatus.CREATED);
     }
 
@@ -53,18 +60,10 @@ public class OrderController {
         return new ResponseEntity<Long>(orderService.delete(id), HttpStatus.OK);
     }
 
-    @PostMapping("/Charge") //for one time payment
-    public void charge(@RequestBody LinkedHashMap payment) throws ClientException, IOException, OmiseException{
-        String token = orderService.getToken(payment).get("token").toString();
-        if(payment.get("total_price") != null){
-            long price = Long.parseLong(payment.get("total_price").toString()); //use this when we has totalPrice from front-end
-        }
-        orderService.charge(3012200,token);
-    }
-    
-    @PostMapping("/creditcard") //get token
-    public LinkedHashMap creditcard(@RequestBody LinkedHashMap payment) throws ClientException, IOException, OmiseException{
-        LinkedHashMap token =  orderService.getToken(payment);
+    @PostMapping("/creditcard") // get token
+    public LinkedHashMap creditcard(@RequestBody LinkedHashMap payment)
+            throws ClientException, IOException, OmiseException {
+        LinkedHashMap token = orderService.getToken(payment);
         return token;
     }
 }

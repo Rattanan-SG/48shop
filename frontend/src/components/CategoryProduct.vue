@@ -70,7 +70,7 @@ export default {
 }
 #items{
     max-width: 172px;
-    max-height:260px;
+    max-height: 260px;
     margin-left: 23px;
     margin-top: 70px;
     width: 172px;
