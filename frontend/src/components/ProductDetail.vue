@@ -7,17 +7,23 @@
                     <img :src=product.image alt="Placeholder image">
                 </div>
                 <div class="column">
-                    <div class="card">
-                        <div class="card-header">
-                            {{product.name}}
-                        </div>
-                        <div class="card-content">
-                            {{product.price}}
-                        </div>
-                        <div class="card-footer">
-                            <div class="button" @click="buy()" :disabled="showNavBot">ซื้อสินค้า</div>
+                    {{product.name}}
+                    <br>
+                    {{product.price}}
+                    <div class="field has-addons">
+                        <div class="control">
+                            <a class="button is-info" @click="DecreaseQty" :disabled="isDisabledDecrease">
+                            -
+                            </a>
+                        </div>                  
+                        <input style="width: 40px; hight:40px; text-align: center" type="text" :value="product.qty" readonly>
+                        <div class="control">
+                            <a class="button is-info" @click="IncreaseQty" :disabled="isDisabledIncrease">
+                            +
+                            </a>
                         </div>
                     </div>
+                    <div class="button" @click="buy()" :disabled="showNavBot">ซื้อสินค้า</div>
                 </div>
             </div>
         </div>
@@ -230,8 +236,11 @@ export default {
                 name: '',
                 price: '',
                 image: '',
-                detail: ''
+                detail: '',
+                qty: 1
             },
+            isDisabledDecrease: true,
+            isDisabledIncrease: false,
             showNavBot: false,
             showCredit: '',
             showAddress: '',
@@ -253,7 +262,6 @@ export default {
                 receiver_address: '',
                 receiver_province: '',
                 receiver_postcode: ''
-            
             }
         }
     },
@@ -264,6 +272,28 @@ export default {
         this.getProductDetail();
     },
     methods: {
+        IncreaseQty: function () {
+            if (this.product.qty >= 9) {
+                this.isDisabledIncrease = true;
+                if (this.product.qty === 9) {
+                    this.product.qty++;
+                }     
+            } else {
+                this.product.qty++;
+                this.isDisabledDecrease = false
+            }   
+        },
+        DecreaseQty: function () {
+            if (this.product.qty <= 2) {
+                this.isDisabledDecrease = true;
+                if (this.product.qty === 2) {
+                    this.product.qty--;
+                }
+            } else {
+                this.product.qty--;
+                this.isDisabledIncrease = false;
+            }  
+        },
         getProductDetail: function() {
             axios.get(url_product + this.product.id)
             .then(response => {
@@ -275,7 +305,6 @@ export default {
         },
         buy: function() {
             this.showNavBot = true;
-            
         },
         showAddressModal: function() {
             this.showAddress = 'block';
@@ -309,11 +338,9 @@ export default {
             })
 
         },
-
         editAddress: function() {
             this.showAddressModal();
         },
-
         setCreditCard: function() {
             // for tesing
             console.log(this.credit.id + "\n" + this.credit.exp_m + "\n" + this.credit.exp_y + "\n" + this.credit.cvv
@@ -338,11 +365,10 @@ export default {
         editCreditCard: function() {
             this.showCreditModal();
         },
-
         censorCreditCard: function() {
             credit.id.toString();
             
-        }
+        },
     }
 }
 </script>
