@@ -2,6 +2,7 @@ package com.sit.int202.backend.UserProfile;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,21 +13,19 @@ import javax.validation.constraints.NotBlank;
 @Entity
 @Table(name = "user_profiles")
 public class UserProfile implements Serializable {
-    
+
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @NotBlank
     private String firstname;
-    
+
     @NotBlank
     private String lastname;
 
-    @NotBlank
     private String facebookToken;
 
-    
     public UserProfile() {
     }
 
