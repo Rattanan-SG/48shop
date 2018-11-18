@@ -18,7 +18,7 @@
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <router-link to='/add-product'>
-                  <v-btn color="primary" @click='setNavBar(true)'>Login</v-btn>
+                  <v-btn color="primary" @click='onLogin'>Login</v-btn>
                 </router-link>
               </v-card-actions>
             </v-card>
@@ -31,6 +31,7 @@
 
 <script>
 import { mapActions } from 'vuex'
+import axios from '@/utils/axios'
 export default {
   data: () => ({
     drawer: null
@@ -40,8 +41,20 @@ export default {
   },
   methods: {
     ...mapActions([
-      'setNavBar'
-    ])
+      'setNavBar',
+      'setProductUnRecommend',
+      'setProducts'
+    ]),
+    onLogin () {
+      this.setNavBar(true)
+      this.setAllProducts()
+    },
+    async setAllProducts () {
+      const { data } = await axios.get('/products')
+      console.log(data)
+      this.setProductUnRecommend(data)
+      this.setProducts(data)
+    }
   },
   mounted () {
     this.setNavBar(false)
