@@ -299,13 +299,13 @@ export default {
                 cvv: '',
                 name: '',
                 address: '',
-                zip: '',
-            
-            
+                zip: 0,
+                token: '',
+                message: ''
             },
             address: {
                 receiver_name: '',
-                tel_no: '',
+                tel_no: 0,
                 receiver_address: '',
                 receiver_province: '',
                 receiver_postcode: ''
@@ -407,6 +407,38 @@ export default {
         censorCreditCard: function() {
             credit.id.toString();
             
+        },
+        orderProduct: function() {
+            axios.post(url_order, {
+                userProfile: {
+                    firstname: "Tanapat",
+                    lastname: "Choochot"
+                },
+                startLocation: {
+                    receiverName: '48shop',
+                    detail: "48Shop 1/2 Surin Thepkanjana Rd, Khok Krabue",
+                    city: "Samut Sakhon",
+                    district: "Amphoe Mueang Samut Sakhon",
+                    zipcode: 74000,
+                    telNumber: '025453227'
+                },
+                destination: {
+                    receiverName: this.address.receiver_name,
+                    detail: this.address.receiver_address,
+                    city: this.address.receiver_province,
+                    zipcode: this.address.receiver_postcode,
+                    telNumber: this.address.tel_no
+                },
+                product_id: this.product.id,
+                productQuantity: this.product.qty,
+                totalPrice: this.product.total,
+                trackingId: 123456789,
+                method: "Credit card",
+                omiseToken: this.credit.token,                        
+            })
+            .then(response => {
+                console.log(response.data);
+            })
         }
     }
 }
