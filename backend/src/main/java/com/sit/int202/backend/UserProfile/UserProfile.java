@@ -24,8 +24,6 @@ public class UserProfile implements Serializable {
     @NotBlank
     private String lastname;
 
-    private String facebookToken;
-
     public UserProfile() {
     }
 
@@ -51,14 +49,6 @@ public class UserProfile implements Serializable {
 
     public void setLastname(String lastname) {
         this.lastname = lastname;
-    }
-
-    public String getFacebookToken() {
-        return this.facebookToken;
-    }
-
-    public void setFacebookToken(String facebookToken) {
-        this.facebookToken = facebookToken;
     }
 
 }
