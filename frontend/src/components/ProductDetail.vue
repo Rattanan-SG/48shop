@@ -40,9 +40,9 @@
                             <div class="field is-grouped " id="form">
                             <p style="margin-top: 10px;">ส่งสินค้าไปที่:</p>
                             <button class="button is-small is-rounded" id="small-button" @click="editAddress"
-                                :disabled="!addresDetail">เปลี่ยนที่อยู่</button>
+                                :disabled="!hasAddress">เปลี่ยนที่อยู่</button>
                             </div>
-                            <template v-if="addresDetail">
+                            <template v-if="hasAddress">
                                 <p class="is-size-7">
                                     {{
                                         address.receiver_name + " " + 
@@ -62,11 +62,9 @@
                                 :disabled="!hasCredit">เปลี่ยนบัตร</button>
                             </div>
                             <template v-if="hasCredit">
-                                <a @click="showCreditModal">
-                                    <p class="is-size-7">
-                                        {{ "XXXX XXXX XXXX X" +credit.id.charAt(13)+credit.id.charAt(14)+credit.id.charAt(15) }}
-                                    </p>
-                                </a>
+                                <p class="is-size-7">
+                                    {{ "XXXX XXXX XXXX X" +credit.id.charAt(13)+credit.id.charAt(14)+credit.id.charAt(15) }}
+                                </p>
                             </template>
                             <template v-else>
                                 <a @click="showCreditModal" class="is-size-7">+ ใส่บัตรเครดิต</a>
@@ -74,8 +72,11 @@
                         </ol> 
                     </div>
                     <div class="column">
-                        ราคา {{product.price}}
+                        ราคา {{product.total}}
                     </div>
+                    <a class="button is-primary" @click="orderProduct" :disabled="!hasCredit && !hasCredit">
+                        <strong>ยืนยันการซื้อ</strong>
+                    </a>
                 </div>
             </div>
         </div>
@@ -225,6 +226,7 @@ import chunk from 'chunk';
 const url_test = `http://jsonplaceholder.typicode.com/posts`;
 const url_product = `http://localhost:8080/product/`;
 const url_credit = `http://localhost:8080/creditcard`;
+const url_order = `http://localhost:8080/order`;
 
 export default {
     name: 'ProductDetail',
@@ -237,14 +239,15 @@ export default {
                 price: '',
                 image: '',
                 detail: '',
-                qty: 1
+                qty: 1,
+                total: ''
             },
             isDisabledDecrease: true,
             isDisabledIncrease: false,
             showNavBot: false,
             showCredit: '',
             showAddress: '',
-            addresDetail: false,
+            hasAddress: false,
             hasCredit: false,
             credit: {
                 id: '',
@@ -254,7 +257,8 @@ export default {
                 name: '',
                 address: '',
                 zip: '',
-            
+                token: '',
+                message: ''
             },
             address: {
                 receiver_name: '',
@@ -277,10 +281,12 @@ export default {
                 this.isDisabledIncrease = true;
                 if (this.product.qty === 9) {
                     this.product.qty++;
+                    this.product.total = this.product.price * this.product.qty;
                 }     
             } else {
                 this.product.qty++;
-                this.isDisabledDecrease = false
+                this.product.total = this.product.price * this.product.qty;
+                this.isDisabledDecrease = false;
             }   
         },
         DecreaseQty: function () {
@@ -288,9 +294,11 @@ export default {
                 this.isDisabledDecrease = true;
                 if (this.product.qty === 2) {
                     this.product.qty--;
+                    this.product.total = this.product.price * this.product.qty;
                 }
             } else {
                 this.product.qty--;
+                this.product.total = this.product.price * this.product.qty;
                 this.isDisabledIncrease = false;
             }  
         },
@@ -301,6 +309,7 @@ export default {
                 this.product.price = response.data.price,
                 this.product.image = response.data.img_url,
                 this.product.detail = response.data.detail 
+                this.product.total = response.data.price
             })
         },
         buy: function() {
@@ -324,19 +333,8 @@ export default {
                         this.address.receiver_province + " " + 
                         this.address.receiver_postcode + " " + 
                         this.address.tel_no);
-            axios.post(url_test, {
-                receiver_name: this.address.receiver_name,
-                tel_no: this.address.tel_no,
-                receiver_address: this.address.receiver_address,
-                receiver_province: this.address.receiver_province,
-                receiver_postcode: this.address.receiver_postcode
-            })
-            .then(response => {
-                console.log(response);
-                this.addresDetail = true;
-                this.showAddress = '';
-            })
-
+            this.hasAddress = true;
+            this.showAddress = '';
         },
         editAddress: function() {
             this.showAddressModal();
@@ -346,7 +344,7 @@ export default {
             console.log(this.credit.id + "\n" + this.credit.exp_m + "\n" + this.credit.exp_y + "\n" + this.credit.cvv
              + "\n" + this.credit.name + "\n" + this.credit.address + "\n" + this.credit.zip);
             //  
-            axios.post(url_test, {
+            axios.post(url_credit, {
                 card_id: this.credit.id,
                 exp_m: this.credit.exp_m,
                 exp_y: this.credit.exp_y,
@@ -360,6 +358,8 @@ export default {
                 this.hasCredit = true;
                 this.showCredit = '';
                 this.censorCreditCard;
+                this.credit.token = response.data.token,
+                this.credit.message = response.data.message
             })
         },
         editCreditCard: function() {
@@ -369,6 +369,63 @@ export default {
             credit.id.toString();
             
         },
+        orderProduct: function() {
+            console.log(`userProfile: {
+                    firstname: "Tanapat",
+                    lastname: "Choochot"
+                },
+                startLocation: {
+                    detail: "48Shop 1/2 Surin Thepkanjana Rd, Khok Krabue",
+                    city: "Samut Sakhon",
+                    district: "Amphoe Mueang Samut Sakhon",
+                    zipcode: 74000,
+                    telNumber: null
+                },
+                destination: {
+                    detail:` + this.address.receiver_address + `,` +
+                    `city: ` + this.address.receiver_province + `,` +
+                    // district: "Thungkru",
+                    `zipcode: ` + this.address.receiver_postcode + `,` +
+                    // `telNumber: '0823463550'
+                `},` +
+                `totalPrice: ` + this.product.total + `,
+                method: ` + "Credit card" + `,
+                omiseToken: ` + this.credit.token + `,
+                products: {
+                    id: ` + this.product.id + `,
+                    qty: ` + this.product.qty +
+                `}`);
+            axios.post(url_order, {
+                userProfile: {
+                    firstname: "Tanapat",
+                    lastname: "Choochot"
+                },
+                startLocation: {
+                    detail: "48Shop 1/2 Surin Thepkanjana Rd, Khok Krabue",
+                    city: "Samut Sakhon",
+                    district: "Amphoe Mueang Samut Sakhon",
+                    zipcode: 74000,
+                    telNumber: null
+                },
+                destination: {
+                    detail: this.address.receiver_address,
+                    city: this.address.receiver_province,
+                    // district: "Thungkru",
+                    zipcode: this.address.receiver_postcode,
+                    telNumber: '0823463550'
+                },
+                totalPrice: this.product.total,
+                method: "Credit card",
+                omiseToken: this.credit.token,
+                products: {
+                    id: this.product.id,
+                    qty: this.product.qty
+                },
+            })
+            .then(response => {
+                console.log(response.data);
+            })
+        }
     }
 }
 </script>
