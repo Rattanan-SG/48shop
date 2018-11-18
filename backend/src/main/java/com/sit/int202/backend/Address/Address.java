@@ -30,6 +30,9 @@ public class Address implements Serializable {
     @NotNull
     private int zipcode;
 
+    @NotBlank
+    private String telNumber;
+
     public Address() {
     }
 
@@ -71,6 +74,14 @@ public class Address implements Serializable {
 
     public void setZipcode(int zipcode) {
         this.zipcode = zipcode;
+    }
+
+    public String getTelNumber() {
+        return this.telNumber;
+    }
+
+    public void setTelNumber(String telNumber) {
+        this.telNumber = telNumber;
     }
 
 }
