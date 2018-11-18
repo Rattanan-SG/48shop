@@ -7,15 +7,19 @@
       </v-toolbar-title>
       <v-toolbar-items>
         <v-btn flat>
-          <router-link to='/' style="text-decoration: none">Home</router-link>
-        </v-btn>
-        <v-btn flat>
           <router-link to='/add-product' style="text-decoration: none">Add Product</router-link>
         </v-btn>
         <v-btn flat>
-          <router-link to='/recommend-product' style="text-decoration: none">Recomment</router-link>
+          <router-link to='/add-recommend-product' style="text-decoration: none">Add Recommend Product</router-link>
+        </v-btn>
+        <v-btn flat>
+          <router-link to='/view-recommend-product' style="text-decoration: none">View Recommend Product</router-link>
         </v-btn>
       </v-toolbar-items>
+      <v-spacer></v-spacer>
+      <v-btn flat>
+        <router-link to='/' style="text-decoration: none">LOGOUT</router-link>
+      </v-btn>
     </v-toolbar>
     <v-content>
       <router-view></router-view>
