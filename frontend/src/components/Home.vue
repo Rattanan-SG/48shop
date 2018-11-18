@@ -35,12 +35,17 @@
                           <div class="card-content" >
                             <div class="field is-grouped">
                             <div class="content">
-                              <p>{{ product.name }}</p>
+                              <div v-if="product.name.length <= 20">
+                                <p>{{ product.name | dontCutWords}}</p>
+                               </div>
+                              <div v-else>
+                                <p>{{ product.name | cutWords}}</p>
+                               </div>
                             </div>
                             </div>
                             <div class="field is-grouped" id="price" >
                             <div class="content">
-                              <p>{{ product.price }}</p>
+                              <p>{{ product.price | currency }}</p>
                             </div>
                             </div>
                           </div>
@@ -120,6 +125,24 @@ const url_product = `http://localhost:8080/product/`;
 export default {
   name: 'CarouselGroup',
   name: 'Home',
+
+  //filter
+  filters: {
+    cutWords: function (value) {
+      return value.substr(0,20).toLowerCase()+"..."
+    },
+
+    dontCutWords: function (value) {
+      return value.toLowerCase()
+    },
+
+    currency: function (value) {
+      return "THB "+value
+    }
+  },
+
+
+  
   data () {
     return {
       msg: 'หน้าแรก สำหรับแสดงสินค้า',

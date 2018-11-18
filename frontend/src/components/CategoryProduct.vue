@@ -7,10 +7,15 @@
                     <router-link :to="{name: 'ProductDetail', params: { id: product.id }}" v-for="product in products" :key="product.id">
                         <div class="card" id="items" >
                             <div class="card-image is-4by3">
-                            <img :src=product.image alt="Placeholder image" width="100" height="100">
+                            <img :src=product.image alt="Placeholder image" id="img">
                             </div>
                             <div class="card-content">
-                                {{product.name}}
+                                <div v-if="product.name.length <= 50">
+                                    <p>{{ product.name | dontCutWords}}</p>
+                                </div>
+                                <div v-else>
+                                    <p>{{ product.name | cutWords}}</p>
+                                </div>
                             </div>
                         </div>
                     </router-link>
@@ -27,6 +32,19 @@ import chunk from 'chunk';
 
 const url = 'http://localhost:8080/products';
 export default {
+
+    //filter
+    filters: {
+    cutWords: function (value) {
+      return value.substr(0,50).toLowerCase()+"..."
+    },
+
+    dontCutWords: function (value) {
+      return value.toLowerCase()
+    },
+
+  },
+
   data () {
     return {
       msg: 'หน้าแรก สำหรับแสดงสินค้า',
@@ -78,5 +96,12 @@ export default {
 }
 #field-box{
     margin-bottom: 0px;
+}
+
+#img{
+    width:75%; 
+    height:50%;
+    margin-left: 20px;
+    margin-right: auto;
 }
 </style>
