@@ -7,23 +7,17 @@
                     <img :src=product.image alt="Placeholder image">
                 </div>
                 <div class="column">
-                    {{product.name}}
-                    <br>
-                    {{product.price}}
-                    <div class="field has-addons">
-                        <div class="control">
-                            <a class="button is-info" @click="DecreaseQty" :disabled="isDisabledDecrease">
-                            -
-                            </a>
-                        </div>                  
-                        <input style="width: 40px; hight:40px; text-align: center" type="text" :value="product.qty" readonly>
-                        <div class="control">
-                            <a class="button is-info" @click="IncreaseQty" :disabled="isDisabledIncrease">
-                            +
-                            </a>
+                    <div class="card">
+                        <div class="card-header">
+                            {{product.name}}
+                        </div>
+                        <div class="card-content">
+                            {{product.price}}
+                        </div>
+                        <div class="card-footer">
+                            <div class="button" @click="buy()" :disabled="showNavBot">ซื้อสินค้า</div>
                         </div>
                     </div>
-                    <div class="button" @click="buy()" :disabled="showNavBot">ซื้อสินค้า</div>
                 </div>
             </div>
         </div>
@@ -40,9 +34,9 @@
                             <div class="field is-grouped " id="form">
                             <p style="margin-top: 10px;">ส่งสินค้าไปที่:</p>
                             <button class="button is-small is-rounded" id="small-button" @click="editAddress"
-                                :disabled="!hasAddress">เปลี่ยนที่อยู่</button>
+                                :disabled="!addresDetail">เปลี่ยนที่อยู่</button>
                             </div>
-                            <template v-if="hasAddress">
+                            <template v-if="addresDetail">
                                 <p class="is-size-7">
                                     {{
                                         address.receiver_name + " " + 
@@ -62,9 +56,11 @@
                                 :disabled="!hasCredit">เปลี่ยนบัตร</button>
                             </div>
                             <template v-if="hasCredit">
-                                <p class="is-size-7">
-                                    {{ "XXXX XXXX XXXX X" +credit.id.charAt(13)+credit.id.charAt(14)+credit.id.charAt(15) }}
-                                </p>
+                                <a @click="showCreditModal">
+                                    <p class="is-size-7">
+                                        {{ "XXXX XXXX XXXX X" +credit.id.charAt(13)+credit.id.charAt(14)+credit.id.charAt(15) }}
+                                    </p>
+                                </a>
                             </template>
                             <template v-else>
                                 <a @click="showCreditModal" class="is-size-7">+ ใส่บัตรเครดิต</a>
@@ -72,11 +68,8 @@
                         </ol> 
                     </div>
                     <div class="column">
-                        ราคา {{product.total}}
+                        ราคา {{product.price}}
                     </div>
-                    <a class="button is-primary" @click="orderProduct" :disabled="!hasCredit && !hasCredit">
-                        <strong>ยืนยันการซื้อ</strong>
-                    </a>
                 </div>
             </div>
         </div>
@@ -144,16 +137,70 @@
                 </div>
             </div>
         </div>
-        <!-- popup Cradit -->
+        <!-- popup Cradit 1 -->
+<div class="modal-card" id="popUpAddCradit">
+    <div class="container" >
+         <div class="modal" id="page-modal" v-bind:style="{display: showCredit}">
+            <div class="modal-background"></div>
+             <section class="modal-card-body">
+             <form>
+                <div class="modal-content">
+                    <div class="modal-content" id="box-Popup">
+                        <div id="#head-cradit">
+                            <header class="modal-card-head" id="head-cradit">
+                                 <p class="modal-card-title" style="  margin-left: 190px;">เพิ่มบัตรเครดิต/เดบิต</p>
+                            </header>
+                        </div>
+                    <table class="table"   id="table"> 
+                             <th id="text" style="color:#9E9E9E; font-size: 12px;">เลือก</th>
+                             <th id="text" style="color:#9E9E9E; font-size: 12px;;">บัตรเครดิต/บัตรเดบิต</th> 
+                    </table>
+                    <div id="body">
+                        <div class="card-content" id="cards"  >
+                            <div class="field is-grouped">
+                                <a class="button" style="margin-right: 25px;">เลือก</a>
+                                    <p class="subtitle" id="text-cradit">
+                                     ธนาคารกรุงเทพ xxxx-xxxx-xxxx-2341
+                                     </p>
+                            </div>
+                        </div>
+                            <div class="card-content" id="cards" >
+                                <div class="field is-grouped">
+                                    <a class="button" style="margin-right: 25px; background-color:#714EC9; color:white;">เลือก</a>
+                                    <p class="subtitle" id="text-cradit">
+                                         ธนาคารกรุงเทพ xxxx-xxxx-xxxx-2341
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="card-content" id="cards" >
+                                <div class="field is-grouped " >
+                                    <a class="button" style="margin-right: 25px; background-color:#373785  ; color:white;" @click="showAddCreditModal">เพิ่มบัตร</a>
+                                </div>
+                            </div>
+                    </div>
+                    <div id="buttom" >
+                        <div class="field is-grouped">
+                            <a class="button" style="margin-right: 20px;  width: 90px;" for="element-toggle" @click="closeCreditModal"> ยกเลิก</a>  
+                            <a class="button" style="margin-right: 20px; background-color:#714EC9; color:white;  width: 90px;">บันทึก</a>  
+                        </div>
+                    </div>
+                    </div>
+                </div>      
+                </form>
+            </section>
+            </div>
+        </div>
+</div>    
+        <!-- popup Cradit 2 -->
         <div class="modal-card" id="popUpCradit">
             <div class="container" >
-                <div class="modal" id="page-modal" v-bind:style="{display: showCredit}">
+                <div class="modal" id="page-modal" v-bind:style="{display: showAddCredit}">
                     <div class="modal-background"></div>
                     <section class="modal-card-body">
                         <div class="modal-content" id="screen">
                             <header id ="head" class="modal-card-head">
                                 <p class="modal-card-title" style="text-align: center;">ใส่บัตรเครดิต/เดบิต</p>
-                                <button class="delete"  aria-label="close" @click="closeCreditModal"></button>
+                                <button class="delete"  aria-label="close" @click="closeAddCreditModal"></button>
                             </header>
                      <!-- form start -->
                              <form>
@@ -203,7 +250,7 @@
                                     </div>
                                     <div class="field is-grouped " id="foot"> 
                                       <div class="field" >
-                                            <button class="button" @click="closeCreditModal">ยกเลิก</button>
+                                            <button class="button" @click="closeAddCreditModal">ยกเลิก</button>
                                             <button class="button is-success" @click.prevent="setCreditCard">บันทึก</button>
                                       </div>
                                     </div>
@@ -226,7 +273,6 @@ import chunk from 'chunk';
 const url_test = `http://jsonplaceholder.typicode.com/posts`;
 const url_product = `http://localhost:8080/product/`;
 const url_credit = `http://localhost:8080/creditcard`;
-const url_order = `http://localhost:8080/order`;
 
 export default {
     name: 'ProductDetail',
@@ -238,16 +284,13 @@ export default {
                 name: '',
                 price: '',
                 image: '',
-                detail: '',
-                qty: 1,
-                total: ''
+                detail: ''
             },
-            isDisabledDecrease: true,
-            isDisabledIncrease: false,
             showNavBot: false,
             showCredit: '',
+            showAddCredit:'',
             showAddress: '',
-            hasAddress: false,
+            addresDetail: false,
             hasCredit: false,
             credit: {
                 id: '',
@@ -257,8 +300,8 @@ export default {
                 name: '',
                 address: '',
                 zip: '',
-                token: '',
-                message: ''
+            
+            
             },
             address: {
                 receiver_name: '',
@@ -266,6 +309,7 @@ export default {
                 receiver_address: '',
                 receiver_province: '',
                 receiver_postcode: ''
+            
             }
         }
     },
@@ -276,32 +320,6 @@ export default {
         this.getProductDetail();
     },
     methods: {
-        IncreaseQty: function () {
-            if (this.product.qty >= 9) {
-                this.isDisabledIncrease = true;
-                if (this.product.qty === 9) {
-                    this.product.qty++;
-                    this.product.total = this.product.price * this.product.qty;
-                }     
-            } else {
-                this.product.qty++;
-                this.product.total = this.product.price * this.product.qty;
-                this.isDisabledDecrease = false;
-            }   
-        },
-        DecreaseQty: function () {
-            if (this.product.qty <= 2) {
-                this.isDisabledDecrease = true;
-                if (this.product.qty === 2) {
-                    this.product.qty--;
-                    this.product.total = this.product.price * this.product.qty;
-                }
-            } else {
-                this.product.qty--;
-                this.product.total = this.product.price * this.product.qty;
-                this.isDisabledIncrease = false;
-            }  
-        },
         getProductDetail: function() {
             axios.get(url_product + this.product.id)
             .then(response => {
@@ -309,11 +327,10 @@ export default {
                 this.product.price = response.data.price,
                 this.product.image = response.data.img_url,
                 this.product.detail = response.data.detail 
-                this.product.total = response.data.price
             })
         },
         buy: function() {
-            this.showNavBot = true;
+            this.showNavBot = true;    
         },
         showAddressModal: function() {
             this.showAddress = 'block';
@@ -327,24 +344,45 @@ export default {
         closeCreditModal: function() {
             this.showCredit = '';
         },
+        showAddCreditModal: function() {
+            this.showAddCredit = 'block';
+            this.showCredit = '';
+        },
+        closeAddCreditModal: function() {
+            this.showAddCredit = '';
+        },
+
         setAddress: function () {
             console.log(this.address.receiver_name + " " + 
                         this.address.receiver_address + " " + 
                         this.address.receiver_province + " " + 
                         this.address.receiver_postcode + " " + 
                         this.address.tel_no);
-            this.hasAddress = true;
-            this.showAddress = '';
+            axios.post(url_test, {
+                receiver_name: this.address.receiver_name,
+                tel_no: this.address.tel_no,
+                receiver_address: this.address.receiver_address,
+                receiver_province: this.address.receiver_province,
+                receiver_postcode: this.address.receiver_postcode
+            })
+            .then(response => {
+                console.log(response);
+                this.addresDetail = true;
+                this.showAddress = '';
+            })
+
         },
+
         editAddress: function() {
             this.showAddressModal();
         },
+
         setCreditCard: function() {
             // for tesing
             console.log(this.credit.id + "\n" + this.credit.exp_m + "\n" + this.credit.exp_y + "\n" + this.credit.cvv
              + "\n" + this.credit.name + "\n" + this.credit.address + "\n" + this.credit.zip);
             //  
-            axios.post(url_credit, {
+            axios.post(url_test, {
                 card_id: this.credit.id,
                 exp_m: this.credit.exp_m,
                 exp_y: this.credit.exp_y,
@@ -357,74 +395,18 @@ export default {
                 console.log(response);
                 this.hasCredit = true;
                 this.showCredit = '';
+                this.showAddCredit= '' ;
                 this.censorCreditCard;
-                this.credit.token = response.data.token,
-                this.credit.message = response.data.message
+                
             })
         },
         editCreditCard: function() {
             this.showCreditModal();
         },
+
         censorCreditCard: function() {
             credit.id.toString();
             
-        },
-        orderProduct: function() {
-            console.log(`userProfile: {
-                    firstname: "Tanapat",
-                    lastname: "Choochot"
-                },
-                startLocation: {
-                    detail: "48Shop 1/2 Surin Thepkanjana Rd, Khok Krabue",
-                    city: "Samut Sakhon",
-                    district: "Amphoe Mueang Samut Sakhon",
-                    zipcode: 74000,
-                    telNumber: null
-                },
-                destination: {
-                    detail:` + this.address.receiver_address + `,` +
-                    `city: ` + this.address.receiver_province + `,` +
-                    // district: "Thungkru",
-                    `zipcode: ` + this.address.receiver_postcode + `,` +
-                    // `telNumber: '0823463550'
-                `},` +
-                `totalPrice: ` + this.product.total + `,
-                method: ` + "Credit card" + `,
-                omiseToken: ` + this.credit.token + `,
-                products: {
-                    id: ` + this.product.id + `,
-                    qty: ` + this.product.qty +
-                `}`);
-            axios.post(url_order, {
-                userProfile: {
-                    firstname: "Tanapat",
-                    lastname: "Choochot"
-                },
-                startLocation: {
-                    detail: "48Shop 1/2 Surin Thepkanjana Rd, Khok Krabue",
-                    city: "Samut Sakhon",
-                    district: "Amphoe Mueang Samut Sakhon",
-                    zipcode: 74000,
-                    telNumber: null
-                },
-                destination: {
-                    detail: this.address.receiver_address,
-                    city: this.address.receiver_province,
-                    // district: "Thungkru",
-                    zipcode: this.address.receiver_postcode,
-                    telNumber: '0823463550'
-                },
-                totalPrice: this.product.total,
-                method: "Credit card",
-                omiseToken: this.credit.token,
-                products: {
-                    id: this.product.id,
-                    qty: this.product.qty
-                },
-            })
-            .then(response => {
-                console.log(response.data);
-            })
         }
     }
 }
@@ -593,6 +575,57 @@ nav {
 #small-button {
     margin-left: 20px;
     margin-top: 13px;
+}
+/* popup1 */
+#element-toggle {
+  display: none;
+}
+#element-toggle:checked ~ #popUpCradit {
+  display: flex;
+}
+#box-Popup{
+  max-width: 1050px;
+  height: 550px;
+  background: #E0E0E0;
+  border-radius: 10px;
+  
+}
+#cards{
+  width: 520px;
+  height: 80px;
+  margin-left: 60px;
+  margin-top: 10px;
+  background: white;
+}
+#buttom{
+  padding: 45px;
+  margin-left: 27%;
+  border: none;
+  margin-top: 40%;
+  
+
+}
+#body{
+  margin-top: -35px;
+  position: fixed;
+}
+
+#table{
+  background:#E0E0E0;
+  border: none;
+  width: 800px;
+  margin-left: 90px;
+  margin-top: 10px;
+  
+}
+#text-cradit{
+font-size: 17px;
+margin-top: 10px;
+margin-left: 70px;
+}
+#head-cradit{
+  font-size: 20px;
+  height: 100px;
 }
 
 </style>
