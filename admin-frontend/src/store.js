@@ -7,18 +7,21 @@ export default new Vuex.Store({
   state: {
     navbar: false,
     recommendProducts: [],
-    products: []
+    products: [],
+    productUnRecommend: []
   },
   mutations: {
     setNavBar: (state, show) => {
       state.navbar = show
     },
     setRecommendProducts: (state, product) => {
-      let tempRecommendProducts = state.recommendProducts.push(product)
-      state.recommendProducts = tempRecommendProducts
+      state.recommendProducts.push(product)
     },
     setProducts: (state, products) => {
       state.products = products
+    },
+    setProductUnRecommend: (state, products) => {
+      state.productUnRecommend = products
     }
   },
   actions: {
@@ -30,6 +33,9 @@ export default new Vuex.Store({
     },
     setProducts: ({ commit }, products) => {
       commit('setProducts', products)
+    },
+    setProductUnRecommend: ({ commit }, products) => {
+      commit('setProductUnRecommend', products)
     }
   },
   getters: {
@@ -41,6 +47,9 @@ export default new Vuex.Store({
     },
     getProducts: (state) => {
       return state.products
+    },
+    getProductUnRecommend: (state) => {
+      return state.productUnRecommend
     }
   }
 })

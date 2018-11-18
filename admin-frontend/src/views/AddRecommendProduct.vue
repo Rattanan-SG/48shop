@@ -10,8 +10,8 @@
         ></v-text-field>
       </v-layout>
       <v-layout wrap justify-center>
-        <v-flex v-for='product in productList' :key='product.id' md3>
-          <ProductCard :product='product'/>
+        <v-flex v-for='(product, productKey) in productList' :key='product.id' md3>
+          <ProductCard :product='product' :id='productKey' />
         </v-flex>
       </v-layout>
     </v-container>
@@ -20,7 +20,6 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import ProductCard from '@/components/ProductCard'
-import axios from '@/utils/axios'
 export default {
   name: 'addRecommendProduct',
   components: {
@@ -29,33 +28,36 @@ export default {
   data: function () {
     return {
       keyword: '',
-      productList: []
+      productList: Array
     }
   },
   methods: {
     ...mapActions([
-      'setProducts'
+      'setProducts',
+      'setProductUnRecommend'
     ]),
     onSearch () {
-      this.productList = this.getProducts.filter(product => {
+      let temp = this.getProductUnRecommend
+      this.productList = this.getProductUnRecommend.filter(product => {
         return product.name.toLowerCase().includes(this.keyword.toLowerCase())
       })
-    },
-    async setAllProducts () {
-      const { data } = await axios.get('/products')
-      console.log(data)
-      this.productList = data
-      this.setProducts(data)
+      console.log(temp)
+      this.setProductUnRecommend(temp)
+      this.setProducts(this.productList)
     }
   },
   computed: {
     ...mapGetters([
-      'getProducts'
+      'getProducts',
+      'getProductUnRecommend',
+      'getRecommendProducts'
     ])
   },
   mounted () {
-    this.productList = this.getProducts
-    this.setAllProducts()
+    this.productList = this.getProductUnRecommend
+  },
+  beforeMount () {
+
   }
 }
 </script>

@@ -15,13 +15,42 @@
           <h2>{{product.price}} ฿</h2>
         </v-flex>
         <v-spacer></v-spacer>
-        <v-btn color="primary">Add</v-btn>
+        <v-btn color="primary" @click.native='addProductToRecommend(product, id)' >Add</v-btn>
       </v-card-actions>
     </v-card>
 </template>
 <script>
+import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'productCard',
-  props: ['product']
+  props: [
+    'product',
+    'id'
+  ],
+  methods: {
+    ...mapActions([
+      'setRecommendProducts',
+      'setProductUnRecommend',
+      'setProducts'
+    ]),
+    addProductToRecommend (product, index) {
+      let temp = this.getProducts
+      const id = temp[index].id
+      temp.splice(index, 1)
+      let productLeft = this.getProductUnRecommend.filter(product => {
+        return product.id != id
+      })
+      this.setProductUnRecommend(productLeft)
+      this.setRecommendProducts(product)
+    }
+  },
+  computed: {
+    ...mapGetters([
+      'getRecommendProducts',
+      'getProducts',
+      'getProductUnRecommend'
+    ])
+  }
+
 }
 </script>
