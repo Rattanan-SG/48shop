@@ -12,68 +12,54 @@ import javax.validation.constraints.NotBlank;
 @Entity
 @Table(name = "user_profiles")
 public class UserProfile implements Serializable {
+    
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private long id;
+
     @NotBlank
     private String firstname;
+    
     @NotBlank
     private String lastname;
 
+    @NotBlank
     private String facebookToken;
 
-    private String omiseToken;
-    @NotBlank
-    private String telNumber;
-
+    
     public UserProfile() {
     }
 
     public long getId() {
-        return id;
+        return this.id;
     }
 
-    public String getTelNumber() {
-        return telNumber;
-    }
-
-    public String getOmiseToken() {
-        return omiseToken;
-    }
-    
-    public String getFacebookToken() {
-        return facebookToken;
-    }
-    
-    public String getLastname() {
-        return lastname;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getFirstname() {
-        return firstname;
+        return this.firstname;
     }
 
-    public void setTelNumber(String telNumber) {
-        this.telNumber = telNumber;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
     }
 
-    public void setOmiseToken(String omiseToken) {
-        this.omiseToken = omiseToken;
+    public String getLastname() {
+        return this.lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public String getFacebookToken() {
+        return this.facebookToken;
     }
 
     public void setFacebookToken(String facebookToken) {
         this.facebookToken = facebookToken;
     }
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
-    
-    public void setId(long id) {
-        this.id = id;
-    }
-    
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
 }
