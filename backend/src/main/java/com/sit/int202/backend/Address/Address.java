@@ -19,6 +19,9 @@ public class Address implements Serializable {
     private long id;
 
     @NotBlank
+    private String receiverName;
+    
+    @NotBlank
     private String detail;
 
     @NotBlank
