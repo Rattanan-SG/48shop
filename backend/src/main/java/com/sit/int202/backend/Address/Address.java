@@ -24,9 +24,6 @@ public class Address implements Serializable {
     @NotBlank
     private String city;
 
-    @NotBlank
-    private String district;
-
     @NotNull
     private int zipcode;
 
@@ -58,14 +55,6 @@ public class Address implements Serializable {
 
     public void setCity(String city) {
         this.city = city;
-    }
-
-    public String getDistrict() {
-        return district;
-    }
-
-    public void setDistrict(String district) {
-        this.district = district;
     }
 
     public int getZipcode() {
