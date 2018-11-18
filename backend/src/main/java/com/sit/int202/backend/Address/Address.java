@@ -20,15 +20,15 @@ public class Address implements Serializable {
 
     @NotBlank
     private String receiverName;
-    
+
     @NotBlank
     private String detail;
 
     @NotBlank
     private String city;
 
-    @NotNull
-    private int zipcode;
+    @NotBlank
+    private String zipcode;
 
     @NotBlank
     private String telNumber;
@@ -60,11 +60,11 @@ public class Address implements Serializable {
         this.city = city;
     }
 
-    public int getZipcode() {
+    public String getZipcode() {
         return zipcode;
     }
 
-    public void setZipcode(int zipcode) {
+    public void setZipcode(String zipcode) {
         this.zipcode = zipcode;
     }
 
