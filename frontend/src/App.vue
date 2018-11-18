@@ -99,17 +99,28 @@
 import axios from 'axios';
 
 const url_login = `http://localhost:8080/login`;
+const url_info = `http://localhost:8080/fbinfo`;
+const config = {
+    headers: {'Access-Control-Allow-Origin': '*',
+              'Access-Control-Allow-Methods': '*',
+              'Access-Control-Allow-Headers': '*'}
+};
 export default {
   name: 'App',
   methods: {
-    getProductDetail: function() {
-        axios.get(url_login)
-        .then(response => {
-            console.log(response)
-        })
+    login: function() {
+      window.open(url_login);
+      // this.getInfo();
+      axios.get(url_login,config)
+      .then(response => {
+          console.log("dfgsdfgsdfg" + response)
+      })
     },
-    login: function () {
-      this.getProductDetail();
+    getInfo: function () {
+       axios.get(url_info,config)
+      .then(response => {
+          console.log("info" + response)
+      })
     }
   }
 }
