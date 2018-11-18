@@ -22,8 +22,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -52,24 +55,29 @@ public class Order implements Serializable {
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Address destination;
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.MERGE)
+    @JoinColumn(name = "product_id", nullable = false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private Product product;
+
     @NotNull
-    private int trackingId;
+    private int productQuantity;
 
     @NotNull
     private long totalPrice;
 
+    @NotNull
+    private int trackingId;
+
+    @NotBlank
     private String method;
 
     private String omiseToken;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
-    @JoinTable(name = "order_has_products",
-            joinColumns = {
-                @JoinColumn(name = "order_id")},
-            inverseJoinColumns = {
-                @JoinColumn(name = "product_id")})
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    private Set<Product> products = new HashSet<>();
+    // @OneToOne(fetch = FetchType.LAZY)
+    // @JoinColumn(name = "order_has_product_order_id", nullable = false)
+    // @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    // private OrderProduct orderProduct;
 
     @Column(nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -119,6 +127,22 @@ public class Order implements Serializable {
         this.trackingId = trackingId;
     }
 
+    public Product getProduct() {
+        return this.product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public int getproductQuantity() {
+        return this.productQuantity;
+    }
+
+    public void setproductQuntity(int productQuantity) {
+        this.productQuantity = productQuantity;
+    }
+
     public long getTotalPrice() {
         return this.totalPrice;
     }
@@ -141,14 +165,6 @@ public class Order implements Serializable {
 
     public void setOmiseToken(String omiseToken) {
         this.omiseToken = omiseToken;
-    }
-
-    public Set<Product> getProducts() {
-        return products;
-    }
-
-    public void setProducts(Set<Product> products) {
-        this.products = products;
     }
 
     public Date getCreatedAt() {
