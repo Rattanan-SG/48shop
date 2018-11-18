@@ -24,6 +24,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -49,13 +50,14 @@ public class Product implements Serializable {
     @NotNull
     private double price;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false )
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "product_category_id", nullable = false)
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    @JsonProperty(value="category")
+    @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+    @JsonProperty(value = "category")
     private ProductCategory productCategory;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "products")
+    @OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @JoinColumn(name = "order_id")
     @JsonIgnore
     private Set<Order> orders = new HashSet<>();
 
