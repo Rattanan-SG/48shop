@@ -96,7 +96,6 @@
 
 <script>
 import axios from 'axios';
-import facebookLogin from 'facebook-login-vuejs';
 
 var test = 'sss';
 const url_login = `http://localhost:8080/login`;
@@ -145,14 +144,13 @@ export default {
              this.firstname = userData.first_name;
              this.lastname = userData.last_name;
              this.picture = userData.picture.data.url;
+             this.status = 'logout';
           });
         }
       });
     },
-    logout: ()=>{
-      FB.getLoginStatus((res)=>{
-        console.log(res.status)
-      });
+    logout:()=>{
+      FB.logut
     }
   }
 }
