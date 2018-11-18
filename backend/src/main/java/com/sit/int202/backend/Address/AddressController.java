@@ -22,27 +22,27 @@ class AddressController {
 
     @GetMapping("/addresses")
     public ResponseEntity<List<Address>> getAddressList() {
-        return new ResponseEntity<>(addressService.getAddressList(), HttpStatus.OK);
+        return new ResponseEntity<List<Address>>(addressService.getAddressList(), HttpStatus.OK);
     }
 
     @GetMapping("/address/{id}")
     public ResponseEntity<Address> getAddressById(@PathVariable long id) {
-        return new ResponseEntity<>(addressService.getAddressById(id).get(), HttpStatus.OK);
+        return new ResponseEntity<Address>(addressService.getAddressById(id).get(), HttpStatus.OK);
     }
 
     @PostMapping("/address")
     public ResponseEntity<Address> createAddress(@Valid @RequestBody Address address) {
-        return new ResponseEntity<>(addressService.save(address), HttpStatus.CREATED);
+        return new ResponseEntity<Address>(addressService.save(address), HttpStatus.CREATED);
     }
 
     @PutMapping("/address")
     public ResponseEntity<Address> updateAddress(@Valid @RequestBody Address address) {
-        return new ResponseEntity<>(addressService.save(address), HttpStatus.OK);
+        return new ResponseEntity<Address>(addressService.save(address), HttpStatus.OK);
     }
 
     @DeleteMapping("/address/{id}")
     public ResponseEntity<Long> deleteAddress(@PathVariable long id) {
-        return new ResponseEntity<>(addressService.delete(id), HttpStatus.OK);
+        return new ResponseEntity<Long>(addressService.delete(id), HttpStatus.OK);
     }
 
 }

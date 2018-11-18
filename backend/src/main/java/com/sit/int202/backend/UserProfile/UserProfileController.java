@@ -26,21 +26,21 @@ public class UserProfileController {
 
     @GetMapping("/profile/{id}")
     public ResponseEntity<UserProfile> getUserProfileById(@PathVariable long id) {
-        return new ResponseEntity<>(userProfileService.getUserProfileById(id).get(), HttpStatus.OK);
+        return new ResponseEntity<UserProfile>(userProfileService.getUserProfileById(id).get(), HttpStatus.OK);
     }
 
     @PostMapping("/profile")
     public ResponseEntity<UserProfile> createUserProfile(@Valid @RequestBody UserProfile userProfile) {
-        return new ResponseEntity<>(userProfileService.save(userProfile), HttpStatus.CREATED);
+        return new ResponseEntity<UserProfile>(userProfileService.save(userProfile), HttpStatus.CREATED);
     }
 
     @PutMapping("/profile")
     public ResponseEntity<UserProfile> updateUserProfile(@Valid @RequestBody UserProfile userProfile) {
-        return new ResponseEntity<>(userProfileService.save(userProfile), HttpStatus.OK);
+        return new ResponseEntity<UserProfile>(userProfileService.save(userProfile), HttpStatus.OK);
     }
 
     @DeleteMapping("/profile/{id}")
     public ResponseEntity<Long> deleteUserProfile(@PathVariable long id) {
-        return new ResponseEntity<>(userProfileService.delete(id), HttpStatus.OK);
+        return new ResponseEntity<Long>(userProfileService.delete(id), HttpStatus.OK);
     }
 }

@@ -25,24 +25,24 @@ public class ProductCategoryController {
     @GetMapping("/categories")
     public ResponseEntity<List<ProductCategory>> getProductCategoryList() {
         List<ProductCategory> productCategoryList = productCategoryService.getProductCategoryList();
-        return new ResponseEntity<>(productCategoryList, HttpStatus.OK);
+        return new ResponseEntity<List<ProductCategory>>(productCategoryList, HttpStatus.OK);
     }
 
     @GetMapping("/category/{category_id}")
     public ResponseEntity<ProductCategory> getProductCategory(@PathVariable("product_id") long category_id){
         ProductCategory productCategory = productCategoryService.getProductCategory(category_id);
-        return new ResponseEntity<>(productCategory, HttpStatus.OK);
+        return new ResponseEntity<ProductCategory>(productCategory, HttpStatus.OK);
     }
 
     @PostMapping("/category")
     public ResponseEntity<ProductCategory> createProductCategory(@Valid @RequestBody ProductCategory productCategory){
         ProductCategory productCategory_return = productCategoryService.create(productCategory);
-        return new ResponseEntity<>(productCategory_return, HttpStatus.CREATED);
+        return new ResponseEntity<ProductCategory>(productCategory_return, HttpStatus.CREATED);
     }
 
     @PutMapping("/category/{category_id}")
     public ResponseEntity<ProductCategory> updateProductCategory(@Valid @PathVariable String category_id, @RequestBody ProductCategory productCategory) {
         ProductCategory productCategory_return = productCategoryService.create(productCategory);
-        return new ResponseEntity<>(productCategory_return, HttpStatus.OK);
+        return new ResponseEntity<ProductCategory>(productCategory_return, HttpStatus.OK);
     }
 }
