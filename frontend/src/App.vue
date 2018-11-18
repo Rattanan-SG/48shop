@@ -23,8 +23,8 @@
                 <a class="button is-primary">
                   <strong>Sign up</strong>
                 </a>
-                <a class="button is-light" @click="login">
-                  Log in
+                <a class="button is-light" @click="login">    
+                  {{status}}
                 </a>
               </div>
             </div>
@@ -90,14 +90,15 @@
             </p>
           </nav>
       </div>
-    
     <router-view/>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
+import facebookLogin from 'facebook-login-vuejs';
 
+var test = 'sss';
 const url_login = `http://localhost:8080/login`;
 const url_info = `http://localhost:8080/fbinfo`;
 const config = {
@@ -105,25 +106,57 @@ const config = {
               'Access-Control-Allow-Methods': '*',
               'Access-Control-Allow-Headers': '*'}
 };
+window.fbAsyncInit = function() {
+      FB.init({
+        appId      : '253765508571750',
+        cookie     : true,
+        xfbml      : true,
+        version    : 'v3.2'
+      });
+        
+      FB.AppEvents.logPageView();   
+        
+    };
+
+    (function(d, s, id){
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) {return;}
+      js = d.createElement(s); js.id = id;
+      js.src = "https://connect.facebook.net/en_US/sdk.js";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+
 export default {
+
   name: 'App',
+  data () {
+    return {
+      firstname: '',
+      lastname: '',
+      picture:'',
+      status:'login'
+    }
+  },
   methods: {
-    login: function() {
-      window.open(url_login);
-      // this.getInfo();
-      axios.get(url_login,config)
-      .then(response => {
-          console.log("dfgsdfgsdfg" + response)
-      })
+    login: function(){
+      FB.login( (response)=>{
+        if(response.status == 'connected'){
+          FB.api('/me?fields=id,first_name,last_name,picture{url}',(userData)=>{
+             this.firstname = userData.first_name;
+             this.lastname = userData.last_name;
+             this.picture = userData.picture.data.url;
+          });
+        }
+      });
     },
-    getInfo: function () {
-       axios.get(url_info,config)
-      .then(response => {
-          console.log("info" + response)
-      })
+    logout: ()=>{
+      FB.getLoginStatus((res)=>{
+        console.log(res.status)
+      });
     }
   }
 }
+
 </script>
 
 <style>
