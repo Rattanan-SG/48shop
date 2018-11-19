@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Login from './views/Login.vue'
 import AddProduct from './views/AddProduct.vue'
-import AddRecommendProduct from './views/AddRecommendProduct'
+import DeleteProduct from './views/DeleteProduct'
 
 Vue.use(Router)
 
@@ -21,9 +21,9 @@ export default new Router({
       component: AddProduct
     },
     {
-      path: '/add-recommend-product',
-      name: 'addRecommendProduct',
-      component: AddRecommendProduct
+      path: '/delete-product',
+      name: 'deleteProduct',
+      component: DeleteProduct
     }
 
   ]
