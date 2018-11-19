@@ -24,7 +24,7 @@
                   <strong>Sign up</strong>
                 </a>
                 <a class="button is-light" @click="login">    
-                  {{status}}
+                  {{changeState}}
                 </a>
               </div>
             </div>
@@ -92,6 +92,7 @@
       </div>
     <router-view/>
   </div>
+  
 </template>
 
 <script>
@@ -117,6 +118,12 @@ window.fbAsyncInit = function() {
         
     };
 
+    function checkLoginState(){
+      FB.getLoginStatus((response)=>{
+        statusChangCallback(response)
+      });
+    }
+
     (function(d, s, id){
       var js, fjs = d.getElementsByTagName(s)[0];
       if (d.getElementById(id)) {return;}
@@ -130,28 +137,42 @@ export default {
   name: 'App',
   data () {
     return {
-      firstname: '',
-      lastname: '',
-      picture:'',
-      status:'login'
+      firstname: localStorage.getItem("firstname"),
+      lastname: localStorage.getItem("lastname"),
+      picture: localStorage.getItem("picture"),
+      userID : localStorage.getItem("userID"),
+      changeState: localStorage.getItem("changeState")
     }
   },
   methods: {
     login: function(){
-      FB.login( (response)=>{
-        if(response.status == 'connected'){
-          FB.api('/me?fields=id,first_name,last_name,picture{url}',(userData)=>{
-             this.firstname = userData.first_name;
-             this.lastname = userData.last_name;
-             this.picture = userData.picture.data.url;
-             this.status = 'logout';
+      if(localStorage.getItem("userID") == undefined){
+        FB.login( (response)=>{
+          if(response.status == 'connected'){
+            FB.api('/me?fields=id,first_name,last_name,picture{url}',(userData)=>{
+              localStorage.setItem("firstname",userData.first_name);
+              localStorage.setItem("lastname",userData.last_name);
+              localStorage.setItem("picture",userData.picture.data.url);
+              localStorage.setItem("userID",response.authResponse.userID)
+              localStorage.setItem('changeState','logout');
+              this.changeState = localStorage.getItem('changeState');
+            });
+          }
+        });
+        }
+        else if(localStorage.getItem("userID") != null){
+          alert('คุณต้องการออกจากระบบหรือไม่ ?');
+          FB.getLoginStatus((response)=>{
+            if(response && response.status === 'connected'){
+              FB.logout((response)=>{
+                localStorage.clear();
+                localStorage.setItem('changeState','login');
+                this.changeState = localStorage.getItem('changeState');
+              });
+            }
           });
         }
-      });
-    },
-    logout:()=>{
-      FB.logut
-    }
+      }
   }
 }
 
