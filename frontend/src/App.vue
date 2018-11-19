@@ -1,29 +1,51 @@
 <template>
   <div id="app">
-    <nav class="navbar" id="nav-top" role="navigation" aria-label="main navigation">
-      <div class="container" id="nav-box">
-            <router-link to="/home">
-              <img src="./assets/meepoohlogo.svg" width="220" height="100">
-            </router-link>
-        <div id="navbarBasicExample" class="navbar-menu">  
-          <div class="navbar-start">
-            <a class="navbar-item">
-                <router-link to="/home">
-                  <button class="is-primary"> Home </button>
-                </router-link>
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <router-link to="/home">
+          <img src="./assets/meepoohlogo.svg" width="220" height="100">
+        </router-link>
+
+        <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+      <div id="navbarBasicExample" class="navbar-menu">
+        <div class="navbar-start">
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link">
+              More
             </a>
+            <div class="navbar-dropdown">
+              <a class="navbar-item">
+                About
+              </a>
+              <a class="navbar-item">
+                Jobs
+              </a>
+              <a class="navbar-item">
+                Contact
+              </a>
+              <hr class="navbar-divider">
+              <a class="navbar-item">
+                Report an issue
+              </a>
+            </div>
           </div>
-          <div class="navbar-end">
-            
-              <div class="buttons" id="nav-bot">
-                <a class="button is-primary">
-                  <strong>Sign up</strong>
-                </a>
-                <a class="button is-light" @click="login">
-                  {{status}}
-                </a>
-              </div>
-            
+        </div>
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <div class="buttons">
+              <input class='button is-rounded'/>
+              <a class="button is-primary">
+                <strong>Sign up</strong>
+              </a>
+              <a class="button is-light" @click="login">
+                {{status}}
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -88,54 +110,58 @@
       </div>
     <router-view/>
   </div>
-  
+
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
 
-var test = 'sss';
+var test = "sss";
 const url_login = `http://localhost:8080/login`;
 const url_info = `http://localhost:8080/fbinfo`;
 const config = {
-    headers: {'Access-Control-Allow-Origin': '*',
-              'Access-Control-Allow-Methods': '*',
-              'Access-Control-Allow-Headers': '*'}
+  headers: {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "*",
+    "Access-Control-Allow-Headers": "*"
+  }
 };
 window.fbAsyncInit = function() {
-      FB.init({
-        appId      : '253765508571750',
-        cookie     : true,
-        xfbml      : true,
-        version    : 'v3.2'
-      });
-        
-      FB.AppEvents.logPageView();   
-        
-    };
+  FB.init({
+    appId: "253765508571750",
+    cookie: true,
+    xfbml: true,
+    version: "v3.2"
+  });
 
-    function checkLoginState(){
-      FB.getLoginStatus((response)=>{
-        statusChangCallback(response)
-      });
-    }
+  FB.AppEvents.logPageView();
+};
 
-    (function(d, s, id){
-      var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) {return;}
-      js = d.createElement(s); js.id = id;
-      js.src = "https://connect.facebook.net/en_US/sdk.js";
-      fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
+function checkLoginState() {
+  FB.getLoginStatus(response => {
+    statusChangCallback(response);
+  });
+}
+
+(function(d, s, id) {
+  var js,
+    fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {
+    return;
+  }
+  js = d.createElement(s);
+  js.id = id;
+  js.src = "https://connect.facebook.net/en_US/sdk.js";
+  fjs.parentNode.insertBefore(js, fjs);
+})(document, "script", "facebook-jssdk");
 
 export default {
-
-  name: 'App',
-  data () {
+  name: "App",
+  data() {
     return {
       user: {},
-      status : ''
-    }
+      status: ""
+    };
   },
   beforeMount() { // ทำก่อน render
     const userData = JSON.parse(localStorage.getItem('user'))
@@ -145,70 +171,61 @@ export default {
         this.status = 'login'
   },
   methods: {
-    login: function(){
-      FB.getLoginStatus((response)=>{
-        if(response.status == 'connected'){
-          FB.logout((response)=>{
+    login: function() {
+      FB.getLoginStatus(response => {
+        if (response.status == "connected") {
+          FB.logout(response => {
             localStorage.clear();
-            this.status = 'login';
+            this.status = "login";
           });
         }
         else{
           FB.login((response)=>{
-            var tmp
             FB.api('/me?fields=id,first_name,last_name,picture{url}',(userData)=>{
-              if(!userData.error){
-                localStorage.setItem('user',JSON.stringify(userData));
-                this.status = 'logout'
-              }
+              localStorage.setItem("user", JSON.stringify(userData));
+              this.status = 'logout';
             });
           });
         }
       });
     }
   }
-}
-
+};
 </script>
 
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
 }
 
 html {
-  background: #F2F2F2;
+  background: #f2f2f2;
 }
 
 #nav-box {
   width: 1000px;
 }
-#nav-top{
+#nav-top {
   height: 120px;
 }
-#nav-bot{
+#nav-bot {
   margin-bottom: -30px;
 }
 
 /* Category */
-#bar{
+#bar {
   font-size: 14px;
-  margin-left:30px;
+  margin-left: 30px;
   margin-top: 20px;
-  background:white;
-  
+  background: white;
 }
-#CategoryBar{
-  background:white;
+#CategoryBar {
+  background: white;
   justify-content: center;
-  border: 0.09em solid #E0E0E0;
+  border: 0.09em solid #e0e0e0;
   height: 40px;
 }
-
-
-
-
 </style>
