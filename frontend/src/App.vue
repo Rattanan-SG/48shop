@@ -139,13 +139,10 @@ export default {
   },
   beforeMount() { // ทำก่อน render
     const userData = JSON.parse(localStorage.getItem('user'))
-    if (userData) {
-      this.user = userData
-      this.status = 'logout'
-    }
-    else{
-      this.status = 'login'
-    }
+      if(userData){
+        this.status = 'logout'
+      }else
+        this.status = 'login'
   },
   methods: {
     login: function(){
@@ -158,9 +155,12 @@ export default {
         }
         else{
           FB.login((response)=>{
+            var tmp
             FB.api('/me?fields=id,first_name,last_name,picture{url}',(userData)=>{
-              localStorage.setItem("user", JSON.stringify(userData));
-              this.status = 'logout';
+              if(!userData.error){
+                localStorage.setItem('user',JSON.stringify(userData));
+                this.status = 'logout'
+              }
             });
           });
         }
