@@ -23,6 +23,7 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import ProductCard from '@/components/ProductCard'
+import axios from '@/utils/axios'
 export default {
   name: 'deleteProduct',
   components: {
@@ -36,12 +37,19 @@ export default {
   },
   methods: {
     ...mapActions([
-      'setProducts'
+      'setProducts',
+      'setDefaultProducts'
     ]),
     onSearch () {
       this.setProducts(this.getDefaultProducts.filter(product => {
         return product.name.toLowerCase().includes(this.keyword.toLowerCase())
       }))
+    },
+    async setAllProducts () {
+      const { data } = await axios.get('/products')
+      console.log(data)
+      this.setDefaultProducts(data)
+      this.setProducts(data)
     }
   },
   computed: {
@@ -52,6 +60,7 @@ export default {
   },
   mounted () {
     this.productList = this.getProducts
+    this.setAllProducts()
   }
 }
 </script>

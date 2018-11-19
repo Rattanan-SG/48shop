@@ -37,21 +37,23 @@ export default {
     ...mapActions([
       'setNavBar',
       'setDefaultProducts',
-      'setProducts'
+      'setProducts',
+      'setCategories'
     ]),
     onLogin () {
       this.setNavBar(true)
-      this.setAllProducts()
     },
-    async setAllProducts () {
-      const { data } = await axios.get('/products')
+    async setAllCategories () {
+      const { data } = await axios.get('/categories')
       console.log(data)
-      this.setDefaultProducts(data)
-      this.setProducts(data)
+      this.setCategories(data)
     }
+  },
+  computed: {
   },
   mounted () {
     this.setNavBar(false)
+    this.setAllCategories()
   }
 }
 </script>
