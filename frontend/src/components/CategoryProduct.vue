@@ -4,7 +4,8 @@
         <div class="field is-grouped" id="field-box" v-for="products in chunkedProducts" :key="products.id">
             <!-- <div class="columns" v-for="products in chunkedProducts" :key="products.id">
                 <div class="column" v-for="product in products" :key="product.id"> -->
-                    <router-link :to="{name: 'ProductDetail', params: { id: product.id }}" v-for="product in products" :key="product.id">
+                    <router-link :to="{name: 'ProductDetail', params: { id: product.id }}" v-for="product in products" :key="product.id"
+                    @click.native="scrollToTop">
                         <div class="card" id="items" >
                             <div class="card-image is-4by3">
                             <img :src=product.image alt="Placeholder image" id="img">
@@ -65,6 +66,9 @@ export default {
             });
           });
       })
+    },
+    scrollToTop: function() {
+        window.scrollTo(0,0);
     }
   },
   mounted () {
