@@ -148,31 +148,35 @@ export default {
       msg: 'หน้าแรก สำหรับแสดงสินค้า',
       activateTab: 1,
       currentOffset: 0,
-      windowSize: 3,
-      paginationFactor: 220,
-      recProduct: [19,22,3,4,8,12,13,15,26,37,5,6,9,23,32,42],
-      topProduct: [1,2,3,5,6,7,18,32,35,39,41,45],
+      windowSize: 0,
+      paginationFactor: 150, // ความเร็วการสไลด์ size * 10
       products: [],
+      recProducts: [],
+      recProductId: [19,22,3,4,34,17,13,1,26,37,5,49,23,32,42],
+      topProducts: [],
+      topProductId: [1,2,3,5,6,7,18,32,35,39,41,45],
       product: {
         id: 0,
         name: '',
         price: '',
         image: '',
-        detail: ''
       }
     }
   },
   mounted () {
-    this.getAllProduct();
+    this.getAllProducts();
     this.getRecProduct();
   },
   computed: {
     atEndOfList() {
-      return this.currentOffset <= (this.paginationFactor * -1) * (this.products.length - this.windowSize);
+      return this.currentOffset <= (this.paginationFactor * -1) * (this.recProducts.size - this.windowSize);
     },
     atHeadOfList() {
       return this.currentOffset === 0;
     },
+    chunkedProducts: function() {
+        return chunk(this.products, 5)
+    }
   },
   methods: {
     moveCarousel: function (direction) {
