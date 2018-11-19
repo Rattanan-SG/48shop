@@ -33,16 +33,10 @@
 import { mapActions } from 'vuex'
 import axios from '@/utils/axios'
 export default {
-  data: () => ({
-    drawer: null
-  }),
-  props: {
-    source: String
-  },
   methods: {
     ...mapActions([
       'setNavBar',
-      'setProductUnRecommend',
+      'setDefaultProducts',
       'setProducts'
     ]),
     onLogin () {
@@ -52,7 +46,7 @@ export default {
     async setAllProducts () {
       const { data } = await axios.get('/products')
       console.log(data)
-      this.setProductUnRecommend(data)
+      this.setDefaultProducts(data)
       this.setProducts(data)
     }
   },

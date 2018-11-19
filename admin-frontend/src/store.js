@@ -6,50 +6,40 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     navbar: false,
-    recommendProducts: [],
-    products: [],
-    productUnRecommend: []
+    defaultProducts: [],
+    products: []
   },
   mutations: {
     setNavBar: (state, show) => {
       state.navbar = show
     },
-    setRecommendProducts: (state, product) => {
-      state.recommendProducts.push(product)
+    setDefaultProducts: (state, products) => {
+      state.defaultProducts = products
     },
     setProducts: (state, products) => {
       state.products = products
-    },
-    setProductUnRecommend: (state, products) => {
-      state.productUnRecommend = products
     }
   },
   actions: {
     setNavBar: ({ commit }, show) => {
       commit('setNavBar', show)
     },
-    setRecommendProducts: ({ commit }, product) => {
-      commit('setRecommendProducts', product)
+    setDefaultProducts: ({ commit }, products) => {
+      commit('setDefaultProducts', products)
     },
     setProducts: ({ commit }, products) => {
       commit('setProducts', products)
-    },
-    setProductUnRecommend: ({ commit }, products) => {
-      commit('setProductUnRecommend', products)
     }
   },
   getters: {
     getNavBar: (state) => {
       return state.navbar
     },
-    getRecommendProducts: (state) => {
-      return state.recommendProducts
+    getDefaultProducts: (state) => {
+      return state.defaultProducts
     },
     getProducts: (state) => {
       return state.products
-    },
-    getProductUnRecommend: (state) => {
-      return state.productUnRecommend
     }
   }
 })
