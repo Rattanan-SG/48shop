@@ -23,8 +23,8 @@
                 <a class="button is-primary">
                   <strong>Sign up</strong>
                 </a>
-                <a class="button is-light" @click="login">    
-                  {{changeState}}
+                <a class="button is-light" @click="login">
+                  {{status}}
                 </a>
               </div>
             </div>
@@ -137,42 +137,39 @@ export default {
   name: 'App',
   data () {
     return {
-      firstname: localStorage.getItem("firstname"),
-      lastname: localStorage.getItem("lastname"),
-      picture: localStorage.getItem("picture"),
-      userID : localStorage.getItem("userID"),
-      changeState: localStorage.getItem("changeState")
+      user: {},
+      status : ''
+    }
+  },
+  beforeMount() { // ทำก่อน render
+    const userData = JSON.parse(localStorage.getItem('user'))
+    if (userData) {
+      this.user = userData
+      this.status = 'logout'
+    }
+    else{
+      this.status = 'login'
     }
   },
   methods: {
     login: function(){
-      if(localStorage.getItem("userID") == undefined){
-        FB.login( (response)=>{
-          if(response.status == 'connected'){
-            FB.api('/me?fields=id,first_name,last_name,picture{url}',(userData)=>{
-              localStorage.setItem("firstname",userData.first_name);
-              localStorage.setItem("lastname",userData.last_name);
-              localStorage.setItem("picture",userData.picture.data.url);
-              localStorage.setItem("userID",response.authResponse.userID)
-              localStorage.setItem('changeState','logout');
-              this.changeState = localStorage.getItem('changeState');
-            });
-          }
-        });
-        }
-        else if(localStorage.getItem("userID") != null){
-          alert('คุณต้องการออกจากระบบหรือไม่ ?');
-          FB.getLoginStatus((response)=>{
-            if(response && response.status === 'connected'){
-              FB.logout((response)=>{
-                localStorage.clear();
-                localStorage.setItem('changeState','login');
-                this.changeState = localStorage.getItem('changeState');
-              });
-            }
+      FB.getLoginStatus((response)=>{
+        if(response.status == 'connected'){
+          FB.logout((response)=>{
+            localStorage.clear();
+            this.status = 'login';
           });
         }
-      }
+        else{
+          FB.login((response)=>{
+            FB.api('/me?fields=id,first_name,last_name,picture{url}',(userData)=>{
+              localStorage.setItem("user", JSON.stringify(userData));
+              this.status = 'logout';
+            });
+          });
+        }
+      });
+    }
   }
 }
 
