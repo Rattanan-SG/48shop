@@ -7,7 +7,8 @@ export default new Vuex.Store({
   state: {
     navbar: false,
     defaultProducts: [],
-    products: []
+    products: [],
+    categories: []
   },
   mutations: {
     setNavBar: (state, show) => {
@@ -18,6 +19,9 @@ export default new Vuex.Store({
     },
     setProducts: (state, products) => {
       state.products = products
+    },
+    setCategories: (state, categories) => {
+      state.categories = categories
     }
   },
   actions: {
@@ -29,6 +33,9 @@ export default new Vuex.Store({
     },
     setProducts: ({ commit }, products) => {
       commit('setProducts', products)
+    },
+    setCategories: ({ commit }, categories) => {
+      commit('setCategories', categories)
     }
   },
   getters: {
@@ -40,6 +47,9 @@ export default new Vuex.Store({
     },
     getProducts: (state) => {
       return state.products
+    },
+    getCategories: (state) => {
+      return state.categories
     }
   }
 })
