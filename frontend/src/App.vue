@@ -2,24 +2,20 @@
   <div id="app">
     <nav class="navbar" id="nav-top" role="navigation" aria-label="main navigation">
       <div class="container" id="nav-box">
-        <div class="navbar-brand">
-          <a class="navbar-item">
             <router-link to="/home">
-              <img src="./assets/logo.png" width="200" height="100">
+              <img src="./assets/meepoohlogo.svg" width="220" height="100">
             </router-link>
-          </a>
-        </div>
         <div id="navbarBasicExample" class="navbar-menu">  
           <div class="navbar-start">
             <a class="navbar-item">
                 <router-link to="/home">
-                  Home
+                  <button class="is-primary"> Home </button>
                 </router-link>
             </a>
           </div>
           <div class="navbar-end">
-            <div class="navbar-item">
-              <div class="buttons">
+            
+              <div class="buttons" id="nav-bot">
                 <a class="button is-primary">
                   <strong>Sign up</strong>
                 </a>
@@ -27,7 +23,7 @@
                   {{status}}
                 </a>
               </div>
-            </div>
+            
           </div>
         </div>
       </div>
@@ -191,7 +187,10 @@ html {
   width: 1000px;
 }
 #nav-top{
-  height: 90px;
+  height: 120px;
+}
+#nav-bot{
+  margin-bottom: -30px;
 }
 
 /* Category */
