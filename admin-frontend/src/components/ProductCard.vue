@@ -28,7 +28,7 @@
               </v-btn>
               <v-card>
                 <v-card-title class="headline">Delete?</v-card-title>
-                <v-card-text>Do you want to delete {{product.name}} ?</v-card-text>
+                <v-card-text>Do you want to delete <b>{{product.name}}</b> ?</v-card-text>
                 <v-card-actions>
                   <v-spacer></v-spacer>
                   <v-btn @click="dialog = false">Disagree</v-btn>
