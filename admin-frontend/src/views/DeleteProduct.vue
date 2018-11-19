@@ -2,6 +2,9 @@
   <v-app>
     <v-container>
       <v-layout>
+        <h4>{{this.getProducts.length}} product(s) left</h4>
+      </v-layout>
+      <v-layout>
         <v-text-field
           v-model='keyword'
           @keyup='onSearch'
@@ -9,8 +12,8 @@
           prepend-inner-icon='search'
         ></v-text-field>
       </v-layout>
-      <v-layout wrap justify-center>
-        <v-flex v-for='(product, productKey) in productList' :key='product.id' md3>
+      <v-layout wrap align-center>
+        <v-flex v-for='(product, productKey) in getProducts' :key='product.id' md2>
           <ProductCard :product='product' :id='productKey' />
         </v-flex>
       </v-layout>
@@ -21,7 +24,7 @@
 import { mapGetters, mapActions } from 'vuex'
 import ProductCard from '@/components/ProductCard'
 export default {
-  name: 'addRecommendProduct',
+  name: 'deleteProduct',
   components: {
     ProductCard
   },
@@ -33,31 +36,22 @@ export default {
   },
   methods: {
     ...mapActions([
-      'setProducts',
-      'setProductUnRecommend'
+      'setProducts'
     ]),
     onSearch () {
-      let temp = this.getProductUnRecommend
-      this.productList = this.getProductUnRecommend.filter(product => {
+      this.setProducts(this.getDefaultProducts.filter(product => {
         return product.name.toLowerCase().includes(this.keyword.toLowerCase())
-      })
-      console.log(temp)
-      this.setProductUnRecommend(temp)
-      this.setProducts(this.productList)
+      }))
     }
   },
   computed: {
     ...mapGetters([
       'getProducts',
-      'getProductUnRecommend',
-      'getRecommendProducts'
+      'getDefaultProducts'
     ])
   },
   mounted () {
-    this.productList = this.getProductUnRecommend
-  },
-  beforeMount () {
-
+    this.productList = this.getProducts
   }
 }
 </script>
