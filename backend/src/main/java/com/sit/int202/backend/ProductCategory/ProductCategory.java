@@ -37,7 +37,7 @@ public class ProductCategory implements Serializable {
     @OneToMany(mappedBy = "productCategory", fetch = FetchType.LAZY)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @JsonIgnore
-    private Set<Product> products = new HashSet<>();
+    private List<Product> products;
 
     public ProductCategory() {
 
@@ -59,11 +59,11 @@ public class ProductCategory implements Serializable {
         this.categoryName = categoryName;
     }
 
-    public Set<Product> getProducts() {
+    public List<Product> getProducts() {
         return this.products;
     }
 
-    public void setProducts(Set<Product> products) {
+    public void setProducts(List<Product> products) {
         this.products = products;
     }
 

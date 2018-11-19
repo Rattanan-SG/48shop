@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -29,6 +30,12 @@ class ProductController {
     @GetMapping("/product/{id}")
     public ResponseEntity<Product> getProductById(@PathVariable long id) {
         return new ResponseEntity<Product>(productService.getProductById(id).get(), HttpStatus.OK);
+    }
+
+    @GetMapping("/product")
+    public ResponseEntity<List<Product>> getProductListByCategoryId(@RequestParam(value = "category") long id) {
+        List<Product> productList = productService.getProductListByCategoryId(id);
+        return new ResponseEntity<List<Product>>(productList, HttpStatus.OK);
     }
 
     @PostMapping("/product")
