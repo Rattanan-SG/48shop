@@ -9,6 +9,9 @@ import java.util.Properties;
 import java.util.TreeMap;
 
 import com.fasterxml.jackson.databind.util.JSONPObject;
+import com.sit.int202.backend.Address.Address;
+import com.sit.int202.backend.Address.AddressService;
+import com.sit.int202.backend.UserProfile.UserProfileService;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -33,6 +36,12 @@ public class OrderService {
 
     @Autowired
     private OrderRepository orderRepository;
+
+    @Autowired
+    private AddressService addressService;
+
+    @Autowired
+    private UserProfileService userProfileService;
     
     @Transactional
     public List<Order> getOrderList(){
@@ -44,6 +53,9 @@ public class OrderService {
     }
     
     public Order save(Order order){
+        addressService.save(order.getDestination());
+        addressService.save(order.getStartLocation());
+        userProfileService.save(order.getUserProfile());
         return orderRepository.save(order);
     }
     

@@ -76,4 +76,11 @@ public class Address implements Serializable {
         this.telNumber = telNumber;
     }
 
+    public String getReceiverName(){
+        return receiverName;
+    }
+    public void setReceiverName(String receiverName){
+        this.receiverName = receiverName;
+    }
+
 }
