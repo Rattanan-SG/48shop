@@ -7,17 +7,23 @@
                     <img :src=product.image alt="Placeholder image">
                 </div>
                 <div class="column">
-                    <div class="card">
-                        <div class="card-header">
-                            {{product.name}}
-                        </div>
-                        <div class="card-content">
-                            {{product.price}}
-                        </div>
-                        <div class="card-footer">
-                            <div class="button" @click="buy()" :disabled="showNavBot">ซื้อสินค้า</div>
+                    {{product.name}}
+                    <br>
+                    {{product.price}}
+                    <div class="field has-addons">
+                        <div class="control">
+                            <a class="button is-info" @click="DecreaseQty" :disabled="isDisabledDecrease">
+                            -
+                            </a>
+                        </div>                  
+                        <input style="width: 40px; hight:40px; text-align: center" type="text" :value="product.qty" readonly>
+                        <div class="control">
+                            <a class="button is-info" @click="IncreaseQty" :disabled="isDisabledIncrease">
+                            +
+                            </a>
                         </div>
                     </div>
+                    <div class="button" @click="buy()" :disabled="showNavBot">ซื้อสินค้า</div>
                 </div>
             </div>
         </div>
@@ -67,9 +73,12 @@
                             </template>  
                         </ol> 
                     </div>
-                    <div class="column">
-                        ราคา {{product.price}}
+                  <div class="column">
+                        ราคา {{product.total}}
                     </div>
+                    <a class="button is-primary" @click="orderProduct" :disabled="!hasCredit && !hasCredit">
+                        <strong>ยืนยันการซื้อ</strong>
+                    </a>
                 </div>
             </div>
         </div>
@@ -335,6 +344,7 @@ import chunk from 'chunk';
 const url_test = `http://jsonplaceholder.typicode.com/posts`;
 const url_product = `http://localhost:8080/product/`;
 const url_credit = `http://localhost:8080/creditcard`;
+const url_order = `http://localhost:8080/order`;
 
 export default {
     name: 'ProductDetail',
@@ -346,8 +356,12 @@ export default {
                 name: '',
                 price: '',
                 image: '',
-                detail: ''
+                detail: '',
+                qty: 1,
+                total: ''
             },
+            isDisabledDecrease: true,
+            isDisabledIncrease: false,
             showNavBot: false,
             showCredit: '',
             showAddCredit:'',
@@ -372,7 +386,6 @@ export default {
                 receiver_address: '',
                 receiver_province: '',
                 receiver_postcode: ''
-            
             }
         }
     },
@@ -383,6 +396,32 @@ export default {
         this.getProductDetail();
     },
     methods: {
+        IncreaseQty: function () {
+            if (this.product.qty >= 9) {
+                this.isDisabledIncrease = true;
+                if (this.product.qty === 9) {
+                    this.product.qty++;
+                    this.product.total = this.product.price * this.product.qty;
+                }     
+            } else {
+                this.product.qty++;
+                this.product.total = this.product.price * this.product.qty;
+                this.isDisabledDecrease = false;
+            }   
+        },
+        DecreaseQty: function () {
+            if (this.product.qty <= 2) {
+                this.isDisabledDecrease = true;
+                if (this.product.qty === 2) {
+                    this.product.qty--;
+                    this.product.total = this.product.price * this.product.qty;
+                }
+            } else {
+                this.product.qty--;
+                this.product.total = this.product.price * this.product.qty;
+                this.isDisabledIncrease = false;
+            }  
+        },
         getProductDetail: function() {
             axios.get(url_product + this.product.id)
             .then(response => {
@@ -390,6 +429,7 @@ export default {
                 this.product.price = response.data.price,
                 this.product.image = response.data.img_url,
                 this.product.detail = response.data.detail 
+                 this.product.total = response.data.price
             })
         },
         buy: function() {
@@ -421,38 +461,24 @@ export default {
         closeAddCreditModal: function() {
             this.showAddCredit = '';
         },
-
         setAddress: function () {
             console.log(this.address.receiver_name + " " + 
                         this.address.receiver_address + " " + 
                         this.address.receiver_province + " " + 
                         this.address.receiver_postcode + " " + 
                         this.address.tel_no);
-            axios.post(url_test, {
-                receiver_name: this.address.receiver_name,
-                tel_no: this.address.tel_no,
-                receiver_address: this.address.receiver_address,
-                receiver_province: this.address.receiver_province,
-                receiver_postcode: this.address.receiver_postcode
-            })
-            .then(response => {
-                console.log(response);
-                this.addresDetail = true;
-                this.showAddress = '';
-            })
-
+            this.hasAddress = true;
+            this.showAddress = '';
         },
-
         editAddress: function() {
             this.showAddressModal();
         },
-
         setCreditCard: function() {
             // for tesing
             console.log(this.credit.id + "\n" + this.credit.exp_m + "\n" + this.credit.exp_y + "\n" + this.credit.cvv
              + "\n" + this.credit.name + "\n" + this.credit.address + "\n" + this.credit.zip);
             //  
-            axios.post(url_test, {
+            axios.post(url_credit, {
                 card_id: this.credit.id,
                 exp_m: this.credit.exp_m,
                 exp_y: this.credit.exp_y,
@@ -468,16 +494,15 @@ export default {
                 this.showAddCredit= '' ;
                 this.showAddAddress='';
                 this.censorCreditCard;
-                
+                this.credit.token = response.data.token,
+                this.credit.message = response.data.message
             })
         },
         editCreditCard: function() {
             this.showCreditModal();
         },
-
         censorCreditCard: function() {
             credit.id.toString();
-            
         },
         orderProduct: function() {
             axios.post(url_order, {
@@ -742,3 +767,4 @@ margin-left: 70px;
 }
 
 </style>
+
