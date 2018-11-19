@@ -48,7 +48,7 @@
                                 </p>
                             </template>
                             <template v-else>
-                                <a @click="showAddressModal" class="is-size-7">+ ใส่ที่อยู่</a>
+                                <a @click="showAddAddressModal" class="is-size-7">+ ใส่ที่อยู่</a>
                             </template>  
                             <div class="field is-grouped " id="form">
                             <p style="margin-top: 13px;"> ชำระเงินด้วย:</p>
@@ -73,6 +73,68 @@
                 </div>
             </div>
         </div>
+        <!-- popupAddress 1 -->
+        <div class="modal-card" id="popUpAddCradit">
+    <div class="container" >
+         <div class="modal" id="page-modal" v-bind:style="{display: showAddAddress}">
+            <div class="modal-background"></div>
+             <section class="modal-card-body">
+             <form>
+                <div class="modal-content">
+                    <div class="modal-content" id="box-Popup">
+                        <div id="#head-cradit">
+                            <header class="modal-card-head" id="head-cradit">
+                                 <p class="modal-card-title" style="text-align: center">เลือกที่อยู่</p>
+                            </header>
+                        </div>
+                    <table class="table"   id="table"> 
+                             <th id="text" style="color:#9E9E9E; font-size: 12px;">เลือก</th>
+                             <th id="text" style="color:#9E9E9E; font-size: 12px;;">ที่อยู่</th> 
+                             <th id="text" style="color:#9E9E9E; font-size: 12px;">เบอร์โทรศัพท์</th>
+                    </table>
+                    <div id="body">
+                        <div class="card-content" id="cards"  >
+                            <div class="field is-grouped">
+                                <a class="button" style="margin-right: 25px;">เลือก</a>
+                                    <p class="field" id="address">
+                                         160 ถนนพระรามที่ 2 แขวงแสมดำ เขตบางขุนเทียน กรุงเทพฯ 10150
+                                    </p>
+                                    <p class="field" id="text-add">
+                                         091-629-5799
+                                    </p>
+                            </div>
+                        </div>
+                            <div class="card-content" id="cards" >
+                                <div class="field is-grouped">
+                                    <a class="button" style="margin-right: 25px; background-color:#714EC9; color:white;">เลือก</a>
+                                    <p class="text" id="address">
+                                         126 มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าธนบุรี (มจธ.) ถนนประชาอุทิศ แขวงบางมด เขตทุ่งครุ กรุงเทพมหานคร 10140
+                                    </p>
+                                     <p class="text" id="text-add">
+                                         093-945-2455
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="card-content" id="cards" >
+                                <div class="field is-grouped " >
+                                    <a class="button" style="margin-right: 25px; background-color:#373785  ; color:white;" @click="showAddressModal">เพิ่มที่อยู่</a>
+                                </div>
+                            </div>
+                          
+                    </div>
+                    <div id="buttom" >
+                        <div class="field is-grouped">
+                            <a class="button" style="margin-right: 20px;  width: 90px;" for="element-toggle" @click="closeAddAddressModal"> ยกเลิก</a>  
+                            <a class="button" style="margin-right: 20px; background-color:#714EC9; color:white;  width: 90px;">บันทึก</a>  
+                        </div>
+                    </div>
+                    </div>
+                </div>      
+                </form>
+            </section>
+            </div>
+        </div>
+</div>    
         <!-- popupAddress -->
         <div class="modal-card" id="popUpAddress">
             <div class="container" >
@@ -83,20 +145,20 @@
                             <!-- Address Form start here-->
                             <form>
                             <header id ="head" class="modal-card-head">
-                                <p class="modal-card-title">ส่งสินค้าไปที่</p>
+                                <p class="modal-card-title" style="text-align: center">ส่งสินค้าไปที่</p>
                                 <button class="delete"  aria-label="close" @click="closeAddressModal"></button>
                             </header>
                             <div class="columns is-multiline" style=" display: flex;" id="bodyPopUpAddress">
                                 <div class="field is-horizontal" id="addressbox">
                                     <div class="field" >
-                                        <label class="label">ชื่อ - นามสกุล</label>
+                                        <label class="label" id="text">ชื่อ - นามสกุล</label>
                                         <div class="control">
                                             <input class="input" type="text" placeholder="Ex. กิตฮับ ขยันอัพจัง" style="width: 300px;"
                                             v-model="address.receiver_name">
                                         </div>
                                     </div>
                                     <div class="field" style="margin-left: 60px;">
-                                        <label class="label">หมายเลขโทรศัพท์ (สำหรับติดต่อ)</label>
+                                        <label class="label" id="text">หมายเลขโทรศัพท์ (สำหรับติดต่อ)</label>
                                         <div class="control">
                                             <input class="input" type="text" placeholder="Ex. 062-0672928 " style="width: 300px;" 
                                             v-model="address.tel_no">
@@ -104,21 +166,21 @@
                                     </div>
                                 </div>
                                 <div class="field" id="addressbox-line2">
-                                    <label class="label">ที่อยู่ในการจัดส่ง</label>
+                                    <label class="label" id="text" >ที่อยู่ในการจัดส่ง</label>
                                     <div class="control">
                                         <textarea class="textarea" id="address" placeholder="Ex. เช่น 112/44 ตึกหอสมุด ด้านใน KMUTT ถนนสุขสบายดี ตำบลมะละกอ" style="height: 100px; width: 300px;"
                                         v-model="address.receiver_address"></textarea>
                                     </div>
                                 </div>
                                 <div class="field" style="margin-left: 400px; margin-top: 100px;">
-                                    <label class="label">จังหวัด</label>
+                                    <label class="label" id="text">จังหวัด</label>
                                     <div class="control">
                                         <input id="province" class="input" type="text" placeholder="Ex. กรุงเทพมหานคร " style="width: 300px; height: 50px;"
                                         v-model="address.receiver_province">
                                     </div>
                                 </div>
                                 <div class="field" style="margin-left: 400px; margin-bottom: 2000px;">
-                                    <label class="label">หมายเลขไปรษณีย์</label>
+                                    <label class="label" id="text">หมายเลขไปรษณีย์</label>
                                     <div class="control">
                                         <input id="postcode" class="input" type="text" placeholder="Ex. 10140 " style="width: 300px; height: 50px;"
                                         v-model="address.receiver_postcode">
@@ -148,7 +210,7 @@
                     <div class="modal-content" id="box-Popup">
                         <div id="#head-cradit">
                             <header class="modal-card-head" id="head-cradit">
-                                 <p class="modal-card-title" style="  margin-left: 190px;">เพิ่มบัตรเครดิต/เดบิต</p>
+                                 <p class="modal-card-title" style="text-align: center;">เพิ่มบัตรเครดิต/เดบิต</p>
                             </header>
                         </div>
                     <table class="table"   id="table"> 
@@ -290,6 +352,7 @@ export default {
             showCredit: '',
             showAddCredit:'',
             showAddress: '',
+            showAddAddress:'',
             addresDetail: false,
             hasCredit: false,
             credit: {
@@ -299,13 +362,13 @@ export default {
                 cvv: '',
                 name: '',
                 address: '',
-                zip: 0,
+                zip: '',
                 token: '',
                 message: ''
             },
             address: {
                 receiver_name: '',
-                tel_no: 0,
+                tel_no: '',
                 receiver_address: '',
                 receiver_province: '',
                 receiver_postcode: ''
@@ -332,8 +395,15 @@ export default {
         buy: function() {
             this.showNavBot = true;    
         },
+        showAddAddressModal: function() {
+            this.showAddAddress = 'block';
+        },
+        closeAddAddressModal: function() {
+            this.showAddAddress = '';
+        },
         showAddressModal: function() {
             this.showAddress = 'block';
+            this.showAddAddress = '';
         },
         closeAddressModal: function() {
             this.showAddress = '';
@@ -396,6 +466,7 @@ export default {
                 this.hasCredit = true;
                 this.showCredit = '';
                 this.showAddCredit= '' ;
+                this.showAddAddress='';
                 this.censorCreditCard;
                 
             })
@@ -474,8 +545,9 @@ export default {
   background: white;
   width: 1000px;
   min-height: 1000px;
-  margin-top: 13px;
+  margin-top: 10px;
   box-shadow: 0 4px 15px 0 rgba(40,44,53,.06), 0 2px 2px 0 rgba(40,44,53,.08);
+  padding: 50px;
 }
 
 html {
@@ -658,6 +730,15 @@ margin-left: 70px;
 #head-cradit{
   font-size: 20px;
   height: 100px;
+}
+#address{
+    font-size: 10px;
+    width: 370px;
+}
+#text-add{
+    font-size: 10px;
+    width: 100px;
+    margin-right: -25px;
 }
 
 </style>
