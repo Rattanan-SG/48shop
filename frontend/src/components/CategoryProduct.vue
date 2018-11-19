@@ -1,6 +1,8 @@
 <template>
   <div id="CategoryProduct">
     <div class="container" id="Category-box">
+        <hr>
+        <p id="Category-name">{{$route.query.category_name}}</p>
         <div class="field is-grouped" id="field-box" v-for="products in chunkedProducts" :key="products.id">
             <!-- <div class="columns" v-for="products in chunkedProducts" :key="products.id">
                 <div class="column" v-for="product in products" :key="product.id"> -->
@@ -84,10 +86,15 @@ export default {
 </script>
 
 <style>
+#Category-name{
+    margin-inline-start: 35px;
+    font: 22px bolder;
+    color: rebeccapurple;
+}
 #Category-box{
     background:white;
     width: 1000px;
-    height: 700px;
+    height: auto;
     margin-top: 35px;
 }
 #items{

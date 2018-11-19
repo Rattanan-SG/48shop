@@ -31,56 +31,56 @@
       <div class="field is-grouped" id="CategoryBar">
           <nav class="level" id="bar">
             <p class="level-item has-text-centered">
-              <router-link to="/category">
+              <router-link to="/category?category_name=เสื้อผ้าและแฟชั่น">
                 เสื้อผ้าและแฟชั่น
               </router-link>
             </p>
           </nav>
           <nav class="level" id="bar">
             <p class="level-item has-text-centered">
-              <router-link to="/category">
+              <router-link to="/category?category_name=สุขภาพและความงาม">
                 สุขภาพและความงาม
               </router-link>
             </p>
           </nav>
           <nav class="level" id="bar">
             <p class="level-item has-text-centered">
-              <router-link to="/category">
+              <router-link to="/category?category_name=อุปกรณ์ทำครัว">
                 อุปกรณ์ทำครัว
               </router-link>
             </p>
           </nav>
           <nav class="level" id="bar">
             <p class="level-item has-text-centered">
-              <router-link to="/category">
+              <router-link to="/category?category_name=บ้านและไลฟ์สไตล์">
                 บ้านและไลฟ์สไตล์
               </router-link>
             </p>
           </nav>
           <nav class="level" id="bar">
             <p class="level-item has-text-centered">
-              <router-link to="/category">
+              <router-link to="/category?category_name=เครื่องใช้ไฟฟ้าในบ้าน">
                 เครื่องใช้ไฟฟ้าในบ้าน
               </router-link>
             </p>
           </nav>
           <nav class="level" id="bar">
             <p class="level-item has-text-centered">
-              <router-link to="/category">
+              <router-link to="/category?category_name=อุปกรณ์อิเล็กทรอนิกส์">
                 อุปกรณ์อิเล็กทรอนิกส์
               </router-link>
             </p>
           </nav>
           <nav class="level" id="bar">
             <p class="level-item has-text-centered">
-              <router-link to="/category">
+              <router-link to="/category?category_name=อุปกรณ์กีฬา">
                 อุปกรณ์กีฬา
               </router-link>
             </p>
           </nav>
           <nav class="level" id="bar">
             <p class="level-item has-text-centered" style=" margin-bottom:18px;">
-              <router-link to="/category">
+              <router-link to="/category?category_name=อุปกรณ์ยานยนต์">
                 อุปกรณ์ยานยนต์
               </router-link>
             </p>
