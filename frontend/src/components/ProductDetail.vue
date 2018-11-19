@@ -133,7 +133,7 @@
                     </div>
                     <div id="buttom" >
                         <div class="field is-grouped">
-                            <a class="button" style="margin-right: 20px;  width: 90px;" for="element-toggle" @click="closeAddAddressModal"> ยกเลิก</a>  
+                            <a class="button" style="margin-right: 20px;  width: 90px;" for="element-toggle" @click.prevent="closeAddAddressModal"> ยกเลิก</a>  
                             <a class="button" style="margin-right: 20px; background-color:#714EC9; color:white;  width: 90px;">บันทึก</a>  
                         </div>
                     </div>
