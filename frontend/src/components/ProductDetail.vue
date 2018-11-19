@@ -1,35 +1,41 @@
 <template>
     <div class="ProductDetail">
         <div class="container" id="product-box">
-            <h1>{{product.id}}</h1>
             <div class="columns">
-                <div class="column is-one-fifth">
+                <div class="column is-one-fifth" id="item">
                     <img :src=product.image alt="Placeholder image">
                 </div>
                 <div class="column">
-                    {{product.name}}
-                    <br>
-                    {{product.price}}
-                    <div class="field has-addons">
-                        <div class="control">
-                            <a class="button is-info" @click="DecreaseQty" :disabled="isDisabledDecrease">
+                    <h1 style="font-size: 24px; margin-top: 20px;">{{product.name}}</h1>
+                    <h1 class="field" id="price" style="padding:12px; padding-left: 26px  ">{{product.price+"  บาท"}}</h1> 
+                    <div class="field is-grouped " style="color:#9C9CA1;">
+                        <h1>จัดส่งโดย เคอรี่</h1>
+                        <h1 style="margin-left:58%">ฟรีค่าจัดส่ง</h1>   
+                    </div>
+                    <div class="field is-grouped" style="border:none;">
+                        <p style="margin-top: 65px; margin-right: 25px; ">จำนวน : </p>
+                    <div class="field has-addons" style="margin-top: 60px;">
+                        <div class="control" >
+                            <a  id="quantity" class="button is-info" @click="DecreaseQty" :disabled="isDisabledDecrease" style="background-color:#9B9B9B; ">
                             -
                             </a>
                         </div>                  
-                        <input style="width: 40px; hight:40px; text-align: center" type="text" :value="product.qty" readonly>
+                        <input style="width: 40px; hight:40px; text-align: center" type="text" :value="product.qty " readonly>
                         <div class="control">
-                            <a class="button is-info" @click="IncreaseQty" :disabled="isDisabledIncrease">
+                            <a  id="quantity" class="button is-info" @click="IncreaseQty" :disabled="isDisabledIncrease" style="background-color:#9B9B9B; ">
                             +
                             </a>
                         </div>
                     </div>
-                    <div class="button" @click="buy()" :disabled="showNavBot">ซื้อสินค้า</div>
+                    </div>
+                    <div class="button" @click="buy()" :disabled="showNavBot" 
+                    style="background-color:#714EC9; color:white;   border:none; padding: 30px 80px; margin-top: 10px; border-radius: 10px;  margin-bottom: 26px;"> <strong>ซื้อสินค้า </strong></div>
                 </div>
             </div>
         </div>
         <div class="container" id="detail-box">
             <p>รายละเอียดสินค้า</p>
-            {{product.detail}}
+            {{ product.detail}}
         </div>
         <div class="navbar is-fixed-bottom" id="nav-bot" v-if="showNavBot">
             <div class="container" id="nav-box" >
@@ -428,7 +434,8 @@ export default {
                 this.product.name = response.data.name,
                 this.product.price = response.data.price,
                 this.product.image = response.data.img_url,
-                this.product.detail = response.data.detail 
+                this.product.detail = JSON.stringify(response.data.detail)
+                console.log(this.product.detail)
                  this.product.total = response.data.price
             })
         },
@@ -542,8 +549,23 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
-
+#item{
+    margin-left: 60px;
+    margin-top: 50px;
+    margin-right: 40px
+}
+#price{
+    width: 630px;
+    height: 60px;
+    background-color: #EBEBEB;
+    font-size: 24px;
+    margin-bottom: 26px;
+    margin-top: 26px;
+    
+}
+#quantity{
+    width: 40px;
+}
 #nav-bot {
     height: 240px;
     border: 0.09em solid #E0E0E0;
@@ -561,9 +583,10 @@ export default {
 #product-box {
   background: white;
   width: 1000px;
-  min-height: 300px;
+  min-height: 390px;
   padding-bottom: 13px;
   box-shadow: 0 4px 15px 0 rgba(40,44,53,.06), 0 2px 2px 0 rgba(40,44,53,.08);
+  margin-top: 30px;
 }
 
 #detail-box {
@@ -635,6 +658,7 @@ nav {
   width: 600px;
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
+  
 
 }
 
