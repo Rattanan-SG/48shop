@@ -16,6 +16,7 @@ import javax.validation.constraints.NotBlank;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import com.sit.int202.backend.UserProfile.UserProfile;
@@ -47,7 +48,7 @@ public class Address implements Serializable {
     private String telNumber;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id", nullable = true)
     @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
     private UserProfile userProfile;
 
