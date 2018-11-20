@@ -77,6 +77,7 @@ export default {
     background:white;
     width: 1000px;
     height: auto;
+    min-height: 300px;
     margin-top: 35px;
 }
 #items{
