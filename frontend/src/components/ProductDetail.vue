@@ -436,7 +436,6 @@ export default {
             Omise.createToken('card',card,(statuscode,response)=>{
                 if(statuscode == 200){
                     this.closeCreditModal();
-                    console.log(response.id)
                     this.credit.token = response.id;
                     this.credit.message = 'valid card';
                     this.hasCredit= true;
@@ -449,8 +448,6 @@ export default {
             })
         },
         checkForm: function (e) {
-          console.log('CheckForm')
-
                this.errors = [];
 
                if(this.credit.id.length == 0) {
@@ -495,8 +492,6 @@ export default {
                }
         },
         checkFormAddress: function (e) {
-          console.log('CheckFormAddress')
-
                this.errorsAddress = [];
 
                if(this.destination.receiverName.length == 0) {
