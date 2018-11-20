@@ -89,7 +89,7 @@
                         <div class="column" style="height:20px ; width:150px ; margin-right: -90px; margin-left: 110px;">
                             <div class="row" style="color:#626567">  {{product.total}}   </div>
                             <div class="row" style="color:#626567"> 20.00  </div> 
-                            <div class="row" style="margin-top:60px">{{product.total}}  </div>
+                            <div class="row" style="margin-top:60px">{{product.total+20}}  </div>
                         </div>
                          <div class="column" style="height:20px ; width:150px ; margin-left: 0px;">
                             <div class="row" style="color:#626567">   บาท </div>
