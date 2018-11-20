@@ -3,22 +3,22 @@
         <span style="margin: 0 auto 0 220px">
             <router-link to="/home" style="color: #828282">หน้าแรก</router-link>
             <span style="color: #828282">></span>
-            <router-link :to="{ name: 'CategoryProduct', query: { category_name: product.category }}"
-             style="color: #828282">{{product.category}}</router-link>
+            <router-link :to="{ name: 'CategoryProduct', query: { category_name: product.category.name }}"
+             style="color: #828282">{{product.category.name}}</router-link>
             <span style="color: #828282">></span>
             {{product.name}}
         </span>
         <div class="container" id="product-box">
             <div class="columns">
                 <div class="column is-one-fifth" id="item">
-                    <img :src=product.image alt="รอซักครู่">
+                    <img :src=product.img_url alt="รอซักครู่">
                 </div>
                 <div class="column">
                     <h1 style="font-size: 24px; margin-top: 20px; width: 630px">{{product.name}}</h1>
-                    <h1 class="field" id="price" style="padding:12px; padding-left: 26px  ">{{product.price+"  บาท"}}</h1> 
+                    <h1 class="field" id="price" style="padding:12px; padding-left: 26px  ">{{product.price+"  บาท"}}</h1>
                     <div class="field is-grouped " style="color:#9C9CA1;">
                         <h1>จัดส่งโดย เคอรี่</h1>
-                        <h1 style="margin-left: auto; margin-right: 65px">20 บาท</h1>   
+                        <h1 style="margin-left: auto; margin-right: 65px">20 บาท</h1>
                     </div>
                     <div class="field is-grouped" style="border:none;">
                         <p style="margin-top: 65px; margin-right: 25px; ">จำนวน : </p>
@@ -27,7 +27,7 @@
                             <a  id="quantity" class="button is-info" @click="DecreaseQty" :disabled="isDisabledDecrease" style="background-color:#9B9B9B; ">
                             -
                             </a>
-                        </div>                  
+                        </div>
                         <input style="width: 40px; hight:40px; text-align: center" type="text" :value="product.qty " readonly>
                         <div class="control">
                             <a  id="quantity" class="button is-info" @click="IncreaseQty" :disabled="isDisabledIncrease" style="background-color:#9B9B9B; ">
@@ -36,7 +36,7 @@
                         </div>
                     </div>
                     </div>
-                    <div class="button" @click="buy()" :disabled="showNavBot" 
+                    <div class="button" @click="buy()" :disabled="showNavBot"
                     style="background-color:#714EC9; color:white;   border:none; padding: 30px 80px; margin-top: 10px; border-radius: 5px;  margin-bottom: 26px;"> <strong>ซื้อสินค้า </strong></div>
                 </div>
             </div>
@@ -51,7 +51,7 @@
             <div class="container" id="nav-box" >
                 <div class="columns">
                     <div class="column" id="user-detail">
-                        <ol type="none" class="is-size-7"> 
+                        <ol type="none" class="is-size-7">
                             <p class="is-size-7">สินค้า: {{product.name}}</p>
                             <div class="field is-grouped " id="form">
                             <p style="margin-top: 10px;">ส่งสินค้าไปที่:</p>
@@ -62,16 +62,16 @@
                                 <p class="is-size-7">
                                    <pre id="address" style="background-color: white; min-width: 200px;
                                    width: auto; padding: 0px;">{{
-                                       "ชื่อผู้รับ :    " + address.receiver_name + 
-                                       "\nส่งที่ :    " + address.receiver_address +
-                                       + address.receiver_province + " " + address.receiver_postcode +
-                                       "\nโทรศัพท์ :    " + address.tel_no + " "
+                                       "ชื่อผู้รับ :    " + destination.receiverName +
+                                       "\nส่งที่ :    " + destination.receiver_address +
+                                       + destination.receiver_province + " " + destination.receiver_postcode +
+                                       "\nโทรศัพท์ :    " + destination.tel_no + " "
                                    }}</pre>
                                </p>
                             </template>
                             <template v-else>
                                 <a @click="showAddressModal" class="is-size-7">+ ใส่ที่อยู่</a>
-                            </template>  
+                            </template>
                             <div class="field is-grouped " id="form">
                             <p style="margin-top: 13px;"> ชำระเงินด้วย:</p>
                             <button class="button is-small is-rounded" id="small-button" @click="showCreditModal"
@@ -86,8 +86,8 @@
                             </template>
                             <template v-else>
                                 <a @click="showCreditModal" class="is-size-7">+ ใส่บัตรเครดิต</a>
-                            </template>  
-                        </ol> 
+                            </template>
+                        </ol>
                     </div>
                     <div class="column" style="height:20px ; width:200px ;  margin-left: 120px;">
                         <div class="row" style="color:#626567"> ค่าสินค้า : </div>
@@ -97,12 +97,12 @@
                     <div class="column" style="height:20px; width:50px; margin-right: -70px; margin-left: 110px
                     text-align: right; padding-right: 50px">
                         <div class="row" style="color:#626567">  {{product.total}}   </div>
-                        <div class="row" style="color:#626567; margin-left: 9px;"> 20  </div> 
+                        <div class="row" style="color:#626567; margin-left: 9px;"> 20  </div>
                         <div class="row" style="margin-top:40px">{{product.total + 20}}  </div>
                     </div>
                         <div class="column" style="height:20px ; width:150px ; margin-left: 0px;">
                         <div class="row" style="color:#626567">   บาท </div>
-                        <div class="row" style="color:#626567"> บาท </div> 
+                        <div class="row" style="color:#626567"> บาท </div>
                         <div class="row" style="margin-top:40px;">บาท </div>
                     </div>
                     <a class="button is-primary" @click="orderProduct" :disabled="!hasAddress || !hasCredit"
@@ -134,14 +134,14 @@
                                         <label class="label" id="text">ชื่อ - นามสกุล</label>
                                         <div class="control">
                                             <input class="input" type="text" placeholder="Ex. กิตฮับ ขยันอัพจัง" style="width: 300px;"
-                                            v-model="address.receiver_name">
+                                            v-model="destination.receiverName">
                                         </div>
                                     </div>
                                     <div class="field" style="margin-left: 60px;">
                                         <label class="label" id="text">หมายเลขโทรศัพท์ (สำหรับติดต่อ)</label>
                                         <div class="control">
-                                            <input class="input" type="text" placeholder="Ex. 062-0672928 " style="width: 300px;" 
-                                            v-model="address.tel_no">
+                                            <input class="input" type="text" placeholder="Ex. 062-0672928 " style="width: 300px;"
+                                            v-model="destination.tel_no">
                                         </div>
                                     </div>
                                 </div>
@@ -149,23 +149,23 @@
                                     <label class="label" id="text" >ที่อยู่ในการจัดส่ง</label>
                                     <div class="control">
                                         <textarea class="textarea" id="address" placeholder="Ex. เช่น 112/44 ตึกหอสมุด ด้านใน KMUTT ถนนสุขสบายดี ตำบลมะละกอ" style="height: 100px; width: 300px;"
-                                        v-model="address.receiver_address"></textarea>
+                                        v-model="destination.receiver_address"></textarea>
                                     </div>
                                 </div>
                                 <div class="field" style="margin-left: 400px; margin-top: 100px;">
                                     <label class="label" id="text">จังหวัด</label>
                                     <div class="control">
                                         <input id="province" class="input" type="text" placeholder="Ex. กรุงเทพมหานคร " style="width: 300px; height: 50px;"
-                                        v-model="address.receiver_province">
+                                        v-model="destination.receiver_province">
                                     </div>
                                 </div>
                                 <div class="field" style="margin-left: 400px; margin-bottom: 2000px;">
                                     <label class="label" id="text">หมายเลขไปรษณีย์</label>
                                     <div class="control">
                                         <input id="postcode" class="input" type="text" placeholder="Ex. 10140 " style="width: 300px; height: 50px;"
-                                        v-model="address.receiver_postcode">
+                                        v-model="destination.receiver_postcode">
                                     </div>
-                                </div>          
+                                </div>
                             </div>
                             <div class="field is-grouped" id="buttonAddress">
                                 <footer id= "footer" class="modal-card-foot" >
@@ -175,7 +175,7 @@
                             </div>
                             </form>
                         </div>
-                    </section> 
+                    </section>
                 </div>
             </div>
         </div>
@@ -211,7 +211,7 @@
                                 <div class="field" id="name" style=" margin-top: 18px;  width: 220px; ">
                                     <label class="label" id="text">ชื่อที่ปรากฏบนบัตร</label>
                                     <div class="control">
-                                        <input class="input" type="text" placeholder="Ex. โสภณ จำปาซ่อนกลิ่น" 
+                                        <input class="input" type="text" placeholder="Ex. โสภณ จำปาซ่อนกลิ่น"
                                         v-model="credit.name">
                                     </div>
                                 </div>
@@ -234,25 +234,25 @@
                                     <div class="field" >
                                         <label  id="text" class="label ">รหัสรักษาความปลอดภัย</label>
                                         <div class="control">
-                                            <input id="box" class="input" type="text" placeholder="CVV" style="width: 110px;  margin-right: 50px;"
+                                            <input id="box" class="input" type="password" placeholder="CVV" style="width: 110px;  margin-right: 50px;"
                                             v-model="credit.cvv">
                                         </div>
                                     </div>
                                 </div>
-                                    <div class="field is-grouped " id="foot"> 
+                                    <div class="field is-grouped " id="foot">
                                       <div class="field" >
                                             <button class="button" @click.prevent="closeCreditModal">ยกเลิก</button>
                                             <button class="button is-success" @click.prevent="checkForm">บันทึก</button>
                                       </div>
                                     </div>
-                                </div>    
+                                </div>
                             </form>
-                             <!-- form end -->    
+                             <!-- form end -->
                         </div>
                     </section>
                 </div>
             </div>
-        </div>    
+        </div>
     </div>
 </template>
 
@@ -260,6 +260,7 @@
 import './../../node_modules/bulma/css/bulma.css';
 import axios from 'axios';
 import chunk from 'chunk';
+import { mapActions } from 'vuex';
 
 const url_test = `http://jsonplaceholder.typicode.com/posts`;
 const url_product = `http://localhost:8080/product/`;
@@ -272,8 +273,8 @@ export default {
         return {
             msg: 'This is Detail page',
             product: {
-                id: 0,
-                category: '',
+                id: '',
+                category: {},
                 name: '',
                 price: '',
                 image: '',
@@ -297,15 +298,15 @@ export default {
                 token: '',
                 message: ''
             },
-            address: {
-                receiver_name: '',
+            destination: {
+                receiverName: '',
                 tel_no: '',
                 receiver_address: '',
                 receiver_province: '',
                 receiver_postcode: ''
             },
             errors: [],
-            errorsAddress: [] 
+            errorsAddress: []
         }
     },
     created() {
@@ -316,18 +317,21 @@ export default {
         this.getProductDetail();
     },
     methods: {
+      ...mapActions([
+        'setOrderId'
+      ]),
         IncreaseQty: function () {
             if (this.product.qty >= 9) {
                 this.isDisabledIncrease = true;
                 if (this.product.qty === 9) {
                     this.product.qty++;
                     this.product.total = this.product.price * this.product.qty;
-                }     
+                }
             } else {
                 this.product.qty++;
                 this.product.total = this.product.price * this.product.qty;
                 this.isDisabledDecrease = false;
-            }   
+            }
         },
         DecreaseQty: function () {
             if (this.product.qty <= 2) {
@@ -340,24 +344,25 @@ export default {
                 this.product.qty--;
                 this.product.total = this.product.price * this.product.qty;
                 this.isDisabledIncrease = false;
-            }  
+            }
         },
         getProductDetail: function() {
             axios.get(url_product + this.product.id)
             .then(response => {
-                this.product.category = response.data.category.name
+                this.product.id = response.data.id
+                this.product.category = response.data.category
                 this.product.name = response.data.name,
                 this.product.price = response.data.price,
-                this.product.image = response.data.img_url,
+                this.product.img_url = response.data.img_url,
                 this.product.detail = response.data.detail,
                 this.product.total = response.data.price
             })
         },
         buy: function() {
-            this.showNavBot = true;    
+            this.showNavBot = true;
         },
         showAddressModal: function() {
-            this.showAddress = 'block';         
+            this.showAddress = 'block';
         },
         closeAddressModal: function() {
             this.showAddress = '';
@@ -376,12 +381,15 @@ export default {
             credit.id.toString();
         },
         orderProduct: function() {
+          const fbAccount = JSON.parse(localStorage.getItem('user'))
             axios.post(url_order, {
                 userProfile: {
-                    firstname: "Tanapat",
-                    lastname: "Choochot"
+                    firstname: fbAccount.first_name,
+                    lastname: fbAccount.last_name,
+                    facebookId: fbAccount.id
                 },
                 startLocation: {
+                    id: 1,
                     receiverName: '48shop',
                     detail: "48Shop 1/2 Surin Thepkanjana Rd, Khok Krabue",
                     city: "Samut Sakhon",
@@ -390,21 +398,30 @@ export default {
                     telNumber: '025453227'
                 },
                 destination: {
-                    receiverName: this.address.receiver_name,
-                    detail: this.address.receiver_address,
-                    city: this.address.receiver_province,
-                    zipcode: this.address.receiver_postcode,
-                    telNumber: this.address.tel_no
+                    receiverName: this.destination.receiverName,
+                    detail: this.destination.receiver_address,
+                    city: this.destination.receiver_province,
+                    zipcode: this.destination.receiver_postcode,
+                    telNumber: this.destination.tel_no
                 },
-                product_id: this.product.id,
+                product: {
+                  id: this.product.id,
+                  productCategory: this.product.category,
+                  name: this.product.name,
+                  price: this.product.price,
+                  img_url: this.product.img_url,
+                  detail: this.product.detail
+                },
                 productQuantity: this.product.qty,
                 totalPrice: this.product.total,
                 trackingId: 123456789,
-                method: "Credit card",
-                omiseToken: this.credit.token,                        
+                paymentMethod: "CreditCard",
+                omiseToken: this.credit.token,
             })
             .then(response => {
                 console.log(response.data);
+                this.setOrderId(response.data.id)
+                this.$router.push('/summary')
             })
         },
         creditCardToken: function(){
@@ -415,11 +432,10 @@ export default {
                 security_code: this.credit.cvv,
                 name: this.credit.name
             }
-            console.log(Omise) 
+            console.log(Omise)
             Omise.createToken('card',card,(statuscode,response)=>{
                 if(statuscode == 200){
                     this.closeCreditModal();
-                    console.log(response.id)
                     this.credit.token = response.id;
                     this.credit.message = 'valid card';
                     this.hasCredit= true;
@@ -429,11 +445,9 @@ export default {
                     this.credit.message = response.message;
                     alert(response.message);
                 }
-            })  
+            })
         },
         checkForm: function (e) {
-          console.log('CheckForm')
-
                this.errors = [];
 
                if(this.credit.id.length == 0) {
@@ -478,36 +492,34 @@ export default {
                }
         },
         checkFormAddress: function (e) {
-          console.log('CheckFormAddress')
-
                this.errorsAddress = [];
 
-               if(this.address.receiver_name.length == 0) {
+               if(this.destination.receiverName.length == 0) {
                this.errorsAddress.push('Name required');
                }
 
-               if(this.address.tel_no.length == 0) {
+               if(this.destination.tel_no.length == 0) {
                this.errorsAddress.push('Telephone Number required');
                }
 
-               if(this.address.receiver_address.length == 0) {
+               if(this.destination.receiver_address.length == 0) {
                this.errorsAddress.push('Address required');
                }
 
-               if(this.address.receiver_province.length == 0 ) {
+               if(this.destination.receiver_province.length == 0 ) {
                this.errorsAddress.push('Province required');
                }
 
-               if(this.address.receiver_postcode.length == 0) {
+               if(this.destination.receiver_postcode.length == 0) {
                this.errorsAddress.push('Postcode required');
                }
 
-               if(!this.address.receiver_postcode.length == 0 && this.address.receiver_postcode.length != 5) {
+               if(!this.destination.receiver_postcode.length == 0 && this.destination.receiver_postcode.length != 5) {
                this.errorsAddress.push('Invalid Postcode');
                }
 
-               if (this.address.receiver_name.length > 0 && this.address.tel_no.length > 0 && this.address.receiver_address.length > 0 &&
-                   this.address.receiver_province.length > 0 && this.address.receiver_postcode.length == 5) {
+               if (this.destination.receiverName.length > 0 && this.destination.tel_no.length > 0 && this.destination.receiver_address.length > 0 &&
+                   this.destination.receiver_province.length > 0 && this.destination.receiver_postcode.length == 5) {
                this.setAddress();
                }
         }
@@ -538,7 +550,7 @@ export default {
     margin-bottom: 26px;
     margin-top: 26px;
     margin-left: 0px;
-    
+
 }
 #quantity{
     width: 40px;
@@ -608,7 +620,7 @@ nav {
 }
 
 /* #user-detail {
-    size: 
+    size:
 } */
 
 #form {
@@ -636,7 +648,7 @@ nav {
     margin-bottom: 20px;
     justify-content: center;
     margin-top: 10px;
-  
+
 }
 
 #bodyPopUp {
@@ -648,7 +660,7 @@ nav {
   width: 600px;
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
-  
+
 
 }
 
@@ -711,7 +723,7 @@ nav {
 }
 #footer {
     margin-left: 20px;
-    background-color:white; 
+    background-color:white;
     border-style: none;
 }
 
@@ -731,7 +743,7 @@ nav {
   height: 550px;
   background: #E0E0E0;
   border-radius: 10px;
-  
+
 }
 #cards{
   width: 520px;
@@ -745,7 +757,7 @@ nav {
   margin-left: 27%;
   border: none;
   margin-top: 40%;
-  
+
 
 }
 #body{
@@ -759,7 +771,7 @@ nav {
   width: 800px;
   margin-left: 90px;
   margin-top: 10px;
-  
+
 }
 #text-cradit{
 font-size: 17px;

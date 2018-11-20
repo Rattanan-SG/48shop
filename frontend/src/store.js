@@ -6,7 +6,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     products: [],
-    keyword: ''
+    keyword: '',
+    orderId: ''
   },
   actions: {
     setProducts: ({ commit }, products) => {
@@ -14,6 +15,9 @@ export default new Vuex.Store({
     },
     setKeyword: ({ commit }, keyword) => {
       commit('setKeyword', keyword)
+    },
+    setOrderId: ({ commit }, id) => {
+      commit('setOrderId', id)
     }
   },
   mutations: {
@@ -22,6 +26,9 @@ export default new Vuex.Store({
     },
     setKeyword: (state, keyword) => {
       state.keyword = keyword
+    },
+    setOrderId: (state, id) => {
+      state.orderId = id
     }
   },
   getters: {
@@ -30,6 +37,9 @@ export default new Vuex.Store({
     },
     getKeyword: (state) => {
       return state.keyword
+    },
+    getOrderId: (state) => {
+      return state.orderId
     }
   }
 })

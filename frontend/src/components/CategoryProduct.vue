@@ -50,7 +50,6 @@ export default {
     },
     computed: {
         chunkedProducts: function() {
-            console.log(this.getProducts);
             return chunk(this.getProducts, 4)
         },
         ...mapGetters([

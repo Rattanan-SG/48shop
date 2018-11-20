@@ -8,15 +8,22 @@
           </router-link>
          </div>
       </div>
-      <div id="navbarBasicExample" class="navbar-menu">
+      <div id="navbarMenu" class="navbar-menu">
         <div class="navbar-end">
+          <div class="navbar-item" style="width: 660px">
+              <input class='button' v-model='keyword' @keypress.enter='onSubmit'  style=" margin-right: 260px; width:400px; margin-top:15px;" />
+          </div>
           <div class="navbar-item">
-            <div class="buttons">
-              <input class='button is-rounded' v-model='keyword' @keypress.enter='onSubmit'  style=" margin-right: 260px; width:400px; margin-top:15px;" />
-              <a class="button is-light" @click="login" style="margin-right:220px;margin-top:20px;background-color:#714EC9; color:white; ">
-                {{status}}
-              </a>
-            </div>
+            {{user.first_name}} <br>
+            {{user.last_name}}
+          </div>
+          <div class="navbar-item">
+            <a class="button is-outlined is-link" @click="login" style="margin-right: 500px;margin-top:20px;">
+              <span class="icon">
+                <i class="fab fa-facebook-f"></i>
+              </span>
+              <span>{{status}}</span>
+            </a>
           </div>
         </div>
       </div>
@@ -141,9 +148,11 @@ export default {
   beforeMount() { // ทำก่อน render
     const userData = JSON.parse(localStorage.getItem('user'))
       if(userData){
-        this.status = 'logout'
-      }else
-        this.status = 'login'
+        this.status = 'ออกจากระบบ'
+        this.user = userData
+      } else {
+        this.status = 'เข้าสู่ระบบ' 
+      }
   },
   methods: {
     login: function() {
@@ -151,7 +160,7 @@ export default {
         if (response.status == "connected") {
           FB.logout(response => {
             localStorage.clear();
-            this.status = "login";
+            this.status = "เข้าสู่ระบบ";
           });
         }
         else{
@@ -159,7 +168,8 @@ export default {
             FB.api('/me?fields=id,first_name,last_name,picture{url}',(userData)=>{
               if(!userData.error){
                 localStorage.setItem("user", JSON.stringify(userData));
-                this.status = 'logout';
+                this.status = 'ออกจากระบบ';
+                this.user = userData
               }
             });
           });
@@ -178,7 +188,6 @@ export default {
       const searchProducts = data.filter(product => {
         return product.name.toLowerCase().includes(this.keyword.toLowerCase())
       })
-      console.log(searchProducts)
       this.setProducts(searchProducts)
       this.setKeyword(this.keyword)
       this.$router.push('/search')
