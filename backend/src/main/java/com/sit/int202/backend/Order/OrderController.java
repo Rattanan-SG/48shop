@@ -61,10 +61,4 @@ public class OrderController {
         return new ResponseEntity<Long>(orderService.delete(id), HttpStatus.OK);
     }
 
-    @PostMapping("/creditcard") // get token
-    public LinkedHashMap creditcard(@RequestBody LinkedHashMap payment)
-            throws ClientException, IOException, OmiseException {
-        LinkedHashMap token = orderService.getToken(payment);
-        return token;
-    }
 }

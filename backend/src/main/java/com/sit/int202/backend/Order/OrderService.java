@@ -57,39 +57,10 @@ public class OrderService {
         return id;
     }
     
-    public LinkedHashMap getToken(LinkedHashMap data) throws ClientException, IOException, OmiseException{
-
-        prop.load(this.getClass().getResourceAsStream("/application.properties"));
-        final String PUBLIC_KEY = prop.getProperty("PUBLIC_KEY");
-        final String SECRET_KEY = prop.getProperty("SECRET_KEY");
-
-        Client client = new Client(PUBLIC_KEY,SECRET_KEY);
-        LinkedHashMap<String,String> tokenData = new LinkedHashMap<>();
-        try{
-            Token token = client.tokens().create(
-                new Token.Create().card(
-                    new Card.Create()
-                    .number(data.get("card_id").toString())
-                    .expirationMonth(Integer.parseInt(data.get("exp_m").toString()))
-                    .expirationYear(Integer.parseInt(data.get("exp_y").toString()))
-                    .securityCode(data.get("cvv").toString())
-                    .name(data.get("name").toString())
-                )
-            );
-            tokenData.put("token",token.getId());
-            tokenData.put("message","availiable card");
-        }catch(OmiseException o){
-            tokenData.put("token","null");
-            tokenData.put("message",o.getMessage());
-        }
-        return tokenData;
-    }
-
     public void charge(long amount,String token) throws ClientException, IOException, OmiseException {
         prop.load(this.getClass().getResourceAsStream("/application.properties"));
         final String PUBLIC_KEY = prop.getProperty("PUBLIC_KEY");
         final String SECRET_KEY = prop.getProperty("SECRET_KEY");
-
         Client client = new Client(PUBLIC_KEY,SECRET_KEY);
         Charge charge = client.charges().create(
             new Charge.Create()
