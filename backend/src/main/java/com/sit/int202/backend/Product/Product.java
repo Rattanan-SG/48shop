@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -31,9 +30,8 @@ import com.sit.int202.backend.ProductCategory.ProductCategory;
 
 @Entity
 @Table(name = "products")
-@CrossOrigin(origins = "*", maxAge = 3600)
-
 @EntityListeners(AuditingEntityListener.class)
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Product implements Serializable {
 
     @Id
@@ -54,12 +52,11 @@ public class Product implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "category_id", nullable = false)
-    @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
     @JsonProperty(value = "category")
     private ProductCategory productCategory;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE,
-            CascadeType.REMOVE }, orphanRemoval = true, mappedBy = "product")
+    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE,
+        CascadeType.REMOVE}, orphanRemoval = true, mappedBy = "product")
     @JsonIgnore
     private Set<Order> orders = new HashSet<>();
 
