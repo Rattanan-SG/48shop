@@ -42,36 +42,42 @@ public class Order implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.MERGE)
     @JoinColumn(name = "user_profile_id", nullable = false)
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
     private UserProfile userProfile;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.MERGE)
     @JoinColumn(name = "start_location_id", nullable = false)
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
     private Address startLocation;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.MERGE)
     @JoinColumn(name = "destination_location_id", nullable = false)
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
     private Address destination;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.MERGE)
     @JoinColumn(name = "product_id", nullable = false)
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
     private Product product;
 
     @NotNull
+    @Column(name = "product_quantity")
     private int productQuantity;
 
     @NotNull
+    @Column(name = "total_price")
     private long totalPrice;
 
     @NotNull
+    @Column(name = "tracking_id")
     private int trackingId;
 
     @NotBlank
-    private String method;
+    @Column(name = "payment_method")
+    private String paymentMethod;
 
+    @NotBlank
+    @Column(name = "omise_token")
     private String omiseToken;
 
     // @OneToOne(fetch = FetchType.LAZY)
@@ -79,7 +85,7 @@ public class Order implements Serializable {
     // @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     // private OrderProduct orderProduct;
 
-    @Column(nullable = false, updatable = false)
+    @Column(name = "created_at", nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @CreatedDate
     private Date createdAt;
@@ -151,12 +157,12 @@ public class Order implements Serializable {
         this.totalPrice = totalPrice;
     }
 
-    public String getMethod() {
-        return method;
+    public String getPaymentMethod() {
+        return this.paymentMethod;
     }
 
-    public void setMethod(String method) {
-        this.method = method;
+    public void setPaymentMethod(String paymentMethod) {
+        this.paymentMethod = paymentMethod;
     }
 
     public String getOmiseToken() {
