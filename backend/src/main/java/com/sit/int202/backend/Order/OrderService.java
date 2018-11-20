@@ -41,6 +41,8 @@ public class OrderService {
     }
 
     public Order save(Order order) {
+        addressService.save(order.getDestination());
+        userProfileService.save(order.getUserProfile());
         return orderRepository.save(order);
     }
 

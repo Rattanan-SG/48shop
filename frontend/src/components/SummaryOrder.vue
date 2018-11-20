@@ -10,12 +10,12 @@
         <div class="box">
           <div class="columns">
             <div class="column">
-              Order #1
+              Order #{{order.id}}
             </div>
           </div>
           <div class="columns">
             <div class="column">
-              Place on 10 / 10 / 2018
+              Place on: {{createdAt}}
             </div>
           </div>
 
@@ -27,37 +27,63 @@
         <div class="box">
           <div class="columns">
             <div class="column is-2">
-              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS459I2QXTcVBgxxy5mWSqCpvNqm9XvtydEnayb7yrpusARcARiVQ" alt="img" />
+              <img :src='order.product.img_url' alt="img" />
             </div>
             <div class="column is-10">
               <div class="columns">
                 <div class="column is-12">
                   <span class="title is-4">
-                    iPhone X 64 GB RED Product
+                    {{order.product.name}}
                   </span>
-                </div>
-              </div>
-              <div class="columns" style="height: 150px">
-                <div class="column is-12">
-                  <span class="title is-6">
-                    126 King Mongkut's
-                  </span>
-
                 </div>
               </div>
               <div class="columns">
-                <div class="column is-offset-8 is-2">
+                <div class="column is-2">
+                  ชื่อผู้รับ:
+                </div>
+                <div class="column is-10">
+                  <span class="title is-6">
+                    {{order.destination.receiverName}}
+                  </span>
+                </div>
+              </div>
+              <div class="columns">
+                <div class="column is-2">
+                  ที่อยู่ปลายทาง:
+                </div>
+                <div class="column is-10">
+                  <span class="title is-6">
+                    {{order.destination.detail + ' ' + order.destination.city + ' ' + order.destination.zipcode}}
+                  </span>
+                </div>
+              </div>
+              <div class="columns">
+                <div class="column is-2">
+                  หมายเลขโทรศัพท์:
+                </div>
+                <div class="column is-10">
+                  <span class="title is-6">
+                    {{order.destination.telNumber}}
+                  </span>
+                </div>
+              </div>
+              <div class="columns">
+                <div class="column is-offset-6 is-2">
                   <span class="title is-4">
-                    100 x 5
+                    ราคารวม
                   </span>
                 </div>
                 <div class="column is-2">
                   <span class="title is-4">
-                    500 ฿
+                    {{order.product.price}} x {{order.productQuantity}}
+                  </span>
+                </div>
+                <div class="column is-2">
+                  <span class="title is-4">
+                    {{order.product.price * order.productQuantity}} ฿
                   </span>
                 </div>
               </div>
-
             </div>
           </div>
         </div>
@@ -65,13 +91,42 @@
     </div>
     <div class="columns">
       <div class="column is-offset-10 is-2">
-        <a class="button is-primary">ช๊อปต่อเลย</a>
+        <a class="button" style="background-color: #714ec9; color: white" @click='goToHome'>ช๊อปต่อเลย</a>
       </div>
     </div>
   </div>
 </template>
 <script>
+import axios from 'axios'
+import { mapGetters } from 'vuex';
+
+const URL_ORDER = 'http://localhost:8080/order/'
 export default {
-  name: 'SummaryOrder'
+  name: 'SummaryOrder',
+  data: () => ({
+    order: {},
+    createdAt: ''
+  }),
+  methods: {
+    async getOrder () {
+      console.log('get order')
+      const { data } = await axios.get(URL_ORDER+this.getOrderId)
+      this.order = data
+      let date = new Date(data.createdAt)
+      this.createdAt = date.getDate() + ' / ' + (date.getMonth()+1) + ' / ' + date.getFullYear()
+      console.log(data)
+    },
+    goToHome () {
+      this.$router.push('/home')
+    }
+  },
+  mounted () {
+    this.getOrder()
+  },
+  computed: {
+    ...mapGetters([
+      'getOrderId'
+    ])
+  }
 }
 </script>
