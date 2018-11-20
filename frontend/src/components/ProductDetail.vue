@@ -39,7 +39,7 @@
         </div>
          <div class="container" id="detail-mock-box">
         </div>
-        <div class="navbar is-fixed-bottom" id="nav-bot" v-if="showNavBot" style="height: 500px;">
+        <div class="navbar is-fixed-bottom" id="nav-bot" v-if="showNavBot" style="height: 430px;">
             <div class="container" id="nav-box" >
                 <div class="columns">
                     <div class="column">
@@ -57,7 +57,7 @@
                                        "\nจัดส่งไปที่      :    "+address.receiver_address +
                                        "\nจังหวัด          :    "+address.receiver_province +
                                        "\nรหัสไปรษณีย์ :    " + address.receiver_postcode +
-                                       "\nโทรศัพท์       :   " +address.tel_no + " "
+                                       "\nโทรศัพท์       :    " +address.tel_no + " "
                                    }}</pre>
                                </p>
                             </template>
@@ -229,7 +229,7 @@
                                     <div class="field is-grouped " id="foot"> 
                                       <div class="field" >
                                             <button class="button" @click.prevent="closeCreditModal">ยกเลิก</button>
-                                            <button class="button is-success" @click.prevent="creditCardToken">บันทึก</button>
+                                            <button class="button is-success" @click.prevent="checkForm">บันทึก</button>
                                       </div>
                                     </div>
                                 </div>    
@@ -401,7 +401,6 @@ export default {
             }
             console.log(Omise) 
             Omise.createToken('card',card,(statuscode,response)=>{
-                console.log(hasCredit)
                 if(statuscode == 200){
                     this.closeCreditModal();
                     console.log(response.id)
@@ -415,10 +414,53 @@ export default {
                     alert(response.message);
                 }
             })  
+        },
+        checkForm: function (e) {
+           console.log('CheckForm')
+                if (this.credit.id.length > 0 && this.credit.name.length > 0 && this.credit.exp_m.length > 0 && 
+                    this.credit.exp_y.length > 0 && this.credit.cvv > 0) {
+                this.creditCardToken();
+                }   
+
+                this.errors = [];
+
+                if(this.credit.id.length == 0) {
+                this.errors.push('Credit Card Number required');
+                }
+
+                if(!this.credit.id.length == 0 && this.credit.id.length != 16) {
+                this.errors.push('Invalid Card Number');
+                }
+
+                if(this.credit.name.length == 0) {
+                this.errors.push('Name required');
+                }
+
+                if(this.credit.exp_m.length == 0) {
+                this.errors.push('Expiry Month required');
+                }
+
+                if(!this.credit.exp_m.length == 0 && (this.credit.exp_m < 1 || this.credit.exp_m > 12)) {
+                this.errors.push('Invalid Month');
+                }
+
+                if(this.credit.exp_y.length == 0 ) {
+                this.errors.push('Expiry Year Number required');
+                }
+
+                if(!this.credit.exp_y.length == 0 && (this.credit.exp_y < 2018 || this.credit.exp_y > 2025)) {
+                this.errors.push('Invalid Expiry Year');
+                }
+
+                if(this.credit.cvv.length == 0) {
+                this.errors.push('CVV required');
+                }
+
+                if(!this.credit.cvv.length == 0 && this.credit.cvv.length != 3) {
+                this.errors.push('Invalid CVV');
+                }
+
         }
-
-
-    
     }
 }
 </script>
