@@ -1,7 +1,7 @@
 package com.sit.int202.backend.CreditCard;
 
-public class CreditCard{
-    
+public class CreditCard {
+
     private String cardId;
     private int expM;
     private int expY;
@@ -10,47 +10,59 @@ public class CreditCard{
     private String zip;
     private double totalPrice;
 
-    public void setCardId(String cardId){
+    public void setCardId(String cardId) {
         this.cardId = cardId;
     }
-    public void setExpM(int expM){
+
+    public void setExpM(int expM) {
         this.expM = expM;
     }
-    public void setExpY(int expY){
+
+    public void setExpY(int expY) {
         this.expY = expY;
     }
-    public void setName(String name){
+
+    public void setName(String name) {
         this.name = name;
     }
-    public void setAddress(String address){
+
+    public void setAddress(String address) {
         this.address = address;
     }
-    public void setZip(String zip){
+
+    public void setZip(String zip) {
         this.zip = zip;
     }
-    public void setPrice(double totalPrice){
+
+    public void setPrice(double totalPrice) {
         this.totalPrice = totalPrice;
     }
 
-    public String getCardId(){
+    public String getCardId() {
         return cardId;
     }
-    public int getExpM(){
+
+    public int getExpM() {
         return expM;
     }
-    public int getExpY(){
+
+    public int getExpY() {
         return expY;
     }
-    public String getName(){
+
+    public String getName() {
         return name;
     }
-    public String getAddress(){
+
+    public String getAddress() {
         return address;
     }
-    public String getZip(){
+
+    public String getZip() {
         return zip;
     }
-    public double totalPrice(){
+
+    public double totalPrice() {
         return totalPrice;
     }
 

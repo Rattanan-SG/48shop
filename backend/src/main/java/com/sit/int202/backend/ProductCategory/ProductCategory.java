@@ -26,6 +26,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Entity
 @Table(name = "product_categories")
 @EntityListeners(AuditingEntityListener.class)
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class ProductCategory implements Serializable {
 
     @Id
@@ -38,7 +39,6 @@ public class ProductCategory implements Serializable {
     private String name;
 
     @OneToMany(mappedBy = "productCategory", fetch = FetchType.LAZY)
-    @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
     @JsonIgnore
     private List<Product> products;
 
