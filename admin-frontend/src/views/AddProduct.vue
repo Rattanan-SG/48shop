@@ -62,31 +62,43 @@
             return-object
           ></v-overflow-btn>
         </v-flex>
-
       </v-layout>
       <v-layout>
         <v-flex>
             <v-flex>
                 <v-dialog v-model="dialog" persistent max-width="650">
-                  <v-btn slot="activator" color="success" style='width: 157%'>
+                  <v-btn slot="activator" color="success" style='width: 157%' @click='message = ""'>
                     <v-icon>done_outline</v-icon>
                   </v-btn>
                   <v-card>
                     <v-container>
                       <v-layout row>
                         <v-flex md7>
-                          <v-card-title class="headline">Add Product Confirmation</v-card-title>
+                          <v-card-title class="headline">
+                            Add Product Confirmation
+                            <v-progress-circular
+                            :indeterminate='loading'
+                            v-show='loading'
+                            color="primary"
+                          ></v-progress-circular>
+                          </v-card-title>
                           <v-card-text>Name: {{this.name}} </v-card-text>
                           <v-card-text>Detail: {{this.detail}}</v-card-text>
                           <v-card-text>Price: {{this.price}}</v-card-text>
                           <v-card-text>Category: {{this.category.name}}</v-card-text>
                         </v-flex>
                         <v-flex md5 align-center justify-center>
-                          <img v-bind:src='img_url' alt='image' style='height: 40%' v-show="img_url.length != 0"/>
+                          <img v-bind:src='img_url' alt='image' style='height: 200px' v-show="img_url.length != 0"  />
                         </v-flex>
                       </v-layout>
                     </v-container>
                     <v-card-actions>
+                      <v-alert
+                        :value="message.length > 0"
+                        type="error"
+                      >
+                        {{message}}
+                      </v-alert>
                       <v-spacer></v-spacer>
                       <v-btn @click="dialog = false">Disagree</v-btn>
                       <v-btn color="success" @click='addProduct'>Confirm</v-btn>
@@ -96,7 +108,6 @@
             </v-flex>
         </v-flex>
       </v-layout>
-
     </v-container>
   </v-app>
 </template>
@@ -113,6 +124,8 @@ export default {
     category: {},
     categories: [],
     dialog: false,
+    message: '',
+    loading: false,
     rules: {
       required: value => !!value || 'Required.',
       counter: value => (value) ? value.length <= 255 || 'Max 255 characters' : '',
@@ -129,20 +142,39 @@ export default {
   },
   methods: {
     async addProduct () {
-      const { data } = await axios.post('/product', {
-        name: this.name,
-        detail: this.detail,
-        img_url: this.img_url,
-        price: this.price,
-        category: this.category
-      })
-      console.log(data)
-      this.dialog = false
-      this.name = ''
-      this.detail = ''
-      this.img_url = ''
-      this.price = ''
-      this.category = ''
+      if (this.validateData()) {
+        this.loading = true
+        const { data } = await axios.post('/product', {
+          name: this.name,
+          detail: this.detail,
+          img_url: this.img_url,
+          price: this.price,
+          category: this.category
+        })
+        console.log(data)
+        this.dialog = false
+        this.name = ''
+        this.detail = ''
+        this.img_url = ''
+        this.price = ''
+        this.category = ''
+        this.message = ''
+        this.loading = false
+      } else {
+        this.message = 'please fill the form correctly'
+      }
+    },
+    validateData () {
+      if (
+        this.name.length > 0 &&
+        this.detail.length > 0 &&
+        parseFloat(this.price) >= 0 &&
+        this.category
+      ) {
+        return true
+      } else {
+        return false
+      }
     }
   }
 }

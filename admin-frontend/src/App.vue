@@ -23,7 +23,6 @@
     </v-content>
   </v-app>
 </template>
-
 <script>
 import { mapGetters } from 'vuex'
 export default {
@@ -32,7 +31,6 @@ export default {
   },
   data () {
     return {
-      //
     }
   },
   computed: {

@@ -17,6 +17,13 @@
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
+                <v-flex md1>
+                  <v-progress-circular
+                    :indeterminate='loading'
+                    color="primary"
+                    v-show='loading'
+                  ></v-progress-circular>
+                </v-flex>
                 <router-link to='/add-product'>
                   <v-btn color="primary" @click='onLogin'>Login</v-btn>
                 </router-link>
@@ -28,11 +35,13 @@
     </v-content>
   </v-app>
 </template>
-
 <script>
 import { mapActions } from 'vuex'
 import axios from '@/utils/axios'
 export default {
+  data: () => ({
+    loading: false
+  }),
   methods: {
     ...mapActions([
       'setNavBar',
@@ -41,6 +50,9 @@ export default {
       'setCategories'
     ]),
     onLogin () {
+      this.loading = true
+      this.setAllCategories()
+      this.loading = false
       this.setNavBar(true)
     },
     async setAllCategories () {
@@ -53,7 +65,6 @@ export default {
   },
   mounted () {
     this.setNavBar(false)
-    this.setAllCategories()
   }
 }
 </script>

@@ -21,22 +21,23 @@
       </v-layout>
       <v-layout style='height: 50' align-space-around fill-height>
         <v-flex>
-
-            <v-dialog v-model="dialog" persistent max-width="290">
-              <v-btn slot="activator" color="error" style='width: 157%'>
-                <v-icon>delete_forever</v-icon>
-              </v-btn>
-              <v-card>
-                <v-card-title class="headline">Delete?</v-card-title>
-                <v-card-text>Do you want to delete <b>{{product.name}}</b> ?</v-card-text>
-                <v-card-actions>
-                  <v-spacer></v-spacer>
-                  <v-btn @click="dialog = false">Disagree</v-btn>
-                  <v-btn color="error" @click='deleteProduct(product.id)'>Delete</v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-dialog>
-
+          <v-dialog v-model="dialog" persistent max-width="290">
+            <v-btn slot="activator" color="error" style='width: 157%'>
+              <v-icon>delete_forever</v-icon>
+            </v-btn>
+            <v-card>
+              <v-card-title class="headline">Delete?</v-card-title>
+              <v-progress-linear :indeterminate="loading" color='red' v-show='loading'></v-progress-linear>
+              <v-card-text>
+                Do you want to delete <b>{{product.name}}</b> ?
+              </v-card-text>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn @click="dialog = false">Disagree</v-btn>
+                <v-btn color="error" @click='deleteProduct(product.id)'>Delete</v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
         </v-flex>
       </v-layout>
     </v-card>
@@ -52,7 +53,8 @@ export default {
     'id'
   ],
   data: () => ({
-    dialog: false
+    dialog: false,
+    loading: false
   }),
   methods: {
     ...mapActions([
@@ -66,6 +68,7 @@ export default {
       return name
     },
     async deleteProduct (id) {
+      this.loading = true
       const { data } = await axios.delete(`/product/${id}`)
       console.log(data)
       const products = this.getProducts.filter(product => {
@@ -73,6 +76,7 @@ export default {
       })
       this.setProducts(products)
       this.setDefaultProducts(products)
+      this.loading = false
       this.dialog = false
     }
   },
@@ -81,6 +85,5 @@ export default {
       'getProducts'
     ])
   }
-
 }
 </script>
