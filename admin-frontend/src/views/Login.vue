@@ -57,7 +57,6 @@ export default {
     },
     async setAllCategories () {
       const { data } = await axios.get('/categories')
-      console.log(data)
       this.setCategories(data)
     }
   },

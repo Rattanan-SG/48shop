@@ -186,8 +186,10 @@ export default {
         else{
           FB.login((response)=>{
             FB.api('/me?fields=id,first_name,last_name,picture{url}',(userData)=>{
-              localStorage.setItem("user", JSON.stringify(userData));
-              this.status = 'logout';
+              if(!userData.error){
+                localStorage.setItem("user", JSON.stringify(userData));
+                this.status = 'logout';
+              }
             });
           });
         }

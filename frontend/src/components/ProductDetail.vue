@@ -47,7 +47,7 @@
         </div>
          <div class="container" id="detail-mock-box">
         </div>
-        <div class="navbar is-fixed-bottom" id="nav-bot" v-if="showNavBot" style="height: 430px;">
+        <div class="navbar is-fixed-bottom" id="nav-bot" v-if="showNavBot" style="height: auto;">
             <div class="container" id="nav-box" >
                 <div class="columns">
                     <div class="column">
@@ -97,7 +97,7 @@
                     <div class="column" style="height:20px; width:50px; margin-right: -70px; margin-left: 110px
                     text-align: right; padding-right: 50px">
                         <div class="row" style="color:#626567">  {{product.total}}   </div>
-                        <div class="row" style="color:#626567; padding-left: 27px"> 20  </div> 
+                        <div class="row" style="color:#626567; margin-left: 9px;"> 20  </div> 
                         <div class="row" style="margin-top:60px">{{product.total + 20}}  </div>
                     </div>
                         <div class="column" style="height:20px ; width:150px ; margin-left: 0px;">
@@ -106,7 +106,7 @@
                         <div class="row" style="margin-top:60px;">บาท </div>
                     </div>
                     <a class="button is-primary" @click="orderProduct" :disabled="!hasAddress || !hasCredit"
-                    style=" padding: 20px 50px; margin-left: -300px;margin-top:160px ">
+                    style=" padding: 20px 50px; margin-left: -270px;margin-top:180px ">
                         <strong>ยืนยันการซื้อ</strong>
                     </a>
                 </div>
@@ -123,6 +123,11 @@
                                 <p class="modal-card-title" style="text-align: center">ส่งสินค้าไปที่</p>
                                 <button class="delete"  aria-label="close" @click.prevent="closeAddressModal"></button>
                             </header>
+                            <p v-if="errorsAddress.length">
+                               <ul>
+                                   <li v-for="errorAdd in errorsAddress" :key="errorAdd.id" style="color: red; background-color: white; text-align: center;">{{errorAdd}}</li>
+                               </ul>
+                            </p>
                             <div class="columns is-multiline" style=" display: flex;" id="bodyPopUpAddress">
                                 <div class="field is-horizontal" id="addressbox">
                                     <div class="field" >
@@ -165,7 +170,7 @@
                             <div class="field is-grouped" id="buttonAddress">
                                 <footer id= "footer" class="modal-card-foot" >
                                     <button class="button" @click.prevent="closeAddressModal" style="width: 100px;">ยกเลิก</button>
-                                    <button class="button is-success" @click.prevent="setAddress" style="width: 100px; margin-left: 10px;">บันทึก</button>
+                                    <button class="button is-success" @click.prevent="checkFormAddress" style="width: 100px; margin-left: 10px;">บันทึก</button>
                                 </footer>
                             </div>
                             </form>
@@ -299,7 +304,8 @@ export default {
                 receiver_province: '',
                 receiver_postcode: ''
             },
-            errors: [] 
+            errors: [],
+            errorsAddress: [] 
         }
     },
     created() {
@@ -426,50 +432,84 @@ export default {
             })  
         },
         checkForm: function (e) {
-           console.log('CheckForm')
-                if (this.credit.id.length > 0 && this.credit.name.length > 0 && this.credit.exp_m.length > 0 && 
-                    this.credit.exp_y.length > 0 && this.credit.cvv > 0) {
-                this.creditCardToken();
-                }   
+          console.log('CheckForm')
 
-                this.errors = [];
+               this.errors = [];
 
-                if(this.credit.id.length == 0) {
-                this.errors.push('Credit Card Number required');
-                }
+               if(this.credit.id.length == 0) {
+               this.errors.push('Credit Card Number required');
+               }
 
-                if(!this.credit.id.length == 0 && this.credit.id.length != 16) {
-                this.errors.push('Invalid Card Number');
-                }
+               if(!this.credit.id.length == 0 && this.credit.id.length != 16) {
+               this.errors.push('Invalid Card Number');
+               }
 
-                if(this.credit.name.length == 0) {
-                this.errors.push('Name required');
-                }
+               if(this.credit.name.length == 0) {
+               this.errors.push('Name required');
+               }
 
-                if(this.credit.exp_m.length == 0) {
-                this.errors.push('Expiry Month required');
-                }
+               if(this.credit.exp_m.length == 0) {
+               this.errors.push('Expiry Month required');
+               }
 
-                if(!this.credit.exp_m.length == 0 && (this.credit.exp_m < 1 || this.credit.exp_m > 12)) {
-                this.errors.push('Invalid Month');
-                }
+               if(!this.credit.exp_m.length == 0 && (this.credit.exp_m < 1 || this.credit.exp_m > 12)) {
+               this.errors.push('Invalid Month');
+               }
 
-                if(this.credit.exp_y.length == 0 ) {
-                this.errors.push('Expiry Year Number required');
-                }
+               if(this.credit.exp_y.length == 0 ) {
+               this.errors.push('Expiry Year Number required');
+               }
 
-                if(!this.credit.exp_y.length == 0 && (this.credit.exp_y < 2018 || this.credit.exp_y > 2025)) {
-                this.errors.push('Invalid Expiry Year');
-                }
+               if(!this.credit.exp_y.length == 0 && (this.credit.exp_y < 2018 || this.credit.exp_y > 2025)) {
+               this.errors.push('Invalid Expiry Year');
+               }
 
-                if(this.credit.cvv.length == 0) {
-                this.errors.push('CVV required');
-                }
+               if(this.credit.cvv.length == 0) {
+               this.errors.push('CVV required');
+               }
 
-                if(!this.credit.cvv.length == 0 && this.credit.cvv.length != 3) {
-                this.errors.push('Invalid CVV');
-                }
+               if(!this.credit.cvv.length == 0 && this.credit.cvv.length != 3) {
+               this.errors.push('Invalid CVV');
+               }
 
+               if (this.credit.id.length > 0 && this.credit.name.length > 0 && this.credit.exp_m.length > 0 &&
+                   this.credit.exp_y.length > 0 && this.credit.cvv.length == 3) {
+               this.creditCardToken();
+               }
+        },
+        checkFormAddress: function (e) {
+          console.log('CheckFormAddress')
+
+               this.errorsAddress = [];
+
+               if(this.address.receiver_name.length == 0) {
+               this.errorsAddress.push('Name required');
+               }
+
+               if(this.address.tel_no.length == 0) {
+               this.errorsAddress.push('Telephone Number required');
+               }
+
+               if(this.address.receiver_address.length == 0) {
+               this.errorsAddress.push('Address required');
+               }
+
+               if(this.address.receiver_province.length == 0 ) {
+               this.errorsAddress.push('Province required');
+               }
+
+               if(this.address.receiver_postcode.length == 0) {
+               this.errorsAddress.push('Postcode required');
+               }
+
+               if(!this.address.receiver_postcode.length == 0 && this.address.receiver_postcode.length != 5) {
+               this.errorsAddress.push('Invalid Postcode');
+               }
+
+               if (this.address.receiver_name.length > 0 && this.address.tel_no.length > 0 && this.address.receiver_address.length > 0 &&
+                   this.address.receiver_province.length > 0 && this.address.receiver_postcode.length == 5) {
+               this.setAddress();
+               }
         }
     }
 }
@@ -490,12 +530,14 @@ export default {
     margin-right: 40px
 }
 #price{
+    max-width:630px;
     width: 630px;
     height: 60px;
     background-color: #EBEBEB;
     font-size: 24px;
     margin-bottom: 26px;
     margin-top: 26px;
+    margin-left: 0px;
     
 }
 #quantity{

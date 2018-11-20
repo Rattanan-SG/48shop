@@ -100,7 +100,7 @@ export default {
     max-width: 200px;
     max-height: 500px;
     margin-left: 40px;
-    margin-top: 70px;
+    margin-top: 40px;
     width: 200px;
     height:330px; 
 }

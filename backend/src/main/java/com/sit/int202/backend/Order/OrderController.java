@@ -1,8 +1,5 @@
 package com.sit.int202.backend.Order;
 
-import java.io.IOException;
-
-import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -19,7 +16,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import co.omise.ClientException;
 import co.omise.models.OmiseException;
 
 @RestController
@@ -61,10 +57,4 @@ public class OrderController {
         return new ResponseEntity<Long>(orderService.delete(id), HttpStatus.OK);
     }
 
-    @PostMapping("/creditcard") 
-    public LinkedHashMap creditcard(@RequestBody LinkedHashMap payment)
-            throws ClientException, IOException, OmiseException {
-        LinkedHashMap token = orderService.getToken(payment);
-        return token;
-    }
 }
