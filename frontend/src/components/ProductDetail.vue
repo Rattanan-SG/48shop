@@ -81,12 +81,13 @@
                             </template>  
                         </ol> 
                     </div>
-                    <div class="column" style="height:20px ; width:150px ;  margin-left: 120px;">
+                    <div class="column" style="height:20px ; width:200px ;  margin-left: 120px;">
                         <div class="row" style="color:#626567"> ค่าสินค้า : </div>
                         <div class="row" style="color:#626567"> ค่าจัดส่ง : </div>
                             <div class="row" style="margin-top:60px;">ยอดค่าสินค้า :  </div>
                     </div>
-                    <div class="column" style="height:20px ; width:150px ; margin-right: -90px; margin-left: 110px">
+                    <div class="column" style="height:20px; width:50px; margin-right: -70px; margin-left: 110px
+                    text-align: right; padding-right: 50px">
                         <div class="row" style="color:#626567">  {{product.total}}   </div>
                         <div class="row" style="color:#626567; padding-left: 27px"> 20  </div> 
                         <div class="row" style="margin-top:60px">{{product.total + 20}}  </div>
@@ -96,7 +97,7 @@
                         <div class="row" style="color:#626567"> บาท </div> 
                         <div class="row" style="margin-top:60px;">บาท </div>
                     </div>
-                    <a class="button is-primary" @click="orderProduct" :disabled="!hasCredit && !hasCredit"
+                    <a class="button is-primary" @click="orderProduct" :disabled="!hasAddress || !hasCredit"
                     style=" padding: 20px 50px; margin-left: -300px;margin-top:160px ">
                         <strong>ยืนยันการซื้อ</strong>
                     </a>
@@ -332,9 +333,8 @@ export default {
                 this.product.name = response.data.name,
                 this.product.price = response.data.price,
                 this.product.image = response.data.img_url,
-                this.product.detail = response.data.detail;
-                console.log('dfgdf' + this.product.detail)
-                 this.product.total = response.data.price
+                this.product.detail = response.data.detail,
+                this.product.total = response.data.price
             })
         },
         buy: function() {
@@ -353,11 +353,6 @@ export default {
             this.showCredit = '';
         },
         setAddress: function () {
-            console.log(this.address.receiver_name + " " + 
-                        this.address.receiver_address + " " + 
-                        this.address.receiver_province + " " + 
-                        this.address.receiver_postcode + " " + 
-                        this.address.tel_no);
             this.hasAddress = true;
             this.showAddress = '';
         },
@@ -406,19 +401,20 @@ export default {
             }
             console.log(Omise) 
             Omise.createToken('card',card,(statuscode,response)=>{
+                console.log(hasCredit)
                 if(statuscode == 200){
                     this.closeCreditModal();
                     console.log(response.id)
                     this.credit.token = response.id;
                     this.credit.message = 'valid card';
+                    this.hasCredit= true;
                 }
                 else{
-                    this.showCreditModal();
+                    this.hasCredit = false;
                     this.credit.message = response.message;
                     alert(response.message);
                 }
-            })
-            // this.hasCredit= true;
+            })  
         }
 
 
