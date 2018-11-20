@@ -21,59 +21,59 @@
         </div>
       </div>
     </nav>
-      <div class="field is-grouped" id="CategoryBar">
+      <div class="field is-grouped" id="CategoryBar" style="background-color:#714EC9;">
           <nav class="level" id="bar">
             <p class="level-item has-text-centered">
-              <a @click="getProductsByCategory(1, 'เสื้อผ้าและแฟชั่น')">
+              <a @click="getProductsByCategory(1, 'เสื้อผ้าและแฟชั่น')" style="color:white;">
                 เสื้อผ้าและแฟชั่น
               </a>
             </p>
           </nav>
           <nav class="level" id="bar">
             <p class="level-item has-text-centered">
-              <a @click="getProductsByCategory(2, 'สุขภาพและความงาม')">
+              <a @click="getProductsByCategory(2, 'สุขภาพและความงาม')" style="color:white;">
                 สุขภาพและความงาม
               </a>
             </p>
           </nav>
           <nav class="level" id="bar">
             <p class="level-item has-text-centered">
-              <a @click="getProductsByCategory(3, 'มือถือและอุปกรณไอที')">
+              <a @click="getProductsByCategory(3, 'มือถือและอุปกรณไอที')" style="color:white;">
                 มือถือและอุปกรณไอที
               </a>
             </p>
           </nav>
           <nav class="level" id="bar">
             <p class="level-item has-text-centered">
-              <a @click="getProductsByCategory(4, 'บ้านและไลฟ์สไตล์')">
+              <a @click="getProductsByCategory(4, 'บ้านและไลฟ์สไตล์')" style="color:white;">
                 บ้านและไลฟ์สไตล์
               </a>
             </p>
           </nav>
           <nav class="level" id="bar">
             <p class="level-item has-text-centered">
-              <a @click="getProductsByCategory(5, 'เครื่องใช้ไฟฟ้าในบ้าน')">
+              <a @click="getProductsByCategory(5, 'เครื่องใช้ไฟฟ้าในบ้าน')" style="color:white;">
                 เครื่องใช้ไฟฟ้าในบ้าน
               </a>
             </p>
           </nav>
           <nav class="level" id="bar">
             <p class="level-item has-text-centered">
-              <a @click="getProductsByCategory(6, 'เครื่องใช้ไฟฟ้าในบ้าน')">
+              <a @click="getProductsByCategory(6, 'เครื่องใช้ไฟฟ้าในบ้าน')" style="color:white;">
                 เครื่องใช้ไฟฟ้าในบ้าน
               </a>
             </p>
           </nav>
           <nav class="level" id="bar">
             <p class="level-item has-text-centered">
-              <a @click="getProductsByCategory(7, 'อุปกรณ์กีฬา')">
+              <a @click="getProductsByCategory(7, 'อุปกรณ์กีฬา')" style="color:white;">
                 อุปกรณ์กีฬา
               </a>
             </p>
           </nav>
           <nav class="level" id="bar">
-            <p class="level-item has-text-centered" style=" margin-bottom:18px;">
-              <a @click="getProductsByCategory(8, 'อุปกรณ์ยานยนต์')">
+            <p class="level-item has-text-centered" style=" margin-bottom:18px; " >
+              <a @click="getProductsByCategory(8, 'อุปกรณ์ยานยนต์')" style="color:white;">
                 อุปกรณ์ยานยนต์
               </a>
             </p>
@@ -217,9 +217,8 @@ html {
 }
 #bar {
   font-size: 14px;
-  margin-left: 30px;
+  margin-left: 35px;
   margin-top: 20px;
-  background: white;
 
 }
 #CategoryBar {
