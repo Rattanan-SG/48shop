@@ -47,7 +47,7 @@
         </div>
          <div class="container" id="detail-mock-box">
         </div>
-        <div class="navbar is-fixed-bottom" id="nav-bot" v-if="showNavBot" style="height: 290px;">
+        <div class="navbar is-fixed-bottom" id="nav-bot" v-if="showNavBot" style="height: auto;">
             <div class="container" id="nav-box" >
                 <div class="columns">
                     <div class="column">
@@ -473,7 +473,7 @@ export default {
                }
 
                if (this.credit.id.length > 0 && this.credit.name.length > 0 && this.credit.exp_m.length > 0 &&
-                   this.credit.exp_y.length > 0 && this.credit.cvv.length > 0) {
+                   this.credit.exp_y.length > 0 && this.credit.cvv.length == 3) {
                this.creditCardToken();
                }
         },
