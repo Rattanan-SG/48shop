@@ -53,49 +53,49 @@
       <div class="field is-grouped" id="CategoryBar">
           <nav class="level" id="bar">
             <p class="level-item has-text-centered">
-              <router-link to="/category?category_name=เสื้อผ้าและแฟชั่น">
+              <router-link to="/category?category_name=เสื้อผ้าและแฟชั่น" @click="getProductsByCategory">
                 เสื้อผ้าและแฟชั่น
               </router-link>
             </p>
           </nav>
           <nav class="level" id="bar">
             <p class="level-item has-text-centered">
-              <router-link to="/category?category_name=สุขภาพและความงาม">
+              <router-link to="/category?category_name=สุขภาพและความงาม" @click="getProductsByCategory">
                 สุขภาพและความงาม
               </router-link>
             </p>
           </nav>
           <nav class="level" id="bar">
             <p class="level-item has-text-centered">
-              <router-link to="/category?category_name=อุปกรณ์ทำครัว">
-                อุปกรณ์ทำครัว
+              <router-link to="/category?category_name=มือถือและอุปกรณไอที" @click.native="getProductsByCategory">
+                มือถือและอุปกรณไอที
               </router-link>
             </p>
           </nav>
           <nav class="level" id="bar">
             <p class="level-item has-text-centered">
-              <router-link to="/category?category_name=บ้านและไลฟ์สไตล์">
+              <router-link to="/category?category_name=บ้านและไลฟ์สไตล์" @click.native="getProductsByCategory">
                 บ้านและไลฟ์สไตล์
               </router-link>
             </p>
           </nav>
           <nav class="level" id="bar">
             <p class="level-item has-text-centered">
-              <router-link to="/category?category_name=เครื่องใช้ไฟฟ้าในบ้าน">
+              <router-link to="/category?category_name=เครื่องใช้ไฟฟ้าในบ้าน" @click.native="getProductsByCategory">
                 เครื่องใช้ไฟฟ้าในบ้าน
               </router-link>
             </p>
           </nav>
           <nav class="level" id="bar">
             <p class="level-item has-text-centered">
-              <router-link to="/category?category_name=อุปกรณ์อิเล็กทรอนิกส์">
-                อุปกรณ์อิเล็กทรอนิกส์
+              <router-link to="/category?category_name=อาหารและเครื่องดื่ม" @click.native="getProductsByCategory">
+                อาหารและเครื่องดื่ม
               </router-link>
             </p>
           </nav>
           <nav class="level" id="bar">
             <p class="level-item has-text-centered">
-              <router-link to="/category?category_name=อุปกรณ์กีฬา">
+              <router-link to="/category?category_name=อุปกรณ์กีฬา" @click.native="getProductsByCategory">
                 อุปกรณ์กีฬา
               </router-link>
             </p>
@@ -188,7 +188,15 @@ export default {
           });
         }
       });
-    }
+    },
+    getProductsByCategory: function() {
+        console.log(this.$route.query.category_name);
+        // axios.get(url_category + this.route.query.category_name)
+        // .then(response => {
+        //     this.product.cate_id = response.data.id
+        // })
+        // console.log(product.cate_id);
+    },
   }
 };
 </script>
