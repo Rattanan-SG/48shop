@@ -39,7 +39,7 @@
         </div>
          <div class="container" id="detail-mock-box">
         </div>
-        <div class="navbar is-fixed-bottom" id="nav-bot" v-if="showNavBot">
+        <div class="navbar is-fixed-bottom" id="nav-bot" v-if="showNavBot" style="height: 500px;">
             <div class="container" id="nav-box" >
                 <div class="columns">
                     <div class="column">
@@ -52,14 +52,14 @@
                             </div>
                             <template v-if="hasAddress">
                                 <p class="is-size-7">
-                                    {{
-                                        address.receiver_name + " " + 
-                                        address.tel_no + " " + 
-                                        address.receiver_address + " " + 
-                                        address.receiver_province + " " + 
-                                        address.receiver_postcode 
-                                    }}
-                                </p>
+                                   <pre id="address" style="background-color: white; margin-left: -30px; width: 800px;">{{
+                                       "ชื่อผู้รับ          :    "+address.receiver_name +
+                                       "\nจัดส่งไปที่      :    "+address.receiver_address +
+                                       "\nจังหวัด          :    "+address.receiver_province +
+                                       "\nรหัสไปรษณีย์ :    " + address.receiver_postcode +
+                                       "\nโทรศัพท์       :   " +address.tel_no + " "
+                                   }}</pre>
+                               </p>
                             </template>
                             <template v-else>
                                 <a @click="showAddressModal" class="is-size-7">+ ใส่ที่อยู่</a>
