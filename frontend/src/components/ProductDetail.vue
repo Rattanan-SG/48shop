@@ -171,7 +171,7 @@
                 <div class="modal" id="page-modal" v-bind:style="{display: showCredit}">
                     <div class="modal-background"></div>
                     <section class="modal-card-body">
-                        <div class="modal-content" id="screen">
+                        <div class="modal-content" id="screen" style="width: 650px;">
                             <header id ="head" class="modal-card-head">
                                 <p class="modal-card-title" style="text-align: center;">ใส่บัตรเครดิต/เดบิต</p>
                                 <button class="delete"  aria-label="close" @click.prevent="closeCreditModal"></button>
@@ -182,7 +182,7 @@
                                     <li v-for="error in errors" :key="error.id" style="color: red; background-color: white; text-align: center;">{{error}}</li>
                                 </ul>
                             </p>
-                            <div class="columns is-multiline" style=" display: flex;" id="bodyPopUp">
+                            <div class="columns is-multiline" style=" display: flex; width: 650px; height: 300px;" id="bodyPopUp">
                             <div class="field is-grouped" id="card-Pop" >
                                 <div class="field is-grouped" id="number" >
                                     <div class="field" >
