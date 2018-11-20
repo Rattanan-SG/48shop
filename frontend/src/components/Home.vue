@@ -97,21 +97,22 @@ export default {
   width: 1000px;
   min-height: 2000px;
   height: auto;
+  margin-top: 40px;
+  padding-top: 50px;
 }
 #head{
-  padding: 30px;
-  margin-left: 30px;
+  margin-left: 60px;
   color:#714EC9;  
   font-size: 35px;
+  margin-bottom: 1px;
 }
 #img{
   max-width: 150px;
   max-height: 150px ;
   margin-left: 30px;
-  margin-bottom: 10%;
   width:75%; 
   height:50%;
-  margin-top: 10px;
+
   
 }
 #content{
@@ -147,7 +148,7 @@ export default {
     max-width: 200px;
     max-height: 500px;
     margin-left: 40px;
-    margin-top: 43px;
+    margin-top: 50px;
     width: 200px;
     height:330px;
  
