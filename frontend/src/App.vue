@@ -9,26 +9,25 @@
          </div>
       </div>
       <div id="navbarMenu" class="navbar-menu">
-        <div class="navbar-end">
-          <div class="navbar-item" style="width: 380px">
-              <input class='button' v-model='keyword' @keypress.enter='onSubmit'  style=" margin-right: 260px; width:400px; margin-top:15px;" />
-          </div>
-          <div class="navbar-item">
-            <img :src=user.picture.data.url alt="รอซักครู่" class="is-rounded" style="border-radius: 50%; margin-top:15px;">
-          </div>
-          <div class="navbar-item" style="margin-top:15px;">
-            Welcome,
-            {{user.first_name}}
-            {{user.last_name}}
-          </div>
-          <div class="navbar-item">
-            <a class="button is-outlined is-link" @click="login" style="margin-right: 500px;margin-top:20px;">
-              <span class="icon">
-                <i class="fab fa-facebook-f"></i>
-              </span>
-              <span>{{status}}</span>
-            </a>
-          </div>
+        <div class="navbar-item">
+            <input class='button' v-model='keyword' @keypress.enter='onSubmit' 
+            style="margin: 10px 10px 0 20px; min-width: 300px" />
+        </div>
+        <div class="navbar-item" v-if="isLogin" style="margin-top:15px;">
+            <img :src=user.picture.data.url alt="รอซักครู่" class="is-rounded" style="border-radius: 50%;margin-right: 20px">
+              Welcome,
+              {{user.first_name}}
+              {{user.last_name}}
+        </div>
+      </div>
+      <div class="navbar-end">
+        <div class="navbar-item">
+          <a class="button is-outlined is-link" @click="login" style="margin-right: 200px;margin-top:20px;">
+            <span class="icon">
+              <i class="fab fa-facebook-f"></i>
+            </span>
+            <span>{{status}}</span>
+          </a>
         </div>
       </div>
     </nav>
@@ -142,7 +141,8 @@ export default {
     return {
       user: {},
       status: "",
-      keyword: ''
+      keyword: '',
+      isLogin: false
     };
   },
   beforeMount() { // ทำก่อน render
@@ -150,6 +150,7 @@ export default {
       if(userData){
         this.status = 'ออกจากระบบ'
         this.user = userData
+        this.isLogin = true
       } else {
         this.status = 'เข้าสู่ระบบ' 
       }
@@ -168,8 +169,9 @@ export default {
             FB.api('/me?fields=id,first_name,last_name,picture{url}',(userData)=>{
               if(!userData.error){
                 localStorage.setItem("user", JSON.stringify(userData));
-                this.status = 'ออกจากระบบ';
                 this.user = userData
+                this.isLogin = true
+                this.status = 'ออกจากระบบ';
               }
             });
           });
