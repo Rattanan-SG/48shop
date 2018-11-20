@@ -9,7 +9,7 @@
       <div class="column is-6">
         <div class="columns">
           <div class="column">
-            Search result of '{{keyword}}' total {{getProducts.length}} item(s)
+            Search result of '{{getKeyword}}' total {{getProducts.length}} item(s)
           </div>
         </div>
         <div v-for="product in getProducts" :key="product.id" style="height: 180px; margin: 5px">
@@ -29,7 +29,6 @@ const URL_PRODUCTS = 'http://localhost:8080/products'
 export default {
   name: 'SearchProduct',
   data: () => ({
-    keyword: 'something'
   }),
   components: {
     ProductCard
@@ -41,7 +40,8 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'getProducts'
+      'getProducts',
+      'getKeyword'
     ])
   },
   mounted () {

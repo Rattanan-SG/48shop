@@ -203,14 +203,16 @@ export default {
     async onSubmit () {
       const { data } = await axios.get(URL_PRODUCTS)
       const searchProducts = data.filter(product => {
-        return product.name.toLowerCase().includes(this.keyword)
+        return product.name.toLowerCase().includes(this.keyword.toLowerCase())
       })
       console.log(searchProducts)
       this.setProducts(searchProducts)
+      this.setKeyword(this.keyword)
       this.$router.push('/search')
     },
     ...mapActions([
-      'setProducts'
+      'setProducts',
+      'setKeyword'
     ])
   }
 };
