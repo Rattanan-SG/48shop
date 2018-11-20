@@ -47,7 +47,7 @@
         </div>
          <div class="container" id="detail-mock-box">
         </div>
-        <div class="navbar is-fixed-bottom" id="nav-bot" v-if="showNavBot" style="height: 430px;">
+        <div class="navbar is-fixed-bottom" id="nav-bot" v-if="showNavBot" style="height: 290px;">
             <div class="container" id="nav-box" >
                 <div class="columns">
                     <div class="column">
@@ -97,7 +97,7 @@
                     <div class="column" style="height:20px; width:50px; margin-right: -70px; margin-left: 110px
                     text-align: right; padding-right: 50px">
                         <div class="row" style="color:#626567">  {{product.total}}   </div>
-                        <div class="row" style="color:#626567; padding-left: 27px"> 20  </div> 
+                        <div class="row" style="color:#626567; margin-left: 9px;"> 20  </div> 
                         <div class="row" style="margin-top:60px">{{product.total + 20}}  </div>
                     </div>
                         <div class="column" style="height:20px ; width:150px ; margin-left: 0px;">
@@ -106,7 +106,7 @@
                         <div class="row" style="margin-top:60px;">บาท </div>
                     </div>
                     <a class="button is-primary" @click="orderProduct" :disabled="!hasAddress || !hasCredit"
-                    style=" padding: 20px 50px; margin-left: -300px;margin-top:160px ">
+                    style=" padding: 20px 50px; margin-left: -270px;margin-top:180px ">
                         <strong>ยืนยันการซื้อ</strong>
                     </a>
                 </div>
@@ -490,12 +490,14 @@ export default {
     margin-right: 40px
 }
 #price{
+    max-width:630px;
     width: 630px;
     height: 60px;
     background-color: #EBEBEB;
     font-size: 24px;
     margin-bottom: 26px;
     margin-top: 26px;
+    margin-left: 0px;
     
 }
 #quantity{
