@@ -536,7 +536,7 @@ export default {
                 productQuantity: this.product.qty,
                 totalPrice: this.product.total,
                 trackingId: 123456789,
-                method: "Credit card",
+                paymentMethod: "Credit card",
                 omiseToken: this.credit.token,                        
             })
             .then(response => {
