@@ -9,14 +9,17 @@
                     <div class="card-image is-4by3">
                     <img :src=product.img_url alt="รอซักครู่" id="img">
                     </div>
-                    <div class="card-content">
-                        <div v-if="product.name.length <= 50">
+                    <div class="card-content" style="height: 100px">
+                        <div v-if="product.name.length <= 35">
                             <p>{{ product.name | dontCutWords}}</p>
                         </div>
                         <div v-else>
                             <p>{{ product.name | cutWords}}</p>
                         </div>
                     </div>
+                        <div class="footer" id="price">
+                            <strong> {{product.price}}  บาท</strong>
+                        </div>
                 </div>
             </router-link>
         </div>    
@@ -48,7 +51,7 @@ export default {
     computed: {
         chunkedProducts: function() {
             console.log(this.getProducts);
-            return chunk(this.getProducts, 5)
+            return chunk(this.getProducts, 4)
         },
         ...mapGetters([
             'getProducts'
@@ -72,6 +75,8 @@ export default {
     margin-inline-start: 35px;
     font: 22px bolder;
     color: rebeccapurple;
+    margin-left: 60px;
+    margin-top: 40px;
 }
 #Category-box{
     background:white;
@@ -91,11 +96,48 @@ export default {
 #field-box{
     margin-bottom: 0px;
 }
-
+#items{
+    max-width: 200px;
+    max-height: 500px;
+    margin-left: 40px;
+    margin-top: 70px;
+    width: 200px;
+    height:330px; 
+}
 #img{
-    width:75%; 
-    height:50%;
-    margin-left: 20px;
-    margin-right: auto;
+  max-width: 150px;
+  max-height: 150px ;
+  margin-left: 30px;
+  margin-bottom: 10%;
+  width:75%; 
+  height:50%;
+  margin-top: 10px;
+}
+#content{
+  max-width: 180px;
+  max-height: 150px ;
+  width: 172px;
+  height: 40px ;
+  font-size: 10px; 
+}
+#price{
+    margin-inline-start: 80px;
+    font: 13px sans-serif;
+    color: #333234;
+    max-width: 180px;
+    max-height: 150px ;
+    width: 200px;
+    height:2px;
+    background:none;
+    margin-top: -35px;
+    margin-left: 100px;
+}
+.card{
+    box-shadow: none;
+}
+#items:hover{
+-webkit-box-shadow: 0px 0px 80px -4px rgba(0,0,0,0.29);
+-moz-box-shadow: 0px 0px 80px -4px rgba(0,0,0,0.29);
+box-shadow: 0px 0px 80px -4px rgba(0,0,0,0.29);
 }
 </style>
