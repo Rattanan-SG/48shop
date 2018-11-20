@@ -29,27 +29,29 @@ public class ProductCategoryController {
     }
 
     @GetMapping("/category/{category_id}")
-    public ResponseEntity<ProductCategory> getProductCategory(@PathVariable long category_id){
+    public ResponseEntity<ProductCategory> getProductCategory(@PathVariable long category_id) {
         ProductCategory productCategory = productCategoryService.getProductCategory(category_id);
         return new ResponseEntity<ProductCategory>(productCategory, HttpStatus.OK);
     }
 
     @GetMapping("/category/{category_name}")
-    public ResponseEntity<ProductCategory> getProductCategoryId(@PathVariable String category_name){
+    public ResponseEntity<ProductCategory> getProductCategoryId(@PathVariable String category_name) {
         ProductCategory productCategory = productCategoryService.getProductCategoryByName(category_name);
         return new ResponseEntity<ProductCategory>(productCategory, HttpStatus.OK);
     }
 
     @PostMapping("/category")
-    public ResponseEntity<ProductCategory> createProductCategory(@Valid @RequestBody ProductCategory productCategory){
+    public ResponseEntity<ProductCategory> createProductCategory(@Valid @RequestBody ProductCategory productCategory) {
         ProductCategory productCategory_return = productCategoryService.create(productCategory);
         return new ResponseEntity<ProductCategory>(productCategory_return, HttpStatus.CREATED);
     }
 
     @PutMapping("/category/{category_id}")
-    public ResponseEntity<ProductCategory> updateProductCategory(@Valid @PathVariable String category_id, @RequestBody ProductCategory productCategory) {
-        ProductCategory productCategory_return = productCategoryService.create(productCategory);
+    public ResponseEntity<ProductCategory> updateProductCategoryName(@Valid @PathVariable long category_id,
+            @RequestBody ProductCategory productCategory) {
+        ProductCategory productCategoryThisId = productCategoryService.getProductCategory(category_id);
+        productCategoryThisId.setCategoryName(productCategory.getCategoryName());
+        ProductCategory productCategory_return = productCategoryService.create(productCategoryThisId);
         return new ResponseEntity<ProductCategory>(productCategory_return, HttpStatus.OK);
     }
-    
 }
