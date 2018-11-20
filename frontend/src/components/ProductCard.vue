@@ -1,32 +1,46 @@
 <template>
-  <router-link to="/ProductDetail">
-    <div class="card">
-      <div class="field is-grouped" id="img">
-        <div class="card-image">
-          <figure class="image " >
-            <img src='https://versions.bulma.io/0.7.0/images/placeholders/1280x960.png' alt="Placeholder image">
-          </figure>
+  <div class="columns box">
+    <div class="column is-3">
+      <img :src='product.img_url' width="100"/>
+    </div>
+    <div class="column" >
+      <div class="columns" style="height: 50px">
+        <div class="column">
+          <h2>
+            {{formatDetail(product.name)}}
+          </h2>
         </div>
       </div>
-      <div class="field is-grouped" id="content" >
-        <div class="card-content" >
-          <div class="field is-grouped">
-            <div class="content">
-              <p>iPhone 8</p>
-            </div>
-          </div>
-          <div class="field is-grouped" id="price" >
-            <div class="content">
-              <p>1x,xxx</p>
-            </div>
-          </div>
+      <div class="columns" style="height: 50px">
+        <div class="column">
+          <p style="color: grey">
+            {{formatDetail(product.detail)}}
+          </p>
+        </div>
+      </div>
+      <div class="columns">
+        <div class="column is-offset-8 is-4">
+          <h3>
+            {{product.price}} ฿
+          </h3>
         </div>
       </div>
     </div>
-  </router-link>
+  </div>
 </template>
 <script>
 export default {
-  name: 'addProduct'
+  name: 'addProduct',
+  props: [
+    'product'
+  ],
+  methods: {
+    formatDetail (detail) {
+      if (detail.length > 50) {
+        return detail.substring(0, 50) + '...'
+      }
+      return detail
+    }
+  }
 }
 </script>
