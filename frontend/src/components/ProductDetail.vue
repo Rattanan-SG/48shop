@@ -441,9 +441,9 @@ export default {
         axios
         .post("/order", {
           userProfile: {
-            firstname: '',
-            lastname: '',
-            facebookId: ''
+            firstname: 'GUEST',
+            lastname: 'GUEST',
+            facebookId: 'GUEST'
           },
           startLocation: {
             id: 1,
