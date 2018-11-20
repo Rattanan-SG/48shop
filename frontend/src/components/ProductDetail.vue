@@ -34,8 +34,10 @@
             </div>
         </div>
         <div class="container" id="detail-box">
-            <p>รายละเอียดสินค้า</p>
-            {{ product.detail}}
+            <p><strong>รายละเอียดสินค้า</strong></p>
+            <pre id="detail">{{ product.detail}}</pre>
+        </div>
+         <div class="container" id="detail-box">
         </div>
         <div class="navbar is-fixed-bottom" id="nav-bot" v-if="showNavBot">
             <div class="container" id="nav-box" >
@@ -79,12 +81,25 @@
                             </template>  
                         </ol> 
                     </div>
-                  <div class="column">
-                        ราคา {{product.total}}
-                    </div>
-                    <a class="button is-primary" @click="orderProduct" :disabled="!hasCredit && !hasCredit">
-                        <strong>ยืนยันการซื้อ</strong>
-                    </a>
+                        <div class="column" style="height:20px ; width:150px ;  margin-left: 120px;">
+                            <div class="row" style="color:#626567"> ค่าสินค้า : </div>
+                            <div class="row" style="color:#626567"> ค่าจัดส่ง : </div>
+                             <div class="row" style="margin-top:60px;">ยอดค่าสินค้า :  </div>
+                        </div>
+                        <div class="column" style="height:20px ; width:150px ; margin-right: -90px; margin-left: 110px;">
+                            <div class="row" style="color:#626567">  {{product.total}}   </div>
+                            <div class="row" style="color:#626567"> 20.00  </div> 
+                            <div class="row" style="margin-top:60px">{{product.total}}  </div>
+                        </div>
+                         <div class="column" style="height:20px ; width:150px ; margin-left: 0px;">
+                            <div class="row" style="color:#626567">   บาท </div>
+                            <div class="row" style="color:#626567"> บาท </div> 
+                            <div class="row" style="margin-top:60px;">บาท </div>
+                        </div>
+                                <a class="button is-primary" @click="orderProduct" :disabled="!hasCredit && !hasCredit"
+                                style=" padding: 20px 50px; margin-left: -300px;margin-top:160px ">
+                                    <strong>ยืนยันการซื้อ</strong>
+                                </a>
                 </div>
             </div>
         </div>
@@ -280,7 +295,12 @@
                                 <button class="delete"  aria-label="close" @click="closeAddCreditModal"></button>
                             </header>
                      <!-- form start -->
-                             <form>
+                             <form                            >
+                            <p v-if="errors.length">
+                                <ul>
+                                    <li v-for="error in errors" :key="error.id" style="color: red; background-color: white; text-align: center;">{{error}}</li>
+                                </ul>
+                            </p>
                             <div class="columns is-multiline" style=" display: flex;" id="bodyPopUp">
                             <div class="field is-grouped" id="card-Pop" >
                                 <div class="field is-grouped" id="number" >
@@ -328,7 +348,7 @@
                                     <div class="field is-grouped " id="foot"> 
                                       <div class="field" >
                                             <button class="button" @click="closeAddCreditModal">ยกเลิก</button>
-                                            <button class="button is-success" @click.prevent="setCreditCard">บันทึก</button>
+                                            <button class="button is-success" @click.prevent="creditCardToken">บันทึก</button>
                                       </div>
                                     </div>
                                 </div>    
@@ -381,8 +401,6 @@ export default {
                 exp_y: '',
                 cvv: '',
                 name: '',
-                address: '',
-                zip: '',
                 token: '',
                 message: ''
             },
@@ -392,13 +410,15 @@ export default {
                 receiver_address: '',
                 receiver_province: '',
                 receiver_postcode: ''
-            }
+            },
+            errors: [] 
         }
     },
     created() {
         this.product.id = this.$route.params.id;
     },
     mounted() {
+        Omise.setPublicKey("pkey_test_5dviz6scp4tdk4cm0au")
         this.getProductDetail();
     },
     methods: {
@@ -434,8 +454,8 @@ export default {
                 this.product.name = response.data.name,
                 this.product.price = response.data.price,
                 this.product.image = response.data.img_url,
-                this.product.detail = JSON.stringify(response.data.detail)
-                console.log(this.product.detail)
+                this.product.detail = response.data.detail;
+                console.log('dfgdf' + this.product.detail)
                  this.product.total = response.data.price
             })
         },
@@ -480,31 +500,6 @@ export default {
         editAddress: function() {
             this.showAddressModal();
         },
-        setCreditCard: function() {
-            // for tesing
-            console.log(this.credit.id + "\n" + this.credit.exp_m + "\n" + this.credit.exp_y + "\n" + this.credit.cvv
-             + "\n" + this.credit.name + "\n" + this.credit.address + "\n" + this.credit.zip);
-            //  
-            axios.post(url_credit, {
-                card_id: this.credit.id,
-                exp_m: this.credit.exp_m,
-                exp_y: this.credit.exp_y,
-                cvv: this.credit.cvv,
-                name: this.credit.name,
-                address: this.credit.address,
-                zip: this.credit.zip
-            })
-            .then(response => {
-                console.log(response);
-                this.hasCredit = true;
-                this.showCredit = '';
-                this.showAddCredit= '' ;
-                this.showAddAddress='';
-                this.censorCreditCard;
-                this.credit.token = response.data.token,
-                this.credit.message = response.data.message
-            })
-        },
         editCreditCard: function() {
             this.showCreditModal();
         },
@@ -536,19 +531,52 @@ export default {
                 productQuantity: this.product.qty,
                 totalPrice: this.product.total,
                 trackingId: 123456789,
-                paymentMethod: "Credit card",
+                method: "Credit card",
                 omiseToken: this.credit.token,                        
             })
             .then(response => {
                 console.log(response.data);
             })
+        },
+        creditCardToken: function(){
+            const card = {
+                number: this.credit.id,
+                expiration_month: this.credit.exp_m,
+                expiration_year: this.credit.exp_y,
+                security_code: this.credit.cvv,
+                name: this.credit.name
+            }
+            console.log(Omise) 
+            Omise.createToken('card',card,(statuscode,response)=>{
+                if(statuscode == 200){
+                    this.closeAddCreditModal();
+                    console.log(response.id)
+                    this.credit.token = response.id;
+                    this.credit.message = 'valid card';
+                }
+                else{
+                    this.showAddCreditModal();
+                    this.credit.message = response.message;
+                    alert(response.message);
+                }
+            })
         }
+
+
+    
     }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+#detail{
+    background-color:white;
+    font-family: "Avenir", Helvetica, Arial, sans-serif;
+    color: black;
+    margin-left: 20px;
+
+}
 #item{
     margin-left: 60px;
     margin-top: 50px;
@@ -567,7 +595,7 @@ export default {
     width: 40px;
 }
 #nav-bot {
-    height: 240px;
+    height: 270px;
     border: 0.09em solid #E0E0E0;
 }
 #nav-top {
@@ -592,7 +620,7 @@ export default {
 #detail-box {
   background: white;
   width: 1000px;
-  min-height: 1000px;
+  min-height: auto;
   margin-top: 10px;
   box-shadow: 0 4px 15px 0 rgba(40,44,53,.06), 0 2px 2px 0 rgba(40,44,53,.08);
   padding: 50px;
@@ -788,6 +816,13 @@ margin-left: 70px;
     font-size: 10px;
     width: 100px;
     margin-right: -25px;
+}
+#detail-box{
+    max-width: 1050px;
+    height: 550px;
+    background: white;
+    margin-top: 13px;
+
 }
 
 </style>
