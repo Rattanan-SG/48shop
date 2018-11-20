@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -29,14 +30,14 @@ public class ProductCategoryController {
     }
 
     @GetMapping("/category/{category_id}")
-    public ResponseEntity<ProductCategory> getProductCategory(@PathVariable long category_id) {
-        ProductCategory productCategory = productCategoryService.getProductCategory(category_id);
+    public ResponseEntity<ProductCategory> getProductCategoryById(@PathVariable(value = "category_id") long id) {
+        ProductCategory productCategory = productCategoryService.getProductCategoryById(id);
         return new ResponseEntity<ProductCategory>(productCategory, HttpStatus.OK);
     }
 
-    @GetMapping("/category/{category_name}")
-    public ResponseEntity<ProductCategory> getProductCategoryId(@PathVariable String category_name) {
-        ProductCategory productCategory = productCategoryService.getProductCategoryByName(category_name);
+    @GetMapping("/category")
+    public ResponseEntity<ProductCategory> getProductCategoryByName(@RequestParam(value = "name") String name) {
+        ProductCategory productCategory = productCategoryService.getProductByCategoryByName(name);
         return new ResponseEntity<ProductCategory>(productCategory, HttpStatus.OK);
     }
 
@@ -47,10 +48,10 @@ public class ProductCategoryController {
     }
 
     @PutMapping("/category/{category_id}")
-    public ResponseEntity<ProductCategory> updateProductCategoryName(@Valid @PathVariable long category_id,
-            @RequestBody ProductCategory productCategory) {
-        ProductCategory productCategoryThisId = productCategoryService.getProductCategory(category_id);
-        productCategoryThisId.setCategoryName(productCategory.getCategoryName());
+    public ResponseEntity<ProductCategory> updateProductCategoryName(
+            @Valid @PathVariable(value = "category_id") long id, @RequestBody ProductCategory productCategory) {
+        ProductCategory productCategoryThisId = productCategoryService.getProductCategoryById(id);
+        productCategoryThisId.setName(productCategory.getName());
         ProductCategory productCategory_return = productCategoryService.create(productCategoryThisId);
         return new ResponseEntity<ProductCategory>(productCategory_return, HttpStatus.OK);
     }

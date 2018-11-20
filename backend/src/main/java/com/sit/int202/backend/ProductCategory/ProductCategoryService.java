@@ -16,9 +16,14 @@ public class ProductCategoryService {
         return productCategoryList;
     }
 
-    public ProductCategory getProductCategory(long category_id) {
-        ProductCategory productCategory = productCategoryRepository.getOne(category_id);
+    public ProductCategory getProductCategoryById(long id) {
+        ProductCategory productCategory = productCategoryRepository.getOne(id);
         return productCategory;
+    }
+
+    public ProductCategory getProductByCategoryByName(String name) {
+        ProductCategory productList = productCategoryRepository.findProductCategoryByName(name);
+        return productList;
     }
 
     public ProductCategory create(ProductCategory productCategory) {
@@ -29,11 +34,6 @@ public class ProductCategoryService {
     public long delete(long productCategory_id) {
         productCategoryRepository.deleteById(productCategory_id);
         return productCategory_id;
-    }
-
-    public ProductCategory getProductCategoryByName(String category_name){
-        ProductCategory productCategory = productCategoryRepository.findByCategoryName(category_name);
-        return productCategory;
     }
 
 }
