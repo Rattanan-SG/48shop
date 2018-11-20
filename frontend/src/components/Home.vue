@@ -57,15 +57,18 @@
             @click.native="scrollToTop">
                 <div class="card" id="items" >
                     <div class="card-image is-4by3">
-                    <img :src=product.image alt="Placeholder image" id="img">
+                      <img :src=product.image alt="Placeholder image" id="img">
                     </div>
-                    <div class="card-content">
-                        <div v-if="product.name.length <= 50">
+                    <div class="card-content" style="height: 100px">
+                        <div v-if="product.name.length <= 35">
                             <p>{{ product.name | dontCutWords}}</p>
                         </div>
                         <div v-else>
                             <p>{{ product.name | cutWords}}</p>
                         </div>
+                    </div>
+                    <div class="footer" id="price">
+                     <strong> {{product.price}}  บาท</strong>
                     </div>
                 </div>
             </router-link>
@@ -131,7 +134,7 @@ export default {
       return this.currentOffset === 0;
     },
     chunkedProducts: function() {
-        return chunk(this.products, 5)
+        return chunk(this.products, 4)
     }
   },
   methods: {
@@ -202,14 +205,20 @@ body {
 }
 
 #img{
-  max-width: 100px;
-  max-height: 100px ;
+  max-width: 150px;
+  max-height: 150px ;
   margin-left: 30px;
-  margin-bottom: 25%;
+  margin-bottom: 10%;
+  width:75%; 
+  height:50%;
+  margin-top: 10px;
+  
 }
 #content{
+  max-width: 180px;
+  max-height: 150px ;
   width: 172px;
-  height: 50px ;
+  height: 40px ;
   font-size: 10px; 
 }
 .card-carousel-wrapper {
@@ -276,6 +285,14 @@ body {
 #price{
     margin-inline-start: 80px;
     font: 13px sans-serif;
+    color: #333234;
+    max-width: 180px;
+    max-height: 150px ;
+    width: 200px;
+    height:2px;
+    background:none;
+    margin-top: -35px;
+    margin-left: 100px;
 }
 #field-box{
     margin-bottom: 0px;
@@ -286,27 +303,20 @@ body {
     height: auto;
 }
 #items{
-    max-width: 172px;
-    max-height: 260px;
-    margin-left: 23px;
+    max-width: 200px;
+    max-height: 500px;
+    margin-left: 40px;
     margin-top: 70px;
-    width: 172px;
-    height:260px;
+    width: 200px;
+    height:330px;
  
 }
 #items:hover{
--webkit-box-shadow: 0px 0px 86px -42px rgba(0,0,0,0.97);
--moz-box-shadow: 0px 0px 86px -42px rgba(0,0,0,0.97);
-box-shadow: 0px 0px 86px -42px rgba(0,0,0,0.97);
+-webkit-box-shadow: 0px 0px 80px -4px rgba(0,0,0,0.29);
+-moz-box-shadow: 0px 0px 80px -4px rgba(0,0,0,0.29);
+box-shadow: 0px 0px 80px -4px rgba(0,0,0,0.29);
 }
 #field-box{
     margin-bottom: 0px;
-}
-
-#img{
-    width:75%; 
-    height:50%;
-    margin-left: 35px;
-    margin-top: 15px;
 }
 </style>
