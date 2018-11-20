@@ -14,7 +14,7 @@
                     <img :src=product.image alt="รอซักครู่">
                 </div>
                 <div class="column">
-                    <h1 style="font-size: 24px; margin-top: 20px;">{{product.name}}</h1>
+                    <h1 style="font-size: 24px; margin-top: 20px; width: 630px">{{product.name}}</h1>
                     <h1 class="field" id="price" style="padding:12px; padding-left: 26px  ">{{product.price+"  บาท"}}</h1> 
                     <div class="field is-grouped " style="color:#9C9CA1;">
                         <h1>จัดส่งโดย เคอรี่</h1>
@@ -37,7 +37,7 @@
                     </div>
                     </div>
                     <div class="button" @click="buy()" :disabled="showNavBot" 
-                    style="background-color:#714EC9; color:white;   border:none; padding: 30px 80px; margin-top: 10px; border-radius: 10px;  margin-bottom: 26px;"> <strong>ซื้อสินค้า </strong></div>
+                    style="background-color:#714EC9; color:white;   border:none; padding: 30px 80px; margin-top: 10px; border-radius: 5px;  margin-bottom: 26px;"> <strong>ซื้อสินค้า </strong></div>
                 </div>
             </div>
         </div>
@@ -50,9 +50,9 @@
         <div class="navbar is-fixed-bottom" id="nav-bot" v-if="showNavBot" style="height: auto;">
             <div class="container" id="nav-box" >
                 <div class="columns">
-                    <div class="column">
-                        <ol type="none" > 
-                            <p>สินค้า: {{product.name}}</p>
+                    <div class="column" id="user-detail">
+                        <ol type="none" class="is-size-7"> 
+                            <p class="is-size-7">สินค้า: {{product.name}}</p>
                             <div class="field is-grouped " id="form">
                             <p style="margin-top: 10px;">ส่งสินค้าไปที่:</p>
                             <button class="button is-small is-rounded" id="small-button" @click="showAddressModal"
@@ -60,12 +60,12 @@
                             </div>
                             <template v-if="hasAddress">
                                 <p class="is-size-7">
-                                   <pre id="address" style="background-color: white; margin-left: -30px; width: 800px;">{{
-                                       "ชื่อผู้รับ          :    "+address.receiver_name +
-                                       "\nจัดส่งไปที่      :    "+address.receiver_address +
-                                       "\nจังหวัด          :    "+address.receiver_province +
-                                       "\nรหัสไปรษณีย์ :    " + address.receiver_postcode +
-                                       "\nโทรศัพท์       :    " +address.tel_no + " "
+                                   <pre id="address" style="background-color: white; min-width: 200px;
+                                   width: auto; padding: 0px;">{{
+                                       "ชื่อผู้รับ :    " + address.receiver_name + 
+                                       "\nส่งที่ :    " + address.receiver_address +
+                                       + address.receiver_province + " " + address.receiver_postcode +
+                                       "\nโทรศัพท์ :    " + address.tel_no + " "
                                    }}</pre>
                                </p>
                             </template>
@@ -92,21 +92,21 @@
                     <div class="column" style="height:20px ; width:200px ;  margin-left: 120px;">
                         <div class="row" style="color:#626567"> ค่าสินค้า : </div>
                         <div class="row" style="color:#626567"> ค่าจัดส่ง : </div>
-                            <div class="row" style="margin-top:60px;">ยอดค่าสินค้า :  </div>
+                            <div class="row" style="margin-top:40px;">ยอดค่าสินค้า :  </div>
                     </div>
                     <div class="column" style="height:20px; width:50px; margin-right: -70px; margin-left: 110px
                     text-align: right; padding-right: 50px">
                         <div class="row" style="color:#626567">  {{product.total}}   </div>
                         <div class="row" style="color:#626567; margin-left: 9px;"> 20  </div> 
-                        <div class="row" style="margin-top:60px">{{product.total + 20}}  </div>
+                        <div class="row" style="margin-top:40px">{{product.total + 20}}  </div>
                     </div>
                         <div class="column" style="height:20px ; width:150px ; margin-left: 0px;">
                         <div class="row" style="color:#626567">   บาท </div>
                         <div class="row" style="color:#626567"> บาท </div> 
-                        <div class="row" style="margin-top:60px;">บาท </div>
+                        <div class="row" style="margin-top:40px;">บาท </div>
                     </div>
                     <a class="button is-primary" @click="orderProduct" :disabled="!hasAddress || !hasCredit"
-                    style=" padding: 20px 50px; margin-left: -270px;margin-top:180px ">
+                    style=" padding: 20px 50px; margin-left: -270px;margin-top:150px;">
                         <strong>ยืนยันการซื้อ</strong>
                     </a>
                 </div>
@@ -544,7 +544,6 @@ export default {
     width: 40px;
 }
 #nav-bot {
-    height: 270px;
     border: 0.09em solid #E0E0E0;
 }
 #nav-top {
@@ -555,6 +554,8 @@ export default {
 #nav-box {
   width: 1000px;
   margin-top: 20px;
+  height: auto;
+  min-height: 240px
 }
 
 #product-box {
@@ -606,10 +607,13 @@ nav {
   width: 1000px;
 }
 
+/* #user-detail {
+    size: 
+} */
+
 #form {
     width: 500px;
-    height: 35px;
-    margin-top: 10px;
+    height: 30px;
 }
 
 #card-Pop{
@@ -713,7 +717,7 @@ nav {
 
 #small-button {
     margin-left: 20px;
-    margin-top: 13px;
+    margin-top: 8px;
 }
 /* popup1 */
 #element-toggle {
@@ -765,10 +769,6 @@ margin-left: 70px;
 #head-cradit{
   font-size: 20px;
   height: 100px;
-}
-#address{
-    font-size: 10px;
-    width: 370px;
 }
 #text-add{
     font-size: 10px;
