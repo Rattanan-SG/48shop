@@ -94,6 +94,7 @@ export default {
 <style lang="scss" scoped>
 #home-box {
   background:white;
+  box-shadow: 0px 0px 80px -4px rgba(0,0,0,0.1);
   width: 1000px;
   min-height: 2000px;
   height: auto;

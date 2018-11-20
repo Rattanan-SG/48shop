@@ -80,6 +80,7 @@ export default {
 }
 #Category-box{
     background:white;
+    box-shadow: 0px 0px 80px -4px rgba(0,0,0,0.1);
     width: 1000px;
     height: auto;
     min-height: 300px;
