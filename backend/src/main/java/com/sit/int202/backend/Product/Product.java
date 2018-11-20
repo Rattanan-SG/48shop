@@ -3,14 +3,14 @@ package com.sit.int202.backend.Product;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.sit.int202.backend.Order.Order;
-import com.sit.int202.backend.ProductCategory.ProductCategory;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,8 +26,13 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import com.sit.int202.backend.Order.Order;
+import com.sit.int202.backend.ProductCategory.ProductCategory;
+
 @Entity
 @Table(name = "products")
+@CrossOrigin(origins = "*", maxAge = 3600)
+
 @EntityListeners(AuditingEntityListener.class)
 public class Product implements Serializable {
 
@@ -49,12 +54,12 @@ public class Product implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "category_id", nullable = false)
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
     @JsonProperty(value = "category")
     private ProductCategory productCategory;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE},
-            orphanRemoval = true, mappedBy = "product")
+    @OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.REMOVE }, orphanRemoval = true, mappedBy = "product")
     @JsonIgnore
     private Set<Order> orders = new HashSet<>();
 
