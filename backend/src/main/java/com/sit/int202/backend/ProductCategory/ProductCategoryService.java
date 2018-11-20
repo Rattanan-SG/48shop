@@ -29,7 +29,11 @@ public class ProductCategoryService {
     public long delete(long productCategory_id) {
         productCategoryRepository.deleteById(productCategory_id);
         return productCategory_id;
+    }
 
+    public ProductCategory getProductCategoryByName(String category_name){
+        ProductCategory productCategory = productCategoryRepository.findByCategoryName(category_name);
+        return productCategory;
     }
 
 }
