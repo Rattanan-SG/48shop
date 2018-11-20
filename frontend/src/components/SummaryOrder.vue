@@ -97,7 +97,7 @@
   </div>
 </template>
 <script>
-import axios from 'axios'
+import axios from '@/utils/axios'
 import { mapGetters } from 'vuex';
 
 const URL_ORDER = 'http://localhost:8080/order/'
@@ -109,12 +109,10 @@ export default {
   }),
   methods: {
     async getOrder () {
-      console.log('get order')
-      const { data } = await axios.get(URL_ORDER+this.getOrderId)
+      const { data } = await axios.get(`/order/${this.getOrderId}`)
       this.order = data
       let date = new Date(data.createdAt)
       this.createdAt = date.getDate() + ' / ' + (date.getMonth()+1) + ' / ' + date.getFullYear()
-      console.log(data)
     },
     goToHome () {
       this.$router.push('/home')

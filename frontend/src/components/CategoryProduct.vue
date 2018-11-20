@@ -22,17 +22,14 @@
                         </div>
                 </div>
             </router-link>
-        </div>    
+        </div>
     </div>
 </template>
 
 <script>
-import axios from 'axios';
 import chunk from 'chunk';
 import { mapActions, mapGetters } from 'vuex'
 
-const url_product = 'http://localhost:8080/products';
-const url_category = 'http://localhost:8080/product?category=';
 export default {
     data () {
         return {
@@ -56,7 +53,6 @@ export default {
             'getProducts'
         ])
     },
-    //filter
     filters: {
         cutWords: function (value) {
         return value.substr(0,50).toLowerCase()+"..."
@@ -102,14 +98,14 @@ export default {
     margin-left: 40px;
     margin-top: 40px;
     width: 200px;
-    height:330px; 
+    height:330px;
 }
 #img{
   max-width: 150px;
   max-height: 150px ;
   margin-left: 30px;
   margin-bottom: 10%;
-  width:75%; 
+  width:75%;
   height:50%;
   margin-top: 10px;
 }
@@ -118,7 +114,7 @@ export default {
   max-height: 150px ;
   width: 172px;
   height: 40px ;
-  font-size: 10px; 
+  font-size: 10px;
 }
 #price{
     margin-inline-start: 80px;

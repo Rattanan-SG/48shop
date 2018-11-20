@@ -258,14 +258,9 @@
 
 <script>
 import './../../node_modules/bulma/css/bulma.css';
-import axios from 'axios';
+import axios from '@/utils/axios';
 import chunk from 'chunk';
 import { mapActions } from 'vuex';
-
-const url_test = `http://jsonplaceholder.typicode.com/posts`;
-const url_product = `http://localhost:8080/product/`;
-const url_credit = `http://localhost:8080/creditcard`;
-const url_order = `http://localhost:8080/order`;
 
 export default {
     name: 'ProductDetail',
@@ -347,7 +342,7 @@ export default {
             }
         },
         getProductDetail: function() {
-            axios.get(url_product + this.product.id)
+            axios.get(`/product/${this.product.id}`)
             .then(response => {
                 this.product.id = response.data.id
                 this.product.category = response.data.category
@@ -382,7 +377,7 @@ export default {
         },
         orderProduct: function() {
           const fbAccount = JSON.parse(localStorage.getItem('user'))
-            axios.post(url_order, {
+            axios.post('/order', {
                 userProfile: {
                     firstname: fbAccount.first_name,
                     lastname: fbAccount.last_name,
@@ -419,7 +414,6 @@ export default {
                 omiseToken: this.credit.token,
             })
             .then(response => {
-                console.log(response.data);
                 this.setOrderId(response.data.id)
                 this.$router.push('/summary')
             })
@@ -432,7 +426,6 @@ export default {
                 security_code: this.credit.cvv,
                 name: this.credit.name
             }
-            console.log(Omise)
             Omise.createToken('card',card,(statuscode,response)=>{
                 if(statuscode == 200){
                     this.closeCreditModal();

@@ -96,14 +96,10 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from "@/utils/axios";
 import { mapActions } from 'vuex';
 
 var test = "sss";
-const url_login = `http://localhost:8080/login`;
-const url_info = `http://localhost:8080/fbinfo`;
-const url_category = 'http://localhost:8080/product?category=';
-const URL_PRODUCTS = 'http://localhost:8080/products'
 const config = {
   headers: {
     "Access-Control-Allow-Origin": "*",
@@ -181,19 +177,24 @@ export default {
       });
     },
     getProductsByCategory: function (id, name) {
-      axios.get(url_category + id)
+      axios.get('/product', {
+        params: {
+          category: id
+        }
+      })
       .then(response => {
           this.setProducts(response.data)
           this.$router.push('/product' + '?category_name=' + name)
       })
     },
     async onSubmit () {
-      const { data } = await axios.get(URL_PRODUCTS)
+      const { data } = await axios.get('/products')
       const searchProducts = data.filter(product => {
         return product.name.toLowerCase().includes(this.keyword.toLowerCase())
       })
       this.setProducts(searchProducts)
       this.setKeyword(this.keyword)
+      this.keyword = ''
       this.$router.push('/search')
     },
     ...mapActions([

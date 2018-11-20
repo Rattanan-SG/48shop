@@ -1,12 +1,7 @@
 <template>
   <div class="container">
     <div class="columns">
-      <div class="column is-2 is-offset-1">
-        <div class="" style="height: 300px; background-color: white">
-          sidebar
-        </div>
-      </div>
-      <div class="column is-6">
+      <div class="column is-offset-3 is-6">
         <div class="columns">
           <div class="column">
             Search result of '{{getKeyword}}' total {{getProducts.length}} item(s)
@@ -22,10 +17,9 @@
   </div>
 </template>
 <script>
-import axios from 'axios'
 import ProductCard from '@/components/ProductCard'
 import { mapActions, mapGetters } from 'vuex'
-const URL_PRODUCTS = 'http://localhost:8080/products'
+
 export default {
   name: 'SearchProduct',
   data: () => ({

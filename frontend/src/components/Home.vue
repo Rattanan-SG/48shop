@@ -22,17 +22,15 @@
                     </div>
                 </div>
             </router-link>
-        </div>      
+        </div>
     </div>
   </div>
 </template>
 <script>
 import './../../node_modules/bulma/css/bulma.css';
-import axios from 'axios';
+import axios from '@/utils/axios';
 import chunk from 'chunk';
 
-const url = 'http://localhost:8080/products';
-const url_product = `http://localhost:8080/product/`;
 export default {
   name: 'CarouselGroup',
   name: 'Home',
@@ -73,14 +71,14 @@ export default {
   },
   methods: {
     getAllProducts: function () {
-      axios.get(url)
+      axios.get('/products')
       .then(response => {
           response.data.forEach(ele => {
             this.products.push({
                 id: ele.id,
                 name: ele.name,
                 price: ele.price,
-                image: ele.img_url 
+                image: ele.img_url
             });
           });
       })
@@ -121,7 +119,7 @@ export default {
   max-height: 150px ;
   width: 172px;
   height: 40px ;
-  font-size: 10px; 
+  font-size: 10px;
 }
 
 .card{
@@ -152,7 +150,7 @@ export default {
     margin-top: 50px;
     width: 200px;
     height:330px;
- 
+
 }
 #items:hover{
 -webkit-box-shadow: 0px 0px 80px -4px rgba(0,0,0,0.29);
