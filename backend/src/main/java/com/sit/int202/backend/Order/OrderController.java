@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import co.omise.ClientException;
 import co.omise.models.OmiseException;
 import com.sit.int202.backend.exception.BadRequestException;
 
