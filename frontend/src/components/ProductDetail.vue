@@ -328,7 +328,7 @@
                                     <div class="field is-grouped " id="foot"> 
                                       <div class="field" >
                                             <button class="button" @click="closeAddCreditModal">ยกเลิก</button>
-                                            <button class="button is-success" @click.prevent="setCreditCard">บันทึก</button>
+                                            <button class="button is-success" @click.prevent="creditCardToken">บันทึก</button>
                                       </div>
                                     </div>
                                 </div>    
@@ -381,8 +381,6 @@ export default {
                 exp_y: '',
                 cvv: '',
                 name: '',
-                address: '',
-                zip: '',
                 token: '',
                 message: ''
             },
@@ -399,6 +397,7 @@ export default {
         this.product.id = this.$route.params.id;
     },
     mounted() {
+        Omise.setPublicKey("pkey_test_5dviz6scp4tdk4cm0au")
         this.getProductDetail();
     },
     methods: {
@@ -480,31 +479,6 @@ export default {
         editAddress: function() {
             this.showAddressModal();
         },
-        setCreditCard: function() {
-            // for tesing
-            console.log(this.credit.id + "\n" + this.credit.exp_m + "\n" + this.credit.exp_y + "\n" + this.credit.cvv
-             + "\n" + this.credit.name + "\n" + this.credit.address + "\n" + this.credit.zip);
-            //  
-            axios.post(url_credit, {
-                card_id: this.credit.id,
-                exp_m: this.credit.exp_m,
-                exp_y: this.credit.exp_y,
-                cvv: this.credit.cvv,
-                name: this.credit.name,
-                address: this.credit.address,
-                zip: this.credit.zip
-            })
-            .then(response => {
-                console.log(response);
-                this.hasCredit = true;
-                this.showCredit = '';
-                this.showAddCredit= '' ;
-                this.showAddAddress='';
-                this.censorCreditCard;
-                this.credit.token = response.data.token,
-                this.credit.message = response.data.message
-            })
-        },
         editCreditCard: function() {
             this.showCreditModal();
         },
@@ -541,6 +515,29 @@ export default {
             })
             .then(response => {
                 console.log(response.data);
+            })
+        },
+        creditCardToken: function(){
+            const card = {
+                number: this.credit.id,
+                expiration_month: this.credit.exp_m,
+                expiration_year: this.credit.exp_y,
+                security_code: this.credit.cvv,
+                name: this.credit.name
+            }
+            console.log(Omise) 
+            Omise.createToken('card',card,(statuscode,response)=>{
+                if(statuscode == 200){
+                    this.closeAddCreditModal();
+                    console.log(response.id)
+                    this.credit.token = response.id;
+                    this.credit.message = 'valid card';
+                }
+                else{
+                    this.showAddCreditModal();
+                    this.credit.message = response.message;
+                    alert(response.message);
+                }
             })
         }
     }
