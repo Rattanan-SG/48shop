@@ -3,115 +3,73 @@
     <div class="container" id="home-box">
       <div class="columns" id="tabs">
         <div class="column">
-          <img src="./../assets/girl.svg" alt="Placeholder image"  width="40" height="40" style=" margin-left: 20px; margin-top: 30px;" 
+          <img src="./../assets/girl.svg" alt="Placeholder image"  width="40" height="40" 
           @mouseover="activateTab=1" v-bind:class="[ activateTab === 1 ? 'active' : '' ]">
           <p>สินค้าแนะนำ</p>
         </div>
         <div class="column">
-          <img src="./../assets/medal.svg" alt="Placeholder image"  width="40" height="40" style=" margin-left: 20px; margin-top: 30px;"
+          <img src="./../assets/wallet.svg" alt="Placeholder image"  width="40" height="40"
           @mouseover="activateTab=2" v-bind:class="[ activateTab === 2 ? 'active' : '' ]">
-          <p>สินค้ายอดนิยม</p>
-        </div>
-        <div class="column">
-          <img src="./../assets/wallet.svg" alt="Placeholder image"  width="40" height="40" style=" margin-left: 20px; margin-top: 30px;"
-          @mouseover="activateTab=3" v-bind:class="[ activateTab === 3 ? 'active' : '' ]">
          <p> สินค้าทั้งหมด</p>
         </div>  
       </div>
-       <div class="container" v-if="activateTab===1">
+       <div class="container" v-if="activateTab===1" id="Category-box">
           <div class="card-carousel-wrapper" id="slide">
               <div class="card-carousel--nav__left" @click="moveCarousel(-1)" :disabled="atHeadOfList"></div>   
                 <div class="card-carousel--overflow-container">
                     <div class="card-carousel-cards " :style="{ transform: 'translateX' + '(' + currentOffset + 'px' + ')'}">
-                        <div class="card" id="item" v-for="product in products" :key="product.id">
-                          <div class="field is-grouped" id="img">
+                      <div class="card" id="item" v-for="product in recProducts" :key="product.id">
+                        <div class="field is-grouped" id="img">
                           <div class="card-image">
-                            <figure class="image " >
+                            <figure class="image center" >
                               <img :src=product.image alt="Placeholder image">
                             </figure>  
                           </div>
                           </div>
-                          <div class="field is-grouped" id="content" >
+                        <div class="field is-grouped" id="content" >
                           <div class="card-content" >
                             <div class="field is-grouped">
-                            <div class="content">
-                              <div v-if="product.name.length <= 20">
-                                <p>{{ product.name | dontCutWords}}</p>
-                               </div>
-                              <div v-else>
-                                <p>{{ product.name | cutWords}}</p>
-                               </div>
-                            </div>
+                              <div class="content">
+                                <div v-if="product.name.length <= 20">
+                                  <p>{{ product.name | dontCutWords}}</p>
+                                </div>
+                                <div v-else>
+                                  <p>{{ product.name | cutWords}}</p>
+                                </div>
+                              </div>
                             </div>
                             <div class="field is-grouped" id="price" >
-                            <div class="content">
-                              <p>{{ product.price | currency }}</p>
+                              <div class="content">
+                                <p>{{ product.price | currency }}</p>
+                              </div>
                             </div>
-                            </div>
-                          </div>
                           </div>
                         </div>
+                      </div>
                     </div>
                 </div>
-            
               <div class="card-carousel--nav__right" @click="moveCarousel(1)" :disabled="atEndOfList"></div>
           </div>
       </div>
-      <div class="container" v-if="activateTab===2">
-        <div class="columns">
-          <div class="column">
-            <router-link to="/ProductDetail">
-              <div class="card">
-                <div class="card-image is-4by3">
-                  <img src="./../assets/mocked/3.png" alt="Placeholder image" width="100" height="100">
+      <div class="container" v-if="activateTab===2" id="Category-box">
+        <div class="field is-grouped" id="field-box" v-for="products in chunkedProducts" :key="products.id">
+            <router-link :to="{name: 'ProductDetail', params: { id: product.id }}" v-for="product in products" :key="product.id"
+            @click.native="scrollToTop">
+                <div class="card" id="items" >
+                    <div class="card-image is-4by3">
+                    <img :src=product.image alt="Placeholder image" id="img">
+                    </div>
+                    <div class="card-content">
+                        <div v-if="product.name.length <= 50">
+                            <p>{{ product.name | dontCutWords}}</p>
+                        </div>
+                        <div v-else>
+                            <p>{{ product.name | cutWords}}</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="card-content">
-                  product name2
-                </div>
-              </div>
             </router-link>
-          </div>
-          <div class="column">
-            <router-link to="/ProductDetail">
-              <div class="card">
-                <div class="card-image is-4by3"  >
-                  <img src="./../assets/mocked/4.jpg" alt="Placeholder image" width="100" height="100">
-                </div>
-                <div class="card-content">
-                  product name2
-                </div>
-              </div>
-            </router-link>
-          </div>
-        </div>
-      </div>
-      <div class="container" v-if="activateTab===3">
-        <div class="columns">
-          <div class="column">
-            <router-link to="/ProductDetail">
-              <div class="card">
-                <div class="card-image is-4by3">
-                  <img src="./../assets/mocked/5.jpg" alt="Placeholder image" width="100" height="100">
-                </div>
-                <div class="card-content">
-                  product name3
-                </div>
-              </div>
-            </router-link>
-          </div>
-          <div class="column">
-            <router-link to="/ProductDetail">
-              <div class="card">
-                <div class="card-image is-4by3">
-                  <img src="./../assets/mocked/6.png" alt="Placeholder image" width="100" height="100">
-                </div>
-                <div class="card-content">
-                  product name3
-                </div>
-              </div>
-            </router-link>
-          </div>
-        </div>
+        </div>    
       </div>
     </div>
   </div>
@@ -119,6 +77,7 @@
 <script>
 import './../../node_modules/bulma/css/bulma.css';
 import axios from 'axios';
+import chunk from 'chunk';
 
 const url = 'http://localhost:8080/products';
 const url_product = `http://localhost:8080/product/`;
@@ -140,9 +99,6 @@ export default {
       return "THB "+value
     }
   },
-
-
-  
   data () {
     return {
       msg: 'หน้าแรก สำหรับแสดงสินค้า',
@@ -187,42 +143,52 @@ export default {
         this.currentOffset += this.paginationFactor;
       } 
     },
-    getAllProduct: function () {
+    getAllProducts: function () {
       axios.get(url)
       .then(response => {
-          console.log(response.data);
+          response.data.forEach(ele => {
+            this.products.push({
+                id: ele.id,
+                name: ele.name,
+                price: ele.price,
+                image: ele.img_url 
+            });
+          });
+          console.log(response);
+          console.log(this.products);
       })
     },
+    scrollToTop: function() {
+        window.scrollTo(0,0);
+    },
     getRecProduct: function() {
-      this.recProduct.forEach(id => {
+      this.recProductId.forEach(id => {
         axios.get(url_product + id)
         .then(response => {
-          console.log(response.data.id);
-          this.products.push({
+          this.recProducts.push({
               id: response.data.id,
               name: response.data.name,
               price: response.data.price,
               image: response.data.img_url 
           });
         })
-      });
+      })
     }
   }
 }
 </script>
 <style lang="scss" scoped>
-#nav-box {
-  width: 1000px;
-}
 #home-box {
-  background: white;
-  max-width: 1000px;
+  background:white;
+  width: 1000px;
   min-height: 2000px;
-  margin-top: 13px;
+  height: auto;
+  margin-top: 0px;
 }
 #tabs {
-  margin-left: 20%;
   margin-top: 30px;
+  text-align: center;
+  margin: 20px 200px 0 200px;
 }
 $vue-teal: #42b883;
 body {
@@ -310,5 +276,31 @@ body {
 #price{
     margin-inline-start: 80px;
     font: 13px sans-serif;
+}
+#field-box{
+    margin-bottom: 0px;
+}
+#Category-box{
+    background:white;
+    width: 1000px;
+    height: auto;
+}
+#items{
+    max-width: 172px;
+    max-height: 260px;
+    margin-left: 23px;
+    margin-top: 70px;
+    width: 172px;
+    height:260px;
+}
+#field-box{
+    margin-bottom: 0px;
+}
+
+#img{
+    width:75%; 
+    height:50%;
+    margin-left: 20px;
+    margin-right: auto;
 }
 </style>
