@@ -122,15 +122,15 @@ export default {
 }
 #price{
     margin-inline-start: 80px;
-    font: 13px sans-serif;
-    color: #333234;
+    font: 15px sans-serif;
+    color:#714EC9;
     max-width: 180px;
     max-height: 150px ;
     width: 200px;
     height:2px;
     background:none;
     margin-top: -35px;
-    margin-left: 100px;
+    margin-left: 90px;
 }
 .card{
     box-shadow: none;
