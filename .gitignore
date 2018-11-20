@@ -2,3 +2,7 @@
 .vscode
 
 frontend/yarn\.lock
+
+frontend/package-lock\.json
+
+frontend/package\.json
