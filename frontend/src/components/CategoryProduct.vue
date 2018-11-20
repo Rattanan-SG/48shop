@@ -1,88 +1,70 @@
 <template>
-  <div id="CategoryProduct">
     <div class="container" id="Category-box">
         <hr>
         <p id="Category-name">{{$route.query.category_name}}</p>
         <div class="field is-grouped" id="field-box" v-for="products in chunkedProducts" :key="products.id">
-            <!-- <div class="columns" v-for="products in chunkedProducts" :key="products.id">
-                <div class="column" v-for="product in products" :key="product.id"> -->
-                    <router-link :to="{name: 'ProductDetail', params: { id: product.id }}" v-for="product in products" :key="product.id"
-                    @click.native="scrollToTop">
-                        <div class="card" id="items" >
-                            <div class="card-image is-4by3">
-                            <img :src=product.image alt="Placeholder image" id="img">
-                            </div>
-                            <div class="card-content">
-                                <div v-if="product.name.length <= 50">
-                                    <p>{{ product.name | dontCutWords}}</p>
-                                </div>
-                                <div v-else>
-                                    <p>{{ product.name | cutWords}}</p>
-                                </div>
-                            </div>
+            <router-link :to="{name: 'ProductDetail', params: { id: product.id }}" v-for="product in products" :key="product.id"
+            @click.native="scrollToTop">
+                <div class="card" id="items" >
+                    <div class="card-image is-4by3">
+                    <img :src=product.img_url alt="รอซักครู่" id="img">
+                    </div>
+                    <div class="card-content">
+                        <div v-if="product.name.length <= 50">
+                            <p>{{ product.name | dontCutWords}}</p>
                         </div>
-                    </router-link>
-                <!-- </div>
-            </div> -->
+                        <div v-else>
+                            <p>{{ product.name | cutWords}}</p>
+                        </div>
+                    </div>
+                </div>
+            </router-link>
         </div>    
     </div>
-  </div>
 </template>
 
 <script>
 import axios from 'axios';
 import chunk from 'chunk';
+import { mapActions, mapGetters } from 'vuex'
 
-const url = 'http://localhost:8080/products';
+const url_product = 'http://localhost:8080/products';
+const url_category = 'http://localhost:8080/product?category=';
 export default {
-
+    data () {
+        return {
+        msg: 'หน้าแรก สำหรับแสดงสินค้า',
+        categoryId: ''
+        }
+    },
+    methods: {
+        scrollToTop: function() {
+            window.scrollTo(0,0);
+        },
+        ...mapActions([
+          'setProducts'
+        ])
+    },
+    computed: {
+        chunkedProducts: function() {
+            console.log(this.getProducts);
+            return chunk(this.getProducts, 5)
+        },
+        ...mapGetters([
+            'getProducts'
+        ])
+    },
     //filter
     filters: {
-    cutWords: function (value) {
-      return value.substr(0,50).toLowerCase()+"..."
-    },
+        cutWords: function (value) {
+        return value.substr(0,50).toLowerCase()+"..."
+        },
 
-    dontCutWords: function (value) {
-      return value.toLowerCase()
+        dontCutWords: function (value) {
+        return value.toLowerCase()
+        },
     },
-
-  },
-
-  data () {
-    return {
-      msg: 'หน้าแรก สำหรับแสดงสินค้า',
-      products: []
     }
-  },
-  methods: {
-    getAllProducts: function () {
-      axios.get(url)
-      .then(response => {
-          // console.log(response.data);
-          response.data.forEach(ele => {
-            this.products.push({
-                id: ele.id,
-                name: ele.name,
-                price: ele.price,
-                image: ele.img_url 
-            });
-          });
-      })
-    },
-    scrollToTop: function() {
-        window.scrollTo(0,0);
-    }
-  },
-  mounted () {
-    this.getAllProducts();
-    console.log(this.products);
-  },
-  computed: {
-        chunkedProducts: function() {
-            return chunk(this.products, 5)
-        }
-    }
-}
 </script>
 
 <style>

@@ -27,7 +27,7 @@ export default new Router({
       props: true
     },
     {
-      path: '/category',
+      path: '/product',
       name: 'CategoryProduct',
       component: CategoryProduct
     },

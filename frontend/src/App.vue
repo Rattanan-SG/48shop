@@ -53,58 +53,58 @@
       <div class="field is-grouped" id="CategoryBar">
           <nav class="level" id="bar">
             <p class="level-item has-text-centered">
-              <router-link to="/category?category_name=เสื้อผ้าและแฟชั่น" @click="getProductsByCategory">
+              <a @click="getProductsByCategory(1, 'เสื้อผ้าและแฟชั่น')">
                 เสื้อผ้าและแฟชั่น
-              </router-link>
+              </a>
             </p>
           </nav>
           <nav class="level" id="bar">
             <p class="level-item has-text-centered">
-              <router-link to="/category?category_name=สุขภาพและความงาม" @click="getProductsByCategory">
+              <a @click="getProductsByCategory(2, 'สุขภาพและความงาม')">
                 สุขภาพและความงาม
-              </router-link>
+              </a>
             </p>
           </nav>
           <nav class="level" id="bar">
             <p class="level-item has-text-centered">
-              <router-link to="/category?category_name=มือถือและอุปกรณไอที" @click.native="getProductsByCategory">
+              <a @click="getProductsByCategory(3, 'มือถือและอุปกรณไอที')">
                 มือถือและอุปกรณไอที
-              </router-link>
+              </a>
             </p>
           </nav>
           <nav class="level" id="bar">
             <p class="level-item has-text-centered">
-              <router-link to="/category?category_name=บ้านและไลฟ์สไตล์" @click.native="getProductsByCategory">
+              <a @click="getProductsByCategory(4, 'บ้านและไลฟ์สไตล์')">
                 บ้านและไลฟ์สไตล์
-              </router-link>
+              </a>
             </p>
           </nav>
           <nav class="level" id="bar">
             <p class="level-item has-text-centered">
-              <router-link to="/category?category_name=เครื่องใช้ไฟฟ้าในบ้าน" @click.native="getProductsByCategory">
+              <a @click="getProductsByCategory(5, 'เครื่องใช้ไฟฟ้าในบ้าน')">
                 เครื่องใช้ไฟฟ้าในบ้าน
-              </router-link>
+              </a>
             </p>
           </nav>
           <nav class="level" id="bar">
             <p class="level-item has-text-centered">
-              <router-link to="/category?category_name=อาหารและเครื่องดื่ม" @click.native="getProductsByCategory">
-                อาหารและเครื่องดื่ม
-              </router-link>
+              <a @click="getProductsByCategory(6, 'เครื่องใช้ไฟฟ้าในบ้าน')">
+                เครื่องใช้ไฟฟ้าในบ้าน
+              </a>
             </p>
           </nav>
           <nav class="level" id="bar">
             <p class="level-item has-text-centered">
-              <router-link to="/category?category_name=อุปกรณ์กีฬา" @click.native="getProductsByCategory">
+              <a @click="getProductsByCategory(7, 'อุปกรณ์กีฬา')">
                 อุปกรณ์กีฬา
-              </router-link>
+              </a>
             </p>
           </nav>
           <nav class="level" id="bar">
             <p class="level-item has-text-centered" style=" margin-bottom:18px;">
-              <router-link to="/category?category_name=อุปกรณ์ยานยนต์">
+              <a @click="getProductsByCategory(8, 'อุปกรณ์ยานยนต์')">
                 อุปกรณ์ยานยนต์
-              </router-link>
+              </a>
             </p>
           </nav>
       </div>
@@ -120,6 +120,7 @@ import { mapActions } from 'vuex';
 var test = "sss";
 const url_login = `http://localhost:8080/login`;
 const url_info = `http://localhost:8080/fbinfo`;
+const url_category = 'http://localhost:8080/product?category=';
 const URL_PRODUCTS = 'http://localhost:8080/products'
 const config = {
   headers: {
@@ -192,13 +193,12 @@ export default {
         }
       });
     },
-    getProductsByCategory: function() {
-        console.log(this.$route.query.category_name);
-        // axios.get(url_category + this.route.query.category_name)
-        // .then(response => {
-        //     this.product.cate_id = response.data.id
-        // })
-        // console.log(product.cate_id);
+    getProductsByCategory: function (id, name) {
+      axios.get(url_category + id)
+      .then(response => {
+          this.setProducts(response.data)
+          this.$router.push('/product' + '?category_name=' + name)
+      })
     },
     async onSubmit () {
       const { data } = await axios.get(URL_PRODUCTS)
