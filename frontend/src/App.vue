@@ -11,7 +11,7 @@
       <div id="navbarMenu" class="navbar-menu">
         <div class="navbar-item">
             <input class='button' v-model='keyword' @keypress.enter='onSubmit' 
-            style="margin: 10px 10px 0 20px; min-width: 300px" />
+            style="margin: 10px 50px 0 20px; min-width: 300px" />
         </div>
         <div class="navbar-item" v-if="isLogin" style="margin-top:15px;">
             <img :src=user.picture.data.url alt="รอซักครู่" class="is-rounded" style="border-radius: 50%;margin-right: 20px">
@@ -19,10 +19,13 @@
               {{user.first_name}}
               {{user.last_name}}
         </div>
+        <div class="navbar-item" v-else>
+
+        </div>
       </div>
       <div class="navbar-end">
         <div class="navbar-item">
-          <a class="button is-outlined is-link" @click="login" style="margin-right: 200px;margin-top:20px;">
+          <a class="button is-outlined is-link" @click="login" style="margin-right: 210px;margin-top:20px;">
             <span class="icon">
               <i class="fab fa-facebook-f"></i>
             </span>
@@ -152,7 +155,8 @@ export default {
         this.user = userData
         this.isLogin = true
       } else {
-        this.status = 'เข้าสู่ระบบ' 
+        this.isLogin = false
+        this.status = 'เข้าสู่ระบบ'
       }
   },
   methods: {
@@ -161,7 +165,9 @@ export default {
         if (response.status == "connected") {
           FB.logout(response => {
             localStorage.clear();
+            this.isLogin = false
             this.status = "เข้าสู่ระบบ";
+            console.log('1: ' + this.isLogin)
           });
         }
         else{
@@ -172,6 +178,7 @@ export default {
                 this.user = userData
                 this.isLogin = true
                 this.status = 'ออกจากระบบ';
+                console.log('2: ' + this.isLogin)
               }
             });
           });
