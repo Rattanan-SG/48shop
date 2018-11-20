@@ -131,7 +131,7 @@ const config = {
 };
 window.fbAsyncInit = function() {
   FB.init({
-    appId: "253765508571750",
+    appId: "363931931017126",
     cookie: true,
     xfbml: true,
     version: "v3.2"
