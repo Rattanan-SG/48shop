@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import co.omise.models.OmiseException;
+import com.sit.int202.backend.exception.BadRequestException;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -40,9 +41,9 @@ public class OrderController {
         try {
             orderService.charge(order.getTotalPrice(), order.getOmiseToken());
         } catch (OmiseException o) {
-            return new ResponseEntity(o.getMessage(), HttpStatus.FORBIDDEN);
+            throw new BadRequestException(o.getMessage());
         } catch (Exception e) {
-            return new ResponseEntity(e.getMessage(), HttpStatus.FORBIDDEN);
+            throw new BadRequestException(e.getMessage());
         }
         return new ResponseEntity<Order>(orderService.save(order), HttpStatus.CREATED);
     }
