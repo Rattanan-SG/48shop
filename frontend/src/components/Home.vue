@@ -1,5 +1,5 @@
 <template>
-  <div class="hello">
+  <div class="Home">
     <div class="container" id="home-box">
       <div class="text" id="head">สินค้าทั้งหมด</div>
         <div class="field is-grouped" id="field-box" v-for="products in chunkedProducts" :key="products.id">
@@ -54,15 +54,7 @@ export default {
   data () {
     return {
       msg: 'หน้าแรก สำหรับแสดงสินค้า',
-      activateTab: 1,
-      currentOffset: 0,
-      windowSize: 0,
-      paginationFactor: 150, // ความเร็วการสไลด์ size * 10
       products: [],
-      recProducts: [],
-      recProductId: [19,22,3,4,34,17,13,1,26,37,5,49,23,32,42],
-      topProducts: [],
-      topProductId: [1,2,3,5,6,7,18,32,35,39,41,45],
       product: {
         id: 0,
         name: '',
@@ -73,28 +65,13 @@ export default {
   },
   mounted () {
     this.getAllProducts();
-    this.getRecProduct();
   },
   computed: {
-    atEndOfList() {
-      return this.currentOffset <= (this.paginationFactor * -1) * (this.recProducts.size - this.windowSize);
-    },
-    atHeadOfList() {
-      return this.currentOffset === 0;
-    },
     chunkedProducts: function() {
         return chunk(this.products, 4)
     }
   },
   methods: {
-    moveCarousel: function (direction) {
-      // Find a more elegant way to express the :style. consider using props to make it truly generic
-      if (direction === 1 && !this.atEndOfList) {
-        this.currentOffset -= this.paginationFactor;
-      } else if (direction === -1 && !this.atHeadOfList) {
-        this.currentOffset += this.paginationFactor;
-      } 
-    },
     getAllProducts: function () {
       axios.get(url)
       .then(response => {
@@ -106,26 +83,11 @@ export default {
                 image: ele.img_url 
             });
           });
-          console.log(response);
-          console.log(this.products);
       })
     },
     scrollToTop: function() {
         window.scrollTo(0,0);
     },
-    getRecProduct: function() {
-      this.recProductId.forEach(id => {
-        axios.get(url_product + id)
-        .then(response => {
-          this.recProducts.push({
-              id: response.data.id,
-              name: response.data.name,
-              price: response.data.price,
-              image: response.data.img_url 
-          });
-        })
-      })
-    }
   }
 }
 </script>
@@ -135,7 +97,6 @@ export default {
   width: 1000px;
   min-height: 2000px;
   height: auto;
-  margin-top: 0px;
 }
 #head{
   padding: 30px;
