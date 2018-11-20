@@ -9,11 +9,13 @@
       <div class="column is-6">
         <div class="columns">
           <div class="column">
-            Search result of '{{keyword}}' total {{products.length}} item(s)
+            Search result of '{{keyword}}' total {{getProducts.length}} item(s)
           </div>
         </div>
-        <div v-for="product in products" :key="product.id" style="height: 180px; margin: 5px">
-          <ProductCard :product='product'/>
+        <div v-for="product in getProducts" :key="product.id" style="height: 180px; margin: 5px">
+          <router-link :to='{name: "ProductDetail", params: {id: product.id}}' >
+            <ProductCard :product='product'/>
+          </router-link>
         </div>
       </div>
     </div>
@@ -25,9 +27,8 @@ import ProductCard from '@/components/ProductCard'
 import { mapActions, mapGetters } from 'vuex'
 const URL_PRODUCTS = 'http://localhost:8080/products'
 export default {
-  name: 'searchProduct',
+  name: 'SearchProduct',
   data: () => ({
-    products: [],
     keyword: 'something'
   }),
   components: {
@@ -36,13 +37,7 @@ export default {
   methods: {
     ...mapActions([
       'setProducts'
-    ]),
-    async getAllProduct () {
-      const { data } = await axios.get(URL_PRODUCTS)
-      console.log(data)
-      this.products = data
-      this.setProducts(data)
-    }
+    ])
   },
   computed: {
     ...mapGetters([
@@ -50,7 +45,6 @@ export default {
     ])
   },
   mounted () {
-    this.getAllProduct()
   },
 }
 </script>

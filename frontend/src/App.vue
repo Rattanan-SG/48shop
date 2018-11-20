@@ -38,7 +38,7 @@
         <div class="navbar-end">
           <div class="navbar-item">
             <div class="buttons">
-              <input class='button is-rounded'/>
+              <input class='button is-rounded' v-model='keyword' @keypress.enter='onSubmit' />
               <a class="button is-primary">
                 <strong>Sign up</strong>
               </a>
@@ -115,10 +115,12 @@
 
 <script>
 import axios from "axios";
+import { mapActions } from 'vuex';
 
 var test = "sss";
 const url_login = `http://localhost:8080/login`;
 const url_info = `http://localhost:8080/fbinfo`;
+const URL_PRODUCTS = 'http://localhost:8080/products'
 const config = {
   headers: {
     "Access-Control-Allow-Origin": "*",
@@ -160,7 +162,8 @@ export default {
   data() {
     return {
       user: {},
-      status: ""
+      status: "",
+      keyword: ''
     };
   },
   beforeMount() { // ทำก่อน render
@@ -197,6 +200,18 @@ export default {
         // })
         // console.log(product.cate_id);
     },
+    async onSubmit () {
+      const { data } = await axios.get(URL_PRODUCTS)
+      const searchProducts = data.filter(product => {
+        return product.name.toLowerCase().includes(this.keyword)
+      })
+      console.log(searchProducts)
+      this.setProducts(searchProducts)
+      this.$router.push('/search')
+    },
+    ...mapActions([
+      'setProducts'
+    ])
   }
 };
 </script>

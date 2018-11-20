@@ -7,7 +7,7 @@
       <div class="columns" style="height: 50px">
         <div class="column">
           <h2>
-            {{formatDetail(product.name)}}
+            <b>{{formatDetail(product.name)}}</b>
           </h2>
         </div>
       </div>
@@ -20,9 +20,9 @@
       </div>
       <div class="columns">
         <div class="column is-offset-8 is-4">
-          <h3>
-            {{product.price}} ฿
-          </h3>
+          <h2>
+            {{addCommas(product.price)}} ฿
+          </h2>
         </div>
       </div>
     </div>
@@ -40,6 +40,17 @@ export default {
         return detail.substring(0, 50) + '...'
       }
       return detail
+    },
+    addCommas (nStr) {
+      nStr += '';
+      let x = nStr.split('.');
+      let x1 = x[0];
+      let x2 = x.length > 1 ? '.' + x[1] : '';
+      var rgx = /(\d+)(\d{3})/;
+      while (rgx.test(x1)) {
+        x1 = x1.replace(rgx, '$1' + ',' + '$2');
+      }
+      return x1 + x2;
     }
   }
 }
