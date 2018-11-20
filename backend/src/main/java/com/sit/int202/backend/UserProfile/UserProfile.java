@@ -21,6 +21,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.sit.int202.backend.Address.Address;
+import com.sit.int202.backend.Order.Order;
 
 @Entity
 @Table(name = "user_profiles")
@@ -41,14 +42,15 @@ public class UserProfile implements Serializable {
     @NotBlank
     private String lastname;
 
-    @NotBlank
-    @Column(name = "customer_omise_token")
-    private String customerOmiseToken;
-
     @OneToMany(mappedBy = "userProfile", fetch = FetchType.LAZY)
     @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
     @JsonIgnore
     private List<Address> addresses;
+
+    @OneToMany(mappedBy = "userProfile", fetch = FetchType.LAZY)
+    @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+    @JsonIgnore
+    private List<Order> orders;
 
     public UserProfile() {
     }
@@ -83,6 +85,14 @@ public class UserProfile implements Serializable {
 
     public void setAddresses(List<Address> addresses) {
         this.addresses = addresses;
+    }
+
+    public List<Order> getOrders() {
+        return this.orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 
 }
