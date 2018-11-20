@@ -30,8 +30,6 @@ import co.omise.models.Token;
 public class OrderService {
 
     Properties prop = new Properties();
-    // private static final String OMISE_OPUBLIC_KEY = "pkey_test_5dviz6scp4tdk4cm0au";
-    // private static final String OMISE_SECRET_KEY = "skey_test_5dviz7b84hcwu90jews";
     private static final String TH_BAHT = "thb";
 
     @Autowired
