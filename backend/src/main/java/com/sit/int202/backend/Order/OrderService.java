@@ -1,20 +1,12 @@
 package com.sit.int202.backend.Order;
 
 import java.io.IOException;
+
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.Properties;
-import java.util.TreeMap;
 
-import com.fasterxml.jackson.databind.util.JSONPObject;
-import com.sit.int202.backend.Address.Address;
-import com.sit.int202.backend.Address.AddressService;
-import com.sit.int202.backend.UserProfile.UserProfileService;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +17,9 @@ import co.omise.models.Card;
 import co.omise.models.Charge;
 import co.omise.models.OmiseException;
 import co.omise.models.Token;
+
+import com.sit.int202.backend.Address.AddressService;
+import com.sit.int202.backend.UserProfile.UserProfileService;
 
 @Service
 public class OrderService {

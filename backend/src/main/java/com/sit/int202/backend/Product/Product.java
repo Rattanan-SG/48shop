@@ -3,8 +3,6 @@ package com.sit.int202.backend.Product;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.sit.int202.backend.Order.Order;
-import com.sit.int202.backend.ProductCategory.ProductCategory;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -27,6 +25,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+
+import com.sit.int202.backend.Order.Order;
+import com.sit.int202.backend.ProductCategory.ProductCategory;
 
 @Entity
 @Table(name = "products")

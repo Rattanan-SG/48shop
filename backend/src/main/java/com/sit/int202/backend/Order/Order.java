@@ -1,16 +1,11 @@
 package com.sit.int202.backend.Order;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.sit.int202.backend.Address.Address;
-import com.sit.int202.backend.Product.Product;
-import com.sit.int202.backend.UserProfile.UserProfile;
 import java.io.Serializable;
+
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Entity;
@@ -19,17 +14,21 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import com.sit.int202.backend.Address.Address;
+import com.sit.int202.backend.Product.Product;
+import com.sit.int202.backend.UserProfile.UserProfile;
 
 @Entity
 @Table(name = "orders")
@@ -79,11 +78,6 @@ public class Order implements Serializable {
     @NotBlank
     @Column(name = "omise_token")
     private String omiseToken;
-
-    // @OneToOne(fetch = FetchType.LAZY)
-    // @JoinColumn(name = "order_has_product_order_id", nullable = false)
-    // @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    // private OrderProduct orderProduct;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)

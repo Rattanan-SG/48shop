@@ -13,12 +13,12 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.sit.int202.backend.UserProfile.UserProfile;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import com.sit.int202.backend.UserProfile.UserProfile;
 
 @Entity
 @Table(name = "addresses")
