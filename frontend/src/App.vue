@@ -10,11 +10,15 @@
       </div>
       <div id="navbarMenu" class="navbar-menu">
         <div class="navbar-end">
-          <div class="navbar-item" style="width: 660px">
+          <div class="navbar-item" style="width: 380px">
               <input class='button' v-model='keyword' @keypress.enter='onSubmit'  style=" margin-right: 260px; width:400px; margin-top:15px;" />
           </div>
           <div class="navbar-item">
-            {{user.first_name}} <br>
+            <img :src=user.picture.data.url alt="รอซักครู่" class="is-rounded" style="border-radius: 50%; margin-top:15px;">
+          </div>
+          <div class="navbar-item" style="margin-top:15px;">
+            Welcome,
+            {{user.first_name}}
             {{user.last_name}}
           </div>
           <div class="navbar-item">
