@@ -195,12 +195,12 @@ body {
   font-family: 'Source Sans Pro', sans-serif;
   min-height: 1000px; 
 }
-#item{
+#item{ 
   max-width: 300px;
   height: 200px;
   margin-left: 20px;
-  border: none;
 }
+
 #img{
   max-width: 100px;
   max-height: 100px ;
@@ -292,6 +292,12 @@ body {
     margin-top: 70px;
     width: 172px;
     height:260px;
+ 
+}
+#items:hover{
+-webkit-box-shadow: 0px 0px 86px -42px rgba(0,0,0,0.97);
+-moz-box-shadow: 0px 0px 86px -42px rgba(0,0,0,0.97);
+box-shadow: 0px 0px 86px -42px rgba(0,0,0,0.97);
 }
 #field-box{
     margin-bottom: 0px;
@@ -300,7 +306,7 @@ body {
 #img{
     width:75%; 
     height:50%;
-    margin-left: 20px;
-    margin-right: auto;
+    margin-left: 35px;
+    margin-top: 15px;
 }
 </style>
