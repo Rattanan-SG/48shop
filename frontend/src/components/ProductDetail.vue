@@ -3,14 +3,14 @@
         <div class="container" id="product-box">
             <div class="columns">
                 <div class="column is-one-fifth" id="item">
-                    <img :src=product.image alt="Placeholder image">
+                    <img :src=product.image alt="รอซักครู่">
                 </div>
                 <div class="column">
                     <h1 style="font-size: 24px; margin-top: 20px;">{{product.name}}</h1>
                     <h1 class="field" id="price" style="padding:12px; padding-left: 26px  ">{{product.price+"  บาท"}}</h1> 
                     <div class="field is-grouped " style="color:#9C9CA1;">
                         <h1>จัดส่งโดย เคอรี่</h1>
-                        <h1 style="margin-left:58%">ฟรีค่าจัดส่ง</h1>   
+                        <h1 style="margin-left: auto; margin-right: 38px">20 บาท</h1>   
                     </div>
                     <div class="field is-grouped" style="border:none;">
                         <p style="margin-top: 65px; margin-right: 25px; ">จำนวน : </p>
@@ -37,7 +37,7 @@
             <p><strong>รายละเอียดสินค้า</strong></p>
             <pre id="detail">{{ product.detail}}</pre>
         </div>
-         <div class="container" id="detail-box">
+         <div class="container" id="detail-mock-box">
         </div>
         <div class="navbar is-fixed-bottom" id="nav-bot" v-if="showNavBot">
             <div class="container" id="nav-box" >
@@ -47,10 +47,10 @@
                             <p>สินค้า: {{product.name}}</p>
                             <div class="field is-grouped " id="form">
                             <p style="margin-top: 10px;">ส่งสินค้าไปที่:</p>
-                            <button class="button is-small is-rounded" id="small-button" @click="editAddress"
-                                :disabled="!addresDetail">เปลี่ยนที่อยู่</button>
+                            <button class="button is-small is-rounded" id="small-button" @click="showAddressModal"
+                                :disabled="!hasAddress">เปลี่ยนที่อยู่</button>
                             </div>
-                            <template v-if="addresDetail">
+                            <template v-if="hasAddress">
                                 <p class="is-size-7">
                                     {{
                                         address.receiver_name + " " + 
@@ -62,11 +62,11 @@
                                 </p>
                             </template>
                             <template v-else>
-                                <a @click="showAddAddressModal" class="is-size-7">+ ใส่ที่อยู่</a>
+                                <a @click="showAddressModal" class="is-size-7">+ ใส่ที่อยู่</a>
                             </template>  
                             <div class="field is-grouped " id="form">
                             <p style="margin-top: 13px;"> ชำระเงินด้วย:</p>
-                            <button class="button is-small is-rounded" id="small-button" @click="editCreditCard"
+                            <button class="button is-small is-rounded" id="small-button" @click="showCreditModal"
                                 :disabled="!hasCredit">เปลี่ยนบัตร</button>
                             </div>
                             <template v-if="hasCredit">
@@ -81,102 +81,38 @@
                             </template>  
                         </ol> 
                     </div>
-                        <div class="column" style="height:20px ; width:150px ;  margin-left: 120px;">
-                            <div class="row" style="color:#626567"> ค่าสินค้า : </div>
-                            <div class="row" style="color:#626567"> ค่าจัดส่ง : </div>
-                             <div class="row" style="margin-top:60px;">ยอดค่าสินค้า :  </div>
-                        </div>
-                        <div class="column" style="height:20px ; width:150px ; margin-right: -90px; margin-left: 110px;">
-                            <div class="row" style="color:#626567">  {{product.total}}   </div>
-                            <div class="row" style="color:#626567"> 20.00  </div> 
-                            <div class="row" style="margin-top:60px">{{product.total+20}}  </div>
-                        </div>
-                         <div class="column" style="height:20px ; width:150px ; margin-left: 0px;">
-                            <div class="row" style="color:#626567">   บาท </div>
-                            <div class="row" style="color:#626567"> บาท </div> 
-                            <div class="row" style="margin-top:60px;">บาท </div>
-                        </div>
-                                <a class="button is-primary" @click="orderProduct" :disabled="!hasCredit && !hasCredit"
-                                style=" padding: 20px 50px; margin-left: -300px;margin-top:160px ">
-                                    <strong>ยืนยันการซื้อ</strong>
-                                </a>
+                    <div class="column" style="height:20px ; width:150px ;  margin-left: 120px;">
+                        <div class="row" style="color:#626567"> ค่าสินค้า : </div>
+                        <div class="row" style="color:#626567"> ค่าจัดส่ง : </div>
+                            <div class="row" style="margin-top:60px;">ยอดค่าสินค้า :  </div>
+                    </div>
+                    <div class="column" style="height:20px ; width:150px ; margin-right: -90px; margin-left: 110px">
+                        <div class="row" style="color:#626567">  {{product.total}}   </div>
+                        <div class="row" style="color:#626567; padding-left: 27px"> 20  </div> 
+                        <div class="row" style="margin-top:60px">{{product.total + 20}}  </div>
+                    </div>
+                        <div class="column" style="height:20px ; width:150px ; margin-left: 0px;">
+                        <div class="row" style="color:#626567">   บาท </div>
+                        <div class="row" style="color:#626567"> บาท </div> 
+                        <div class="row" style="margin-top:60px;">บาท </div>
+                    </div>
+                    <a class="button is-primary" @click="orderProduct" :disabled="!hasCredit && !hasCredit"
+                    style=" padding: 20px 50px; margin-left: -300px;margin-top:160px ">
+                        <strong>ยืนยันการซื้อ</strong>
+                    </a>
                 </div>
             </div>
         </div>
-        <!-- popupAddress 1 -->
-        <div class="modal-card" id="popUpAddCradit">
-    <div class="container" >
-         <div class="modal" id="page-modal" v-bind:style="{display: showAddAddress}">
-            <div class="modal-background"></div>
-             <section class="modal-card-body">
-             <form>
-                <div class="modal-content">
-                    <div class="modal-content" id="box-Popup">
-                        <div id="#head-cradit">
-                            <header class="modal-card-head" id="head-cradit">
-                                 <p class="modal-card-title" style="text-align: center">เลือกที่อยู่</p>
-                            </header>
-                        </div>
-                    <table class="table"   id="table"> 
-                             <th id="text" style="color:#9E9E9E; font-size: 12px;">เลือก</th>
-                             <th id="text" style="color:#9E9E9E; font-size: 12px;;">ที่อยู่</th> 
-                             <th id="text" style="color:#9E9E9E; font-size: 12px;">เบอร์โทรศัพท์</th>
-                    </table>
-                    <div id="body">
-                        <div class="card-content" id="cards"  >
-                            <div class="field is-grouped">
-                                <a class="button" style="margin-right: 25px;">เลือก</a>
-                                    <p class="field" id="address">
-                                         160 ถนนพระรามที่ 2 แขวงแสมดำ เขตบางขุนเทียน กรุงเทพฯ 10150
-                                    </p>
-                                    <p class="field" id="text-add">
-                                         091-629-5799
-                                    </p>
-                            </div>
-                        </div>
-                            <div class="card-content" id="cards" >
-                                <div class="field is-grouped">
-                                    <a class="button" style="margin-right: 25px; background-color:#714EC9; color:white;">เลือก</a>
-                                    <p class="text" id="address">
-                                         126 มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าธนบุรี (มจธ.) ถนนประชาอุทิศ แขวงบางมด เขตทุ่งครุ กรุงเทพมหานคร 10140
-                                    </p>
-                                     <p class="text" id="text-add">
-                                         093-945-2455
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="card-content" id="cards" >
-                                <div class="field is-grouped " >
-                                    <a class="button" style="margin-right: 25px; background-color:#373785  ; color:white;" @click="showAddressModal">เพิ่มที่อยู่</a>
-                                </div>
-                            </div>
-                          
-                    </div>
-                    <div id="buttom" >
-                        <div class="field is-grouped">
-                            <a class="button" style="margin-right: 20px;  width: 90px;" for="element-toggle" @click.prevent="closeAddAddressModal"> ยกเลิก</a>  
-                            <a class="button" style="margin-right: 20px; background-color:#714EC9; color:white;  width: 90px;">บันทึก</a>  
-                        </div>
-                    </div>
-                    </div>
-                </div>      
-                </form>
-            </section>
-            </div>
-        </div>
-</div>    
-        <!-- popupAddress -->
         <div class="modal-card" id="popUpAddress">
             <div class="container" >
                 <div class="modal" id="page-modal2" v-bind:style="{display: showAddress}">
                     <div class="modal-background"></div>
                     <section class="modal-card-body">
                         <div class="modal-content" id="screenAddress">
-                            <!-- Address Form start here-->
                             <form>
                             <header id ="head" class="modal-card-head">
                                 <p class="modal-card-title" style="text-align: center">ส่งสินค้าไปที่</p>
-                                <button class="delete"  aria-label="close" @click="closeAddressModal"></button>
+                                <button class="delete"  aria-label="close" @click.prevent="closeAddressModal"></button>
                             </header>
                             <div class="columns is-multiline" style=" display: flex;" id="bodyPopUpAddress">
                                 <div class="field is-horizontal" id="addressbox">
@@ -219,7 +155,7 @@
                             </div>
                             <div class="field is-grouped" id="buttonAddress">
                                 <footer id= "footer" class="modal-card-foot" >
-                                    <button class="button" @click="closeAddressModal" style="width: 100px;">ยกเลิก</button>
+                                    <button class="button" @click.prevent="closeAddressModal" style="width: 100px;">ยกเลิก</button>
                                     <button class="button is-success" @click.prevent="setAddress" style="width: 100px; margin-left: 10px;">บันทึก</button>
                                 </footer>
                             </div>
@@ -229,72 +165,16 @@
                 </div>
             </div>
         </div>
-        <!-- popup Cradit 1 -->
-<div class="modal-card" id="popUpAddCradit">
-    <div class="container" >
-         <div class="modal" id="page-modal" v-bind:style="{display: showCredit}">
-            <div class="modal-background"></div>
-             <section class="modal-card-body">
-             <form>
-                <div class="modal-content">
-                    <div class="modal-content" id="box-Popup">
-                        <div id="#head-cradit">
-                            <header class="modal-card-head" id="head-cradit">
-                                 <p class="modal-card-title" style="text-align: center;">เพิ่มบัตรเครดิต/เดบิต</p>
-                            </header>
-                        </div>
-                    <table class="table"   id="table"> 
-                             <th id="text" style="color:#9E9E9E; font-size: 12px;">เลือก</th>
-                             <th id="text" style="color:#9E9E9E; font-size: 12px;;">บัตรเครดิต/บัตรเดบิต</th> 
-                    </table>
-                    <div id="body">
-                        <div class="card-content" id="cards"  >
-                            <div class="field is-grouped">
-                                <a class="button" style="margin-right: 25px;">เลือก</a>
-                                    <p class="subtitle" id="text-cradit">
-                                     ธนาคารกรุงเทพ xxxx-xxxx-xxxx-2341
-                                     </p>
-                            </div>
-                        </div>
-                            <div class="card-content" id="cards" >
-                                <div class="field is-grouped">
-                                    <a class="button" style="margin-right: 25px; background-color:#714EC9; color:white;">เลือก</a>
-                                    <p class="subtitle" id="text-cradit">
-                                         ธนาคารกรุงเทพ xxxx-xxxx-xxxx-2341
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="card-content" id="cards" >
-                                <div class="field is-grouped " >
-                                    <a class="button" style="margin-right: 25px; background-color:#373785  ; color:white;" @click="showAddCreditModal">เพิ่มบัตร</a>
-                                </div>
-                            </div>
-                    </div>
-                    <div id="buttom" >
-                        <div class="field is-grouped">
-                            <a class="button" style="margin-right: 20px;  width: 90px;" for="element-toggle" @click="closeCreditModal"> ยกเลิก</a>  
-                            <a class="button" style="margin-right: 20px; background-color:#714EC9; color:white;  width: 90px;">บันทึก</a>  
-                        </div>
-                    </div>
-                    </div>
-                </div>      
-                </form>
-            </section>
-            </div>
-        </div>
-</div>    
-        <!-- popup Cradit 2 -->
         <div class="modal-card" id="popUpCradit">
             <div class="container" >
-                <div class="modal" id="page-modal" v-bind:style="{display: showAddCredit}">
+                <div class="modal" id="page-modal" v-bind:style="{display: showCredit}">
                     <div class="modal-background"></div>
                     <section class="modal-card-body">
                         <div class="modal-content" id="screen">
                             <header id ="head" class="modal-card-head">
                                 <p class="modal-card-title" style="text-align: center;">ใส่บัตรเครดิต/เดบิต</p>
-                                <button class="delete"  aria-label="close" @click="closeAddCreditModal"></button>
+                                <button class="delete"  aria-label="close" @click.prevent="closeCreditModal"></button>
                             </header>
-                     <!-- form start -->
                              <form                            >
                             <p v-if="errors.length">
                                 <ul>
@@ -308,21 +188,21 @@
                                     <label  id="text" class="label">หมายเลขบัตร
                                     <img src="../assets/visa.svg" width="20" height="10" style="  margin-left: 10px;">
                                     <img src="../assets/mastercard.svg" width="20" height="10" style="  margin-left: 10px;"></label>
-                                    <div class="control" >
-                                        <input id="num" class="input" type="text" placeholder="Ex. 2321 2342 2415 5432"
-                                        v-model="credit.id" >
-                                    </div>
-                                    </div>
-                                </div>
-                                    <div class="field" id="name" style=" margin-top: 18px;  width: 220px; ">
-                                        <label class="label" id="text">ชื่อที่ปรากฏบนบัตร</label>
-                                        <div class="control">
-                                            <input class="input" type="text" placeholder="Ex. โสภณ จำปาซ่อนกลิ่น" 
-                                            v-model="credit.name">
+                                        <div class="control" >
+                                            <input id="num" class="input" type="text" placeholder="Ex. 2321 2342 2415 5432"
+                                            v-model="credit.id" >
                                         </div>
                                     </div>
+                                </div>
+                                <div class="field" id="name" style=" margin-top: 18px;  width: 220px; ">
+                                    <label class="label" id="text">ชื่อที่ปรากฏบนบัตร</label>
+                                    <div class="control">
+                                        <input class="input" type="text" placeholder="Ex. โสภณ จำปาซ่อนกลิ่น" 
+                                        v-model="credit.name">
+                                    </div>
+                                </div>
                             </div>
-                                    <div class="field is-grouped " id="MY">
+                                <div class="field is-grouped " id="MY">
                                     <div class="field" id="month">
                                         <label  id="text" class="label">เดือนหมดอายุ</label>
                                         <div class="control ">
@@ -344,10 +224,10 @@
                                             v-model="credit.cvv">
                                         </div>
                                     </div>
-                                    </div>
+                                </div>
                                     <div class="field is-grouped " id="foot"> 
                                       <div class="field" >
-                                            <button class="button" @click="closeAddCreditModal">ยกเลิก</button>
+                                            <button class="button" @click.prevent="closeCreditModal">ยกเลิก</button>
                                             <button class="button is-success" @click.prevent="creditCardToken">บันทึก</button>
                                       </div>
                                     </div>
@@ -390,10 +270,8 @@ export default {
             isDisabledIncrease: false,
             showNavBot: false,
             showCredit: '',
-            showAddCredit:'',
             showAddress: '',
-            showAddAddress:'',
-            addresDetail: false,
+            hasAddress: false,
             hasCredit: false,
             credit: {
                 id: '',
@@ -462,15 +340,8 @@ export default {
         buy: function() {
             this.showNavBot = true;    
         },
-        showAddAddressModal: function() {
-            this.showAddAddress = 'block';
-        },
-        closeAddAddressModal: function() {
-            this.showAddAddress = '';
-        },
         showAddressModal: function() {
-            this.showAddress = 'block';
-            this.showAddAddress = '';
+            this.showAddress = 'block';         
         },
         closeAddressModal: function() {
             this.showAddress = '';
@@ -481,13 +352,6 @@ export default {
         closeCreditModal: function() {
             this.showCredit = '';
         },
-        showAddCreditModal: function() {
-            this.showAddCredit = 'block';
-            this.showCredit = '';
-        },
-        closeAddCreditModal: function() {
-            this.showAddCredit = '';
-        },
         setAddress: function () {
             console.log(this.address.receiver_name + " " + 
                         this.address.receiver_address + " " + 
@@ -496,12 +360,6 @@ export default {
                         this.address.tel_no);
             this.hasAddress = true;
             this.showAddress = '';
-        },
-        editAddress: function() {
-            this.showAddressModal();
-        },
-        editCreditCard: function() {
-            this.showCreditModal();
         },
         censorCreditCard: function() {
             credit.id.toString();
@@ -549,17 +407,18 @@ export default {
             console.log(Omise) 
             Omise.createToken('card',card,(statuscode,response)=>{
                 if(statuscode == 200){
-                    this.closeAddCreditModal();
+                    this.closeCreditModal();
                     console.log(response.id)
                     this.credit.token = response.id;
                     this.credit.message = 'valid card';
                 }
                 else{
-                    this.showAddCreditModal();
+                    this.showCreditModal();
                     this.credit.message = response.message;
                     alert(response.message);
                 }
             })
+            // this.hasCredit= true;
         }
 
 
@@ -620,10 +479,19 @@ export default {
 #detail-box {
   background: white;
   width: 1000px;
-  min-height: auto;
-  margin-top: 10px;
+  height: auto;
+  margin-top: 13px;
   box-shadow: 0 4px 15px 0 rgba(40,44,53,.06), 0 2px 2px 0 rgba(40,44,53,.08);
   padding: 50px;
+}
+
+#detail-mock-box {
+    background: white;
+    width: 1000px;
+    height: 400px;
+    margin-top: 13px;
+    box-shadow: 0 4px 15px 0 rgba(40,44,53,.06), 0 2px 2px 0 rgba(40,44,53,.08);
+    padding: 50px;
 }
 
 html {
@@ -816,13 +684,6 @@ margin-left: 70px;
     font-size: 10px;
     width: 100px;
     margin-right: -25px;
-}
-#detail-box{
-    max-width: 1050px;
-    height: 550px;
-    background: white;
-    margin-top: 13px;
-
 }
 
 </style>
