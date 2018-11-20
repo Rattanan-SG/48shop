@@ -47,7 +47,6 @@ export default {
     },
     async setAllProducts () {
       const { data } = await axios.get('/products')
-      console.log(data)
       this.setDefaultProducts(data)
       this.setProducts(data)
     }

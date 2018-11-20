@@ -70,7 +70,6 @@ export default {
     async deleteProduct (id) {
       this.loading = true
       const { data } = await axios.delete(`/product/${id}`)
-      console.log(data)
       const products = this.getProducts.filter(product => {
         return product.id != id
       })

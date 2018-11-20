@@ -151,7 +151,6 @@ export default {
           price: this.price,
           category: this.category
         })
-        console.log(data)
         this.dialog = false
         this.name = ''
         this.detail = ''
