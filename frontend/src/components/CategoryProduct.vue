@@ -1,29 +1,33 @@
 <template>
-    <div class="container" id="Category-box">
-        <hr>
-        <p id="Category-name">{{$route.query.category_name}}</p>
-        <div class="field is-grouped" id="field-box" v-for="products in chunkedProducts" :key="products.id">
-            <router-link :to="{name: 'ProductDetail', params: { id: product.id }}" v-for="product in products" :key="product.id"
-            @click.native="scrollToTop">
-                <div class="card" id="items" >
-                    <div class="card-image is-4by3">
-                    <img :src=product.img_url alt="รอซักครู่" id="img">
-                    </div>
-                    <div class="card-content" style="height: 100px">
-                        <div v-if="product.name.length <= 35">
-                            <p>{{ product.name | dontCutWords}}</p>
-                        </div>
-                        <div v-else>
-                            <p>{{ product.name | cutWords}}</p>
-                        </div>
-                    </div>
-                        <div class="footer" id="price">
-                            <strong> {{product.price}}  บาท</strong>
-                        </div>
-                </div>
-            </router-link>
+  <div class="container" id="Category-box">
+    <hr>
+    <p id="Category-name">{{$route.query.category_name}}</p>
+    <div class="field is-grouped" id="field-box" v-for="products in chunkedProducts" :key="products.id">
+      <router-link
+        :to="{name: 'ProductDetail', params: { id: product.id }}"
+        v-for="product in products"
+        :key="product.id"
+        @click.native="scrollToTop"
+      >
+        <div class="card" id="items" >
+          <div class="card-image is-4by3">
+            <img :src=product.img_url alt="รอซักครู่" id="img">
+          </div>
+          <div class="card-content" style="height: 100px">
+            <div v-if="product.name.length <= 35">
+              <p>{{ product.name | dontCutWords}}</p>
+            </div>
+            <div v-else>
+              <p>{{ product.name | cutWords}}</p>
+            </div>
+          </div>
+          <div class="footer" id="price">
+            <strong> {{product.price}}  บาท</strong>
+          </div>
         </div>
+      </router-link>
     </div>
+  </div>
 </template>
 
 <script>
@@ -31,38 +35,37 @@ import chunk from 'chunk';
 import { mapActions, mapGetters } from 'vuex'
 
 export default {
-    data () {
-        return {
-        msg: 'หน้าแรก สำหรับแสดงสินค้า',
-        categoryId: ''
-        }
-    },
-    methods: {
-        scrollToTop: function() {
-            window.scrollTo(0,0);
-        },
-        ...mapActions([
-          'setProducts'
-        ])
-    },
-    computed: {
-        chunkedProducts: function() {
-            return chunk(this.getProducts, 4)
-        },
-        ...mapGetters([
-            'getProducts'
-        ])
-    },
-    filters: {
-        cutWords: function (value) {
-        return value.substr(0,50).toLowerCase()+"..."
-        },
-
-        dontCutWords: function (value) {
-        return value.toLowerCase()
-        },
-    },
+  data () {
+    return {
+      msg: 'หน้าแรก สำหรับแสดงสินค้า',
+      categoryId: ''
     }
+  },
+  methods: {
+    scrollToTop: function() {
+      window.scrollTo(0,0);
+    },
+    ...mapActions([
+      'setProducts'
+    ])
+  },
+  computed: {
+    chunkedProducts: function() {
+      return chunk(this.getProducts, 4)
+    },
+    ...mapGetters([
+      'getProducts'
+    ])
+  },
+  filters: {
+    cutWords: function (value) {
+      return value.substr(0,50).toLowerCase()+"..."
+    },
+    dontCutWords: function (value) {
+      return value.toLowerCase()
+    },
+  },
+}
 </script>
 
 <style>
