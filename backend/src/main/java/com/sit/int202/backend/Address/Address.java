@@ -1,5 +1,6 @@
 package com.sit.int202.backend.Address;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 
 import javax.persistence.Id;
@@ -16,14 +17,13 @@ import javax.validation.constraints.NotBlank;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import com.sit.int202.backend.UserProfile.UserProfile;
+import javax.persistence.CascadeType;
 
 @Entity
 @Table(name = "addresses")
 @EntityListeners(AuditingEntityListener.class)
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Address implements Serializable {
 
     @Id
@@ -47,9 +47,8 @@ public class Address implements Serializable {
     @Column(name = "tel_number")
     private String telNumber;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_id", nullable = true)
-    @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.MERGE)
+    @JoinColumn(name = "user_id", nullable = false)
     private UserProfile userProfile;
 
     public Address() {
