@@ -1,5 +1,13 @@
 <template>
     <div class="ProductDetail">
+        <span style="margin: 0 auto 0 220px">
+            <router-link to="/home" style="color: #828282">หน้าแรก</router-link>
+            <span style="color: #828282">></span>
+            <router-link :to="{ name: 'CategoryProduct', query: { category_name: product.category }}"
+             style="color: #828282">{{product.category}}</router-link>
+            <span style="color: #828282">></span>
+            {{product.name}}
+        </span>
         <div class="container" id="product-box">
             <div class="columns">
                 <div class="column is-one-fifth" id="item">
@@ -10,7 +18,7 @@
                     <h1 class="field" id="price" style="padding:12px; padding-left: 26px  ">{{product.price+"  บาท"}}</h1> 
                     <div class="field is-grouped " style="color:#9C9CA1;">
                         <h1>จัดส่งโดย เคอรี่</h1>
-                        <h1 style="margin-left: auto; margin-right: 38px">20 บาท</h1>   
+                        <h1 style="margin-left: auto; margin-right: 65px">20 บาท</h1>   
                     </div>
                     <div class="field is-grouped" style="border:none;">
                         <p style="margin-top: 65px; margin-right: 25px; ">จำนวน : </p>
@@ -260,6 +268,7 @@ export default {
             msg: 'This is Detail page',
             product: {
                 id: 0,
+                category: '',
                 name: '',
                 price: '',
                 image: '',
@@ -330,6 +339,7 @@ export default {
         getProductDetail: function() {
             axios.get(url_product + this.product.id)
             .then(response => {
+                this.product.category = response.data.category.name
                 this.product.name = response.data.name,
                 this.product.price = response.data.price,
                 this.product.image = response.data.img_url,
@@ -511,7 +521,7 @@ export default {
   min-height: 390px;
   padding-bottom: 13px;
   box-shadow: 0 4px 15px 0 rgba(40,44,53,.06), 0 2px 2px 0 rgba(40,44,53,.08);
-  margin-top: 30px;
+  margin-top: 20px;
 }
 
 #detail-box {
