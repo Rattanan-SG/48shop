@@ -76,14 +76,10 @@
                     <p class="is-size-7">
                       <pre
                         id="address"
-                        style="background-color: white; min-width: 200px; width: auto; padding: 0px;"
-                      >
-                        {{
-                          "ชื่อผู้รับ :    " + destination.receiverName +
+                        style="background-color: white; min-width: 200px; width: auto; padding: 0px; height: auto;"
+                      >{{"ชื่อผู้รับ :    " + destination.receiverName +
                           "\nส่งที่ :    " + destination.receiver_address + " " + destination.receiver_province + " " + destination.receiver_postcode +
-                          "\nโทรศัพท์ :    " + destination.tel_no + " "
-                        }}
-                      </pre>
+                          "\nโทรศัพท์ :    " + destination.tel_no + " "}}</pre>
                     </p>
                   </template>
                   <template v-else>
@@ -242,22 +238,25 @@
                                 <div class="field is-grouped " id="MY">
                                     <div class="field" id="month">
                                         <label  id="text" class="label">เดือนหมดอายุ</label>
-                                        <div class="control ">
-                                            <input id="box" class="input" type="text" placeholder="mm" style="width: 150px;  margin-right: 50px;"
+                                        <div class="control">
+                                            <input class="input" type="text" placeholder="mm"
+                                            style="width: 150px;  margin-right: 50px; width: 40%; height: 20%;"
                                             v-model="credit.exp_m">
                                         </div>
                                     </div>
                                     <div class="field" id="year">
                                         <label  id="text" class="label">ปีหมดอายุ</label>
                                         <div class="control">
-                                            <input id="box" class="input" type="text" placeholder="yyyy" style="width: 130px;  margin-right: 50px;"
+                                            <input class="input" type="text" placeholder="yyyy"
+                                            style="width: 130px;  margin-right: 50px; width: 40%; height: 20%;"
                                             v-model="credit.exp_y">
                                         </div>
                                     </div>
                                     <div class="field" >
                                         <label  id="text" class="label ">รหัสรักษาความปลอดภัย</label>
                                         <div class="control">
-                                            <input id="box" class="input" type="password" placeholder="CVV" style="width: 110px;  margin-right: 50px;"
+                                            <input class="input" type="password" placeholder="CVV"
+                                            style="width: 110px;  margin-right: 50px;  width: 40%; height: 20%;"
                                             v-model="credit.cvv">
                                         </div>
                                     </div>
@@ -396,7 +395,8 @@ export default {
     },
     orderProduct: function() {
       const fbAccount = JSON.parse(localStorage.getItem("user"));
-      axios
+      if (fbAccount) {
+        axios
         .post("/order", {
           userProfile: {
             firstname: fbAccount.first_name,
@@ -437,6 +437,49 @@ export default {
           this.setOrderId(response.data.id);
           this.$router.push("/summary");
         });
+      } else {
+        axios
+        .post("/order", {
+          userProfile: {
+            firstname: '',
+            lastname: '',
+            facebookId: ''
+          },
+          startLocation: {
+            id: 1,
+            receiverName: "48shop",
+            detail: "48Shop 1/2 Surin Thepkanjana Rd, Khok Krabue",
+            city: "Samut Sakhon",
+            district: "Amphoe Mueang Samut Sakhon",
+            zipcode: 74000,
+            telNumber: "025453227"
+          },
+          destination: {
+            receiverName: this.destination.receiverName,
+            detail: this.destination.receiver_address,
+            city: this.destination.receiver_province,
+            zipcode: this.destination.receiver_postcode,
+            telNumber: this.destination.tel_no
+          },
+          product: {
+            id: this.product.id,
+            productCategory: this.product.category,
+            name: this.product.name,
+            price: this.product.price,
+            img_url: this.product.img_url,
+            detail: this.product.detail
+          },
+          productQuantity: this.product.qty,
+          totalPrice: this.product.total,
+          trackingId: 123456789,
+          paymentMethod: "CreditCard",
+          omiseToken: this.credit.token
+        })
+        .then(response => {
+          this.setOrderId(response.data.id);
+          this.$router.push("/summary");
+        });
+      } 
     },
     creditCardToken: function() {
       const card = {
