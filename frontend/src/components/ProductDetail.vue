@@ -34,8 +34,10 @@
             </div>
         </div>
         <div class="container" id="detail-box">
-            <p>รายละเอียดสินค้า</p>
-            {{ product.detail}}
+            <p><strong>รายละเอียดสินค้า</strong></p>
+            <pre id="detail">{{ product.detail}}</pre>
+        </div>
+         <div class="container" id="detail-box">
         </div>
         <div class="navbar is-fixed-bottom" id="nav-bot" v-if="showNavBot">
             <div class="container" id="nav-box" >
@@ -79,12 +81,25 @@
                             </template>  
                         </ol> 
                     </div>
-                  <div class="column">
-                        ราคา {{product.total}}
-                    </div>
-                    <a class="button is-primary" @click="orderProduct" :disabled="!hasCredit && !hasCredit">
-                        <strong>ยืนยันการซื้อ</strong>
-                    </a>
+                        <div class="column" style="height:20px ; width:150px ;  margin-left: 120px;">
+                            <div class="row" style="color:#626567"> ค่าสินค้า : </div>
+                            <div class="row" style="color:#626567"> ค่าจัดส่ง : </div>
+                             <div class="row" style="margin-top:60px;">ยอดค่าสินค้า :  </div>
+                        </div>
+                        <div class="column" style="height:20px ; width:150px ; margin-right: -90px; margin-left: 110px;">
+                            <div class="row" style="color:#626567">  {{product.total}}   </div>
+                            <div class="row" style="color:#626567"> 20.00  </div> 
+                            <div class="row" style="margin-top:60px">{{product.total}}  </div>
+                        </div>
+                         <div class="column" style="height:20px ; width:150px ; margin-left: 0px;">
+                            <div class="row" style="color:#626567">   บาท </div>
+                            <div class="row" style="color:#626567"> บาท </div> 
+                            <div class="row" style="margin-top:60px;">บาท </div>
+                        </div>
+                                <a class="button is-primary" @click="orderProduct" :disabled="!hasCredit && !hasCredit"
+                                style=" padding: 20px 50px; margin-left: -300px;margin-top:160px ">
+                                    <strong>ยืนยันการซื้อ</strong>
+                                </a>
                 </div>
             </div>
         </div>
@@ -433,8 +448,8 @@ export default {
                 this.product.name = response.data.name,
                 this.product.price = response.data.price,
                 this.product.image = response.data.img_url,
-                this.product.detail = JSON.stringify(response.data.detail)
-                console.log(this.product.detail)
+                this.product.detail = response.data.detail;
+                console.log('dfgdf' + this.product.detail)
                  this.product.total = response.data.price
             })
         },
@@ -546,6 +561,13 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+#detail{
+    background-color:white;
+    font-family: "Avenir", Helvetica, Arial, sans-serif;
+    color: black;
+    margin-left: 20px;
+
+}
 #item{
     margin-left: 60px;
     margin-top: 50px;
@@ -564,7 +586,7 @@ export default {
     width: 40px;
 }
 #nav-bot {
-    height: 240px;
+    height: 270px;
     border: 0.09em solid #E0E0E0;
 }
 #nav-top {
@@ -589,7 +611,7 @@ export default {
 #detail-box {
   background: white;
   width: 1000px;
-  min-height: 1000px;
+  min-height: auto;
   margin-top: 10px;
   box-shadow: 0 4px 15px 0 rgba(40,44,53,.06), 0 2px 2px 0 rgba(40,44,53,.08);
   padding: 50px;
@@ -785,6 +807,13 @@ margin-left: 70px;
     font-size: 10px;
     width: 100px;
     margin-right: -25px;
+}
+#detail-box{
+    max-width: 1050px;
+    height: 550px;
+    background: white;
+    margin-top: 13px;
+
 }
 
 </style>
