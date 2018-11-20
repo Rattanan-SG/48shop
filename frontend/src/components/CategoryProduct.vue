@@ -73,8 +73,8 @@ export default {
 <style>
 #Category-name{
     margin-inline-start: 35px;
-    font: 22px bolder;
-    color: rebeccapurple;
+    font: 35px bolder;
+    color: #714EC9;
     margin-left: 60px;
     margin-top: 40px;
 }
