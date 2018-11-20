@@ -3,15 +3,26 @@ package com.sit.int202.backend.Address;
 import java.io.Serializable;
 
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.sit.int202.backend.UserProfile.UserProfile;
+
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 @Entity
 @Table(name = "addresses")
+@EntityListeners(AuditingEntityListener.class)
 public class Address implements Serializable {
 
     @Id
@@ -19,6 +30,7 @@ public class Address implements Serializable {
     private long id;
 
     @NotBlank
+    @Column(name = "receiver_name")
     private String receiverName;
 
     @NotBlank
@@ -31,7 +43,13 @@ public class Address implements Serializable {
     private String zipcode;
 
     @NotBlank
+    @Column(name = "tel_number")
     private String telNumber;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+    private UserProfile userProfile;
 
     public Address() {
     }
@@ -76,11 +94,19 @@ public class Address implements Serializable {
         this.telNumber = telNumber;
     }
 
-    public String getReceiverName(){
+    public String getReceiverName() {
         return receiverName;
     }
-    public void setReceiverName(String receiverName){
+
+    public void setReceiverName(String receiverName) {
         this.receiverName = receiverName;
     }
 
+    public UserProfile getUserProfie() {
+        return this.userProfile;
+    }
+
+    public void setUserProfie(UserProfile userProfile) {
+        this.userProfile = userProfile;
+    }
 }
