@@ -1,48 +1,19 @@
 <template>
   <div id="app">
-    <nav class="navbar" role="navigation" aria-label="main navigation">
-      <div class="navbar-brand">
-        <router-link to="/home">
-          <img src="./assets/meepoohlogo.svg" width="220" height="100">
-        </router-link>
-
-        <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-        </a>
+    <nav class="navbar" role="navigation" aria-label="main navigation" id="nav-top">
+       <div class="navbar-brand">
+         <div class="navbar-start">
+          <router-link to="/home">
+            <img src="./assets/meepoohlogo.svg" width="220" height="100" style="margin-left:210px;margin-top:35px;">
+          </router-link>
+         </div>
       </div>
       <div id="navbarBasicExample" class="navbar-menu">
-        <div class="navbar-start">
-          <div class="navbar-item has-dropdown is-hoverable">
-            <a class="navbar-link">
-              More
-            </a>
-            <div class="navbar-dropdown">
-              <a class="navbar-item">
-                About
-              </a>
-              <a class="navbar-item">
-                Jobs
-              </a>
-              <a class="navbar-item">
-                Contact
-              </a>
-              <hr class="navbar-divider">
-              <a class="navbar-item">
-                Report an issue
-              </a>
-            </div>
-          </div>
-        </div>
         <div class="navbar-end">
           <div class="navbar-item">
             <div class="buttons">
-              <input class='button is-rounded' v-model='keyword' @keypress.enter='onSubmit' />
-              <a class="button is-primary">
-                <strong>Sign up</strong>
-              </a>
-              <a class="button is-light" @click="login">
+              <input class='button is-rounded' v-model='keyword' @keypress.enter='onSubmit'  style=" margin-right: 260px; width:400px; margin-top:15px;" />
+              <a class="button is-light" @click="login" style="margin-right:220px;margin-top:20px;background-color:#714EC9; color:white; ">
                 {{status}}
               </a>
             </div>
@@ -231,6 +202,9 @@ export default {
 html {
   background: #f2f2f2;
 }
+#img{
+  margin-left: 20px
+}
 
 #nav-box {
   width: 1000px;
@@ -241,13 +215,12 @@ html {
 #nav-bot {
   margin-bottom: -30px;
 }
-
-/* Category */
 #bar {
   font-size: 14px;
   margin-left: 30px;
   margin-top: 20px;
   background: white;
+
 }
 #CategoryBar {
   background: white;
