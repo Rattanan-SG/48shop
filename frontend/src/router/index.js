@@ -4,6 +4,7 @@ import Home from '@/components/Home'
 import ProductDetail from '@/components/ProductDetail'
 import CategoryProduct from '@/components/CategoryProduct'
 import SearchPage from '@/components/SearchPage'
+import SummaryOrder from '@/components/SummaryOrder'
 
 Vue.use(Router)
 
@@ -35,6 +36,11 @@ export default new Router({
       path: '/search',
       name: 'SearchProduct',
       component: SearchPage
+    },
+    {
+      path: '/summary',
+      name: 'SummaryOrder',
+      component: SummaryOrder
     }
   ]
 })
